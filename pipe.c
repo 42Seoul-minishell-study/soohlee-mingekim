@@ -6,13 +6,13 @@
 /*   By: mingekim <mingekim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 15:09:28 by mingekim          #+#    #+#             */
-/*   Updated: 2023/05/11 15:10:06 by mingekim         ###   ########.fr       */
+/*   Updated: 2023/05/11 16:01:04 by mingekim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <libft.h>
+#include "minishell.h"
 
-int	pipe(void)
+int	pipe_and_fork(void)
 {
 	return (0);
 }

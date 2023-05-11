@@ -1,31 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   loop_prompt.c                                      :+:      :+:    :+:   */
+/*   interpreter.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mingekim <mingekim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/05 20:29:27 by soohlee           #+#    #+#             */
-/*   Updated: 2023/05/11 15:59:22 by mingekim         ###   ########.fr       */
+/*   Created: 2023/05/11 15:52:26 by mingekim          #+#    #+#             */
+/*   Updated: 2023/05/11 16:00:59 by mingekim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	loop_prompt(int argc, char **argv, char **envp)
+int	interpreter(char *str)
 {
-	char	*str;
+	char	***data;
 
-	while (1)
-	{
-		str = readline(PROMPT);
-		if (str)
-			interpreter(str);
-		else
-			free_exit(EXIT);
-		add_history(str);
-		free(str);
-	}
-	if (argc || argv || envp)
-		;
+	data = NULL;
+	str = NULL;
+	return (0);
 }

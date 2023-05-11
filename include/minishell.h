@@ -3,25 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mingekim <mingekim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 11:28:15 by soohlee           #+#    #+#             */
-/*   Updated: 2023/05/06 02:11:37 by soohlee          ###   ########.fr       */
+/*   Updated: 2023/05/11 16:00:10 by mingekim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include <termios.h>
-# include <stdio.h>
-# include "libft.h"
-# include <unistd.h>
-# include <stdlib.h>
 # include <fcntl.h>
 # include <signal.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <termios.h>
+# include <unistd.h>
 # include "readline/readline.h"
 # include "readline/history.h"
+# include "libft.h"
 
 //finish flags
 # define EXIT 0
@@ -36,18 +36,23 @@
 # define STDERR 2
 # define PROMPT "minishell$ "
 
-//args_check
-int		my_args_check(int argc, char **argv, char **envp);
+//args_check.c
+int		args_check(int argc, char **argv, char **envp);
 
 //signal
-void	my_signal(void);
-void	my_ctrl_c_handler(int signum);
+void	set_signal(void);
+void	ctrl_c_handler(int signum);
 
-//my_shell
-void	my_loop_prompt(int argc, char **argv, char **envp);
+//shell
+void	loop_prompt(int argc, char **argv, char **envp);
 
 //shell terminate
-void	my_free_exit(int flag);
-void	my_exit_print(int flag);
+void	free_exit(int flag);
+void	exit_print(int flag);
+
+//interpreter.c
+int		interpreter(char *str);
+
+//pipe.c
 
 #endif

@@ -1,5 +1,12 @@
 ##basic rule
-SRCS = main.c signal.c args_check.c loop_prompt.c free_exit.c
+SRCS = 	main.c \
+		signal.c \
+		args_check.c \
+		loop_prompt.c \
+		free_exit.c \
+		pipe.c \
+		interpreter.c
+
 NAME = minishell
 CC = cc
 LIBFT_DIR = ./libft

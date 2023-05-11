@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   args_check.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mingekim <mingekim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 19:18:48 by soohlee           #+#    #+#             */
-/*   Updated: 2023/05/05 20:25:36 by soohlee          ###   ########.fr       */
+/*   Updated: 2023/05/11 15:51:26 by mingekim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	my_args_check(int argc, char **argv, char **envp)
+int	args_check(int argc, char **argv, char **envp)
 {
 	if (argc != 1)
 	{

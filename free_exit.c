@@ -3,22 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   free_exit.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mingekim <mingekim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 21:25:43 by soohlee           #+#    #+#             */
-/*   Updated: 2023/05/05 21:50:04 by soohlee          ###   ########.fr       */
+/*   Updated: 2023/05/11 15:51:22 by mingekim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	my_free_exit(int flag)
+void	free_exit(int flag)
 {
-	my_exit_print(flag);
+	exit_print(flag);
 	exit (0);
 }
 
-void	my_exit_print(int flag)
+void	exit_print(int flag)
 {
 	if (flag == EXIT)
 	{
