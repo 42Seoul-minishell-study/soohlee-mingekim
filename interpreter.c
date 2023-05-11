@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   interpreter.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mingekim <mingekim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 15:52:26 by mingekim          #+#    #+#             */
-/*   Updated: 2023/05/11 16:00:59 by mingekim         ###   ########.fr       */
+/*   Updated: 2023/05/11 19:27:41 by soohlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	interpreter(char *str)
+int	interpreter(char *str, char **envp)
 {
 	char	***data;
 

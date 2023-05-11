@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mingekim <mingekim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 11:28:15 by soohlee           #+#    #+#             */
-/*   Updated: 2023/05/11 16:00:10 by mingekim         ###   ########.fr       */
+/*   Updated: 2023/05/11 19:26:59 by soohlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	free_exit(int flag);
 void	exit_print(int flag);
 
 //interpreter.c
-int		interpreter(char *str);
+int		interpreter(char *str, char **envp);
 
 //pipe.c
 

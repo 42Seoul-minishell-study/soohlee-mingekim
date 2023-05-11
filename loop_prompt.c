@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   loop_prompt.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mingekim <mingekim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 20:29:27 by soohlee           #+#    #+#             */
-/*   Updated: 2023/05/11 15:59:22 by mingekim         ###   ########.fr       */
+/*   Updated: 2023/05/11 19:27:06 by soohlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	loop_prompt(int argc, char **argv, char **envp)
 	{
 		str = readline(PROMPT);
 		if (str)
-			interpreter(str);
+			interpreter(str, envp);
 		else
 			free_exit(EXIT);
 		add_history(str);

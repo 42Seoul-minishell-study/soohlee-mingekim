@@ -6,8 +6,13 @@
 /*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 14:53:16 by soohlee           #+#    #+#             */
-/*   Updated: 2023/05/11 14:53:30 by soohlee          ###   ########.fr       */
+/*   Updated: 2023/05/11 19:24:13 by soohlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-//merge testfile
+#include "minishell.h"
+
+int parsing()
+{
+    return (0);
+}
