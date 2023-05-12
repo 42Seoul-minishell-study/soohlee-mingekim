@@ -14,9 +14,12 @@
 
 int	interpreter(char *str)
 {
-	char	***data;
+	char	***cmds;
 
-	data = NULL;
-	str = NULL;
-	return (0);
+	cmds = NULL;
+	if (cmds == NULL)
+		return (0);
+	if (str == NULL)
+		return (0);
+	return (1);
 }
