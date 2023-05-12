@@ -28,8 +28,8 @@ SILENT = -s
 
 all : $(NAME)
 
-$(NAME) : $(OBJS) $(LIBFT_A)
-	$(CC) $(CFLAGS) $(LIBFT_A) $(OBJS) $(LDFLAGS) -lreadline -lhistory -o $(NAME)
+$(NAME) : $(LIBFT_A) $(OBJS)
+	$(CC) $(CFLAGS) $(OBJS) $(LIBFT_A) $(LDFLAGS) -lreadline -lhistory -o $(NAME)
 
 $(LIBFT_A) :
 	cd ./libft; make $(SILENT);
