@@ -22,14 +22,14 @@ int	set_fds_malloc(char ***cmds, int **input_fds_out, int **output_fds_out)
 	*input_fds_out = (int *)malloc(sizeof(int) * cmds_len);
 	if (*input_fds_out == NULL)
 	{
-		write(2, "malloc error\n", 14);
+		perror("malloc");
 		return (0);
 	}
 	*output_fds_out =  (int *)malloc(sizeof(int) * cmds_len);
 	if (*output_fds_out == NULL)
 	{
 		free(*input_fds_out);
-		write(2, "malloc error\n", 14);
+		perror("malloc");
 		return (0);
 	}
 	return (1);
