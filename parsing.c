@@ -6,13 +6,16 @@
 /*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 14:53:16 by soohlee           #+#    #+#             */
-/*   Updated: 2023/05/11 19:24:13 by soohlee          ###   ########.fr       */
+/*   Updated: 2023/05/12 19:30:29 by soohlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int parsing()
+int	parsing(char *str, char ****data, char **envp)
 {
-    return (0);
+	expanding(&str, envp);
+	redirections_merge(&str);
+	split_simple_command(&str, &data);
+	return (0);
 }
