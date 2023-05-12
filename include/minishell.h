@@ -54,5 +54,6 @@ void	exit_print(int flag);
 int		interpreter(char *str);
 
 //pipe.c
+int	    operator_process(char ***cmds, char **envp);
 
 #endif

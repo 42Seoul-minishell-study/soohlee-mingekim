@@ -14,7 +14,7 @@
 
 int	set_fds_malloc(char ***cmds, int **input_fds_out, int **output_fds_out)
 {
-	int		cmds_len;
+	int	cmds_len;
 
 	cmds_len = 0;
 	while (cmds[cmds_len] != NULL)
@@ -39,19 +39,26 @@ int	get_input_fd(char **cmd)
 {
 	int	cmd_index;
 	int	fd;
+	int	last_redirection_index;
 
 	cmd_index = 0;
+	fd = -1;
+	last_redirection_index = -1;
 	while (cmd[cmd_index] != NULL)
 	{
 		if (ft_strncmp(cmd[cmd_index], "<\0", 2) == 0)
 		{
+			if (last_redirection_index != -1)
+				close(fd);
 			fd = open(cmd[cmd_index + 1], O_RDONLY);
 			if (fd < 0)
 				perror("open");
-			return (fd);
+			last_redirection_index = cmd_index;
 		}
 		cmd_index++;
 	}
+	if (last_redirection_index != -1)
+		return (fd);
 	return (-1);
 }
 
@@ -59,19 +66,26 @@ int		get_output_fd(char **cmd)
 {
 	int	cmd_index;
 	int	fd;
+	int	last_redirection_index;
 
 	cmd_index = 0;
+	fd = -1;
+	last_redirection_index = -1;
 	while (cmd[cmd_index] != NULL)
 	{
 		if (ft_strncmp(cmd[cmd_index], ">\0", 2) == 0)
 		{
-			fd = open(cmd[cmd_index + 1], O_WRONLY);
+			if (last_redirection_index != -1)
+				close(fd);
+			fd = open(cmd[cmd_index + 1], O_RDONLY);
 			if (fd < 0)
 				perror("open");
-			return (fd);
+			last_redirection_index = cmd_index;
 		}
 		cmd_index++;
 	}
+	if (last_redirection_index != -1)
+		return (fd);
 	return (-1);
 }
 
@@ -123,7 +137,6 @@ int	operator_process(char ***cmds, char **envp)
 	int	*output_fds;
 
 	set_fds_malloc(cmds, &input_fds, &output_fds);
-	//redirections & open files fds
 	//pipes
 	//exec
 	//close fds
