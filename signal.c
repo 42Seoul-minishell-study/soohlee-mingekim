@@ -21,7 +21,9 @@ void	set_signal(void)
 void	ctrl_c_handler(int signum)
 {
 	if (signum)
-		;
+	{
+		return ;
+	}
 	rl_on_new_line();
 	rl_replace_line("", 0);
 	write(1, "\n", 1);

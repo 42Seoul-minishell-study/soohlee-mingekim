@@ -27,5 +27,5 @@ void	loop_prompt(int argc, char **argv, char **envp)
 		free(str);
 	}
 	if (argc || argv || envp)
-		;
+		return ;
 }
