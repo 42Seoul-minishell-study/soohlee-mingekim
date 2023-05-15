@@ -6,7 +6,7 @@
 /*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 20:29:27 by soohlee           #+#    #+#             */
-/*   Updated: 2023/05/11 19:27:06 by soohlee          ###   ########.fr       */
+/*   Updated: 2023/05/15 17:18:38 by soohlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,13 @@ void	loop_prompt(int argc, char **argv, char **envp)
 	{
 		str = readline(PROMPT);
 		if (str)
-			interpreter(str, envp);
+		{
+			rl_on_new_line();
+			add_history(str);
+			interpreter(&str, envp);
+		}
 		else
 			free_exit(EXIT);
-		add_history(str);
 		free(str);
 	}
 	if (argc || argv || envp)

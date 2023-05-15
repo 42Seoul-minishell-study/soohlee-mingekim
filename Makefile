@@ -5,7 +5,10 @@ SRCS = 	main.c \
 		loop_prompt.c \
 		free_exit.c \
 		pipe.c \
-		interpreter.c
+		interpreter.c \
+		parsing.c \
+		expanding.c \
+		double_quate.c
 
 NAME = minishell
 CC = cc

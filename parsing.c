@@ -6,16 +6,19 @@
 /*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 14:53:16 by soohlee           #+#    #+#             */
-/*   Updated: 2023/05/12 19:30:29 by soohlee          ###   ########.fr       */
+/*   Updated: 2023/05/15 16:19:25 by soohlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	parsing(char *str, char ****data, char **envp)
+int	parsing(char **out_str, char ****out_data, char **envp)
 {
-	expanding(&str, envp);
-	redirections_merge(&str);
-	split_simple_command(&str, &data);
+	expanding(out_str, envp);
+	printf("expanded :%s\n", *out_str);
+//	redirections_merge(out_str);
+//	split_simple_command(out_str, out_data);
+	if (out_data)
+		;
 	return (0);
 }

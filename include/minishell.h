@@ -6,7 +6,7 @@
 /*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 11:28:15 by soohlee           #+#    #+#             */
-/*   Updated: 2023/05/12 12:52:47 by soohlee          ###   ########.fr       */
+/*   Updated: 2023/05/15 17:18:36 by soohlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,12 @@
 # define STDERR 2
 # define PROMPT "minishell$ "
 
+//parsing struct 'only sooha'
+typedef struct s_string
+{
+	int	offset;
+}		t_string;
+
 //args_check.c
 int		args_check(int argc, char **argv, char **envp);
 
@@ -52,7 +58,17 @@ void	free_exit(int flag);
 void	exit_print(int flag);
 
 //interpreter.c
-int		interpreter(char *str, char **envp);
+int		interpreter(char **out_str, char **envp);
+
+//parsing.c
+int		parsing(char **out_str, char ****out_data, char **envp);
+int		expanding(char **out_str, char **envp);
+int		single_quate(char **out_str, int *offset, char **envp);
+int		double_quate(char **out_str, int *offset, char **envp);
+char	*word_expanding(char *out_doulbe_str, char **envp);
+char	*loop_expanding(char **out_str);
+char	*small_word_expanding(char *out_small_str);
+int		merge_word(char **out_str, char *out_middle_str, int start, int end);
 
 //pipe.c
 
