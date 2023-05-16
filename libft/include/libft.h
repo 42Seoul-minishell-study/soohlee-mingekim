@@ -6,7 +6,7 @@
 /*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 15:30:11 by soohlee           #+#    #+#             */
-/*   Updated: 2023/04/21 11:38:21 by soohlee          ###   ########.fr       */
+/*   Updated: 2023/05/16 14:01:49 by soohlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,5 +102,8 @@ int		ft_atoi_no_overflow(const char *str);
 
 //piscine
 void	ft_sort_int_tab(int *tab, int size);
+
+//my_function
+char	*ft_strinsert(char *str, char *insert_str, int del_start, int del_len);
 
 #endif

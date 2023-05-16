@@ -6,7 +6,7 @@
 /*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 13:25:31 by soohlee           #+#    #+#             */
-/*   Updated: 2023/05/15 17:15:40 by soohlee          ###   ########.fr       */
+/*   Updated: 2023/05/16 17:12:41 by soohlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@ char	*word_expanding(char *out_double_str, char **envp) //""따옴표 포함한 
 	char	**split_env_str;
 
 	env_str = ft_strtrim(out_double_str, "\"");
-	if (!ft_strchr(out_double_str, '$'))
+	if (!ft_strchr(env_str, '$'))
 		return (env_str);
-	split_env_str = ft_split (env_str, '$');
+	split_env_str = ft_split (env_str, ' ');
 	free(env_str);
 	env_str = 0;
 	env_str = loop_expanding(split_env_str);
@@ -40,21 +40,18 @@ char	*loop_expanding(char **out_str)
 	i = -1;
 	while ((out_str)[++i])
 	{
-		printf("in%d\n", i);
 		small_word = small_word_expanding((out_str)[i]);
 		if (!small_word)
 		{
 			free(env_str);
 			continue ;
 		}
-		printf("mi%d\n", i);
 		temp = env_str;
 		env_str = ft_strjoin(env_str, small_word);
 		free(temp);
 		temp = 0;
 		free(small_word);
 		small_word = 0;
-		printf("out%d\n", i);
 	}
 	return (env_str);
 }
@@ -62,26 +59,23 @@ char	*loop_expanding(char **out_str)
 char	*small_word_expanding(char *out_small_str)
 {
 	int		i;
-	char	*temp_str;
+	char	*env_start_str;
 	char	*env_value;
 	char	*res_str;
+	int		len;
 
+	env_start_str = ft_strchr(out_small_str, '$');
+	if (!env_start_str)
+		return (out_small_str);
+	len = env_start_str++ - out_small_str;
 	i = 0;
-	printf("smmal: %s\n", out_small_str);
-	while (out_small_str[i] && ft_isalnum(out_small_str[i]))
+	while (env_start_str[i] && ft_isalnum(env_start_str[i]))
 		i++;
-	temp_str = ft_substr(out_small_str, 0, i);
-	env_value = getenv(temp_str);
+	env_start_str = ft_substr(env_start_str, 0, i);
+	env_value = getenv(env_start_str);
 	if (!env_value)
 		return (0);
-	free(temp_str);
-	temp_str = ft_substr(out_small_str, i, -1);
-	printf("tempstr : %s\nenv_value: %s\n", temp_str, env_value);
-	res_str = ft_strjoin(env_value, temp_str);
-	free(env_value);
-	free(temp_str);
-	env_value = 0;
-	temp_str = 0;
+	res_str = ft_strinsert(out_small_str, env_value, len, len + ft_strlen(env_start_str) + 1);
 	return (res_str);
 }
 
