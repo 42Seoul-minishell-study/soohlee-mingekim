@@ -12,10 +12,11 @@
 
 #include "minishell.h"
 
-int	main(int argc, char **argv, char **envp)
+int	main(void)
 {
-	char	***cmds = {};
-	operator_process(cmds, envp);
+	// char	****tokens;
+
+	// operator_process(cmds, envp);
 	// args_check(argc, argv, envp);
 	// set_signal();
 	// loop_prompt(argc, argv, envp);

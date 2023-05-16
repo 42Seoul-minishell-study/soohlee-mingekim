@@ -5,7 +5,8 @@ SRCS = 	main.c \
 		loop_prompt.c \
 		free_exit.c \
 		pipe.c \
-		interpreter.c
+		interpreter.c \
+		tokenize.c
 
 NAME = minishell
 CC = cc

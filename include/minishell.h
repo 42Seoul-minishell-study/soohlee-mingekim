@@ -56,4 +56,6 @@ int		interpreter(char *str);
 //pipe.c
 int	    operator_process(char ***cmds, char **envp);
 
+int	split_tokens(char *str);
+
 #endif
