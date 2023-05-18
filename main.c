@@ -14,8 +14,17 @@
 
 int	main(void)
 {
-	// char	****tokens;
+	char	****tokens;
+	char	*str;
 
+	while (1)
+	{
+		str = readline(PROMPT);
+		if (str)
+			tokens = tokenize(str);
+		add_history(str);
+		free(str);
+	}
 	// operator_process(cmds, envp);
 	// args_check(argc, argv, envp);
 	// set_signal();

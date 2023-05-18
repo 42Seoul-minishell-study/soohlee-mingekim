@@ -6,7 +6,12 @@ SRCS = 	main.c \
 		free_exit.c \
 		pipe.c \
 		interpreter.c \
-		tokenize.c
+		tokenize.c \
+		tokenize_ops_and_words.c \
+		tokenize_ops.c \
+		tokenize_words.c \
+		tokenize_utils.c \
+		tokenize_find_quote.c
 
 NAME = minishell
 CC = cc
@@ -14,7 +19,7 @@ LIBFT_DIR = ./libft
 OBJS = $(SRCS:.c=.o)
 
 #complie auto option
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -g
 
 #header includes
 #CPPFLAGS : 환경변수로 readline library 경로 등록해놓고 사용함. 
