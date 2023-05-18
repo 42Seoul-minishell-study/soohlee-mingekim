@@ -6,7 +6,7 @@
 /*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 11:28:15 by soohlee           #+#    #+#             */
-/*   Updated: 2023/05/15 17:18:36 by soohlee          ###   ########.fr       */
+/*   Updated: 2023/05/18 15:39:22 by soohlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,11 +58,12 @@ void	free_exit(int flag);
 void	exit_print(int flag);
 
 //interpreter.c
-int		interpreter(char **out_str, char **envp);
+int		interpreter(char *out_str, char **envp);
 
 //parsing.c
-int		parsing(char **out_str, char ****out_data, char **envp);
-int		expanding(char **out_str, char **envp);
+int		translation(char *out_str, char *****out_data, char **envp);
+int		shell_expansions(char *****out_data, char **envp);
+int		convert_env(char *****out_data, char **envp);
 int		single_quate(char **out_str, int *offset, char **envp);
 int		double_quate(char **out_str, int *offset, char **envp);
 char	*word_expanding(char *out_doulbe_str, char **envp);

@@ -1,36 +1,51 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   expanding.c                                        :+:      :+:    :+:   */
+/*   shell_expansions.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 19:29:16 by soohlee           #+#    #+#             */
-/*   Updated: 2023/05/16 21:49:53 by soohlee          ###   ########.fr       */
+/*   Updated: 2023/05/18 15:54:26 by soohlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	expanding(char **out_str, char **envp)
+int	shell_expansions(char *****out_data, char **envp)
+{
+	int	procces_idx;
+
+	procces_idx = -1;
+	while ((*out_data)[++procces_idx])
+	{
+		redicetion_expansions(&((*out_data)[procces_idx][0]), envp);
+		cmd_expansions(&((*out_data)[procces_idx][1]), envp);
+	}
+	return (0);
+}
+
+int	convert_env(char ***out_data, char **envp)
 {
 	int	offset;
 
 	offset = -1;
-	while ((*out_str)[++offset])
-	{
-		if ((*out_str)[offset] == '\'')
-			single_quate(out_str, &offset, envp);
-		else if ((*out_str)[offset] == '\"')
-			double_quate(out_str, &offset, envp);
-	}
+	// while ((*out_str)[++offset])
+	// {
+	// 	if ((*out_str)[offset] == '\'')
+	// 		single_quate(out_str, &offset, envp);
+	// 	else if ((*out_str)[offset] == '\"')
+	// 		double_quate(out_str, &offset, envp);
+	// }
+	if (out_data || envp)
+		;
 	return (0);
 }
 
 int	single_quate(char **out_str, int *offset, char **envp)	//하는중;
 {
 	int		start;
-	char	*insert_str;d
+	char	*insert_str;
 	char	*res;
 	char	*temp;
 

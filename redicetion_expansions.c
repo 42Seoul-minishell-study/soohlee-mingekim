@@ -1,24 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   interpreter.c                                      :+:      :+:    :+:   */
+/*   redicetion_expansions.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/11 15:52:26 by mingekim          #+#    #+#             */
-/*   Updated: 2023/05/17 16:25:48 by soohlee          ###   ########.fr       */
+/*   Created: 2023/05/18 15:44:12 by soohlee           #+#    #+#             */
+/*   Updated: 2023/05/18 15:54:25 by soohlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	interpreter(char *out_str, char **envp)
+int	redicetion_expansions(char ***redir, char **envp)
 {
-	char	****data;
-
-	translation(out_str, &data, envp);	//sooha
-//	execute(data, envp);				//minkeun
-	if (envp)
-		;
+	while (i)
 	return (0);
 }

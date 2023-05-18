@@ -6,8 +6,8 @@ SRCS = 	main.c \
 		free_exit.c \
 		pipe.c \
 		interpreter.c \
-		parsing.c \
-		expanding.c \
+		translation.c \
+		shell_expansions.c \
 		double_quate.c
 
 NAME = minishell
