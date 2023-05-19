@@ -14,14 +14,13 @@
 
 int	main(void)
 {
-	char	****tokens;
 	char	*str;
 
 	while (1)
 	{
 		str = readline(PROMPT);
 		if (str)
-			tokens = tokenize(str);
+			tokenize(str);
 		add_history(str);
 		free(str);
 	}

@@ -26,10 +26,14 @@ char	*find_next_word(char *str)
 		if (ft_strncmp(str, "\'", 1) == 0)
 		{
 			str = find_next_single_quote(str);
+			if (*str == '\'')
+				return (++str);
 		}
 		else if (ft_strncmp(str, "\"", 1) == 0)
 		{
 			str = find_next_double_quote(str);
+			if (*str == '\"')
+				return (++str);
 		}
 		if (is_redirection(str) == 1)
 			return (str);
@@ -40,7 +44,7 @@ char	*find_next_word(char *str)
 
 char	*pass_space(char *str)
 {
-	while (*str != '\0' && *str == ' ')
+	while (*str != '\0' && *str == ' ' && *str != '|')
 	{
 		str++;
 	}
