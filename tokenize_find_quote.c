@@ -8,7 +8,7 @@ char	*find_next_single_quote(char *str)
 	while (*str != '\0' && *str != '\'')
 		str++;
 	if (*str == '\0')
-		return (temp);
+		return (find_next_word(temp));
 	return (str);
 }
 
@@ -20,6 +20,6 @@ char	*find_next_double_quote(char *str)
 	while (*str != '\0' && *str != '\"')
 		str++;
 	if (*str == '\0')
-		return (temp);
+		return (find_next_word(temp));
 	return (str);
 }
