@@ -6,7 +6,7 @@
 /*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 11:28:15 by soohlee           #+#    #+#             */
-/*   Updated: 2023/05/18 15:39:22 by soohlee          ###   ########.fr       */
+/*   Updated: 2023/05/21 16:53:36 by soohlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,11 +62,15 @@ int		interpreter(char *out_str, char **envp);
 
 //parsing.c
 int		translation(char *out_str, char *****out_data, char **envp);
+int		basic_input(char **out_str, int *offset, char **envp);
+int		cmd_expansions(char ***out_cmd, char **envp);
 int		shell_expansions(char *****out_data, char **envp);
-int		convert_env(char *****out_data, char **envp);
+int		redirection_expansions(char ***out_redir, char **envp);
+int		cmd_expansions(char ***out_redir, char **envp);
+int		one_line_expantions(char **out_one_line, char **envp);
 int		single_quate(char **out_str, int *offset, char **envp);
 int		double_quate(char **out_str, int *offset, char **envp);
-char	*word_expanding(char *out_doulbe_str, char **envp);
+char	*word_expanding(char **out_str, char **envp);
 char	*loop_expanding(char **out_str);
 char	*small_word_expanding(char *out_small_str);
 int		merge_word(char **out_str, char *out_middle_str, int start, int end);

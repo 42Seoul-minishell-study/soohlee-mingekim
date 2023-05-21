@@ -8,7 +8,9 @@ SRCS = 	main.c \
 		interpreter.c \
 		translation.c \
 		shell_expansions.c \
-		double_quate.c
+		double_quate.c \
+		redirection_expansions.c \
+		cmd_expansions.c
 
 NAME = minishell
 CC = cc

@@ -1,42 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cmd_expansions.c                                   :+:      :+:    :+:   */
+/*   redirection_expansions.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/18 15:43:44 by soohlee           #+#    #+#             */
-/*   Updated: 2023/05/21 15:32:09 by soohlee          ###   ########.fr       */
+/*   Created: 2023/05/18 15:44:12 by soohlee           #+#    #+#             */
+/*   Updated: 2023/05/21 16:55:02 by soohlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	cmd_double_quate(char **out_str, int *offset, char **envp);
-int cmd_line_expantions(char **out_one_line, char **envp);
-int	cmd_basic_env_input(char **out_str, int *offset, char **envp);
-int	cmd_single_quate(char **out_str, int *offset, char **envp);
-int	cmd_double_quate(char **out_str, int *offset, char **envp);
-
-// int	cmd_join(char **joined_cmd, char ***out_cmd);
-// int cmd_line_expantions(char **out_joined_cmd, char **envp);
-// int	cmd_single_quate(char **out_str, int *offset, char **envp);
-// int	cmd_double_quate(char **out_str, int *offset, char **envp);
-
-int	cmd_expansions(char ***out_cmd, char **envp)
+int	redirection_expansions(char ***out_redir, char **envp)
 {	
-	int	cmd_num;
+	int	redir_num;
 
-	printf("\ncmdexppaitn\n");
-	cmd_num = -1;
-	while ((*out_cmd)[++cmd_num])
-		cmd_line_expantions(&((*out_cmd)[cmd_num]), envp);
+	redir_num = -1;
+	while ((*out_redir)[++redir_num])
+		one_line_expantions(&((*out_redir)[redir_num]), envp);
 	if (envp)
 		;
 	return (0);
 }
 
-int cmd_line_expantions(char **out_one_line, char **envp)
+int one_line_expantions(char **out_one_line, char **envp)
 {
 	int	offset;
 
@@ -44,18 +32,17 @@ int cmd_line_expantions(char **out_one_line, char **envp)
 	printf("onelone\n\n");
 	while ((*out_one_line)[++offset])
 	{
-		printf("basic outoneline\n");
 		if ((*out_one_line)[offset] == '\'')
-			cmd_single_quate(out_one_line, &offset, envp);
+			single_quate(out_one_line, &offset, envp);
 		else if ((*out_one_line)[offset] == '\"')
-			cmd_double_quate(out_one_line, &offset, envp);
-		else if ((*out_one_line)[offset] == '$')
-			cmd_basic_env_input(out_one_line, &offset, envp);
+			double_quate(out_one_line, &offset, envp);
+		else
+			basic_input(out_one_line, &offset, envp);
 	}
 	return (0);
 }
 
-int	cmd_basic_env_input(char **out_str, int *offset, char **envp)
+int	basic_input(char **out_str, int *offset, char **envp)
 {
 	int		start;
 	char	*env_str;
@@ -72,7 +59,6 @@ int	cmd_basic_env_input(char **out_str, int *offset, char **envp)
 	env_str = ft_substr(*out_str, start, *offset - start);
 	if (!ft_strchr(env_str, '$'))
 	{
-		*offset = *offset - 1;
 		free(env_str);
 		env_str = 0;
 		return (0);
@@ -88,11 +74,10 @@ int	cmd_basic_env_input(char **out_str, int *offset, char **envp)
 	*offset = start + ft_strlen(insert_str) - 1;
 	if (envp)
 		;
-	printf("\nbaseic\n");
 	return (0);
 }
 
-int	cmd_single_quate(char **out_str, int *offset, char **envp)	//하는중;
+int	single_quate(char **out_str, int *offset, char **envp)	//하는중;
 {
 	int		start;
 	char	*insert_str;
@@ -119,7 +104,7 @@ int	cmd_single_quate(char **out_str, int *offset, char **envp)	//하는중;
 	return (0);
 }
 
-int	cmd_double_quate(char **out_str, int *offset, char **envp)
+int	double_quate(char **out_str, int *offset, char **envp)
 {
 	int		start;
 	char	*insert_str;
@@ -134,7 +119,7 @@ int	cmd_double_quate(char **out_str, int *offset, char **envp)
 		return (0);
 	insert_str = ft_substr(*out_str, start, *offset - start);
 	temp = insert_str;
-	insert_str = word_expanding(insert_str, envp);
+	insert_str = word_expanding(&insert_str, envp);
 	free(temp);
 	temp = 0;
 	res = ft_strinsert(*out_str, insert_str, start, *offset);
