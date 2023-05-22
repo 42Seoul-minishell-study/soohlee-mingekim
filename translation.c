@@ -6,7 +6,7 @@
 /*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 14:53:16 by soohlee           #+#    #+#             */
-/*   Updated: 2023/05/22 18:39:46 by soohlee          ###   ########.fr       */
+/*   Updated: 2023/05/22 21:45:56 by soohlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,13 @@
 void	temp_make_data(char *****out_data);
 void	temp_data_print(char *****out_data);
 
-int	translation(char *out_str, char *****out_data, char **envp)
-{
+int	translation(char *****out_data, char **envp)
+{	
 //	tokenization(out_str, out_data);	//thursday minkeun
-	temp_make_data(out_data);
+//	temp_make_data(out_data);
 	shell_expansions(out_data, envp);	//thursday sooha
 	temp_data_print(out_data);
-	if (out_str || envp)
+	if (envp)
 		;
 	return (0);
 }
@@ -52,31 +52,47 @@ void	temp_make_data(char *****out_data)
 
 void	temp_data_print(char *****out_data)
 {
-//node 1
-	printf("\n-----<node 1>--------------------\nredir : %s\n", (*out_data)[0][0][0]);
-	printf("redir : %s\n", (*out_data)[0][0][1]);
-	printf("redir : %s\n", (*out_data)[0][0][2]);
-	printf("redir : %s\n", (*out_data)[0][0][3]);
-	printf("redir : %s\n", (*out_data)[0][0][4]);
-	printf("redir : %s\n", (*out_data)[0][0][5]);
+	int	pipe;
+	int	i;
+	int	j;
 
-	printf("\ncmd : %s\n", (*out_data)[0][1][0]);
-	printf("cmd : %s\n", (*out_data)[0][1][1]);
-	printf("cmd : %s\n", (*out_data)[0][1][2]);
+	pipe = -1;
+	printf("---------------------------expantion-----------------------------\n");
+	while ((*out_data)[++pipe])
+	{
+		i = -1;
+		while ((*out_data)[pipe][++i])
+		{
+			j = -1;
+			while ((*out_data)[pipe][i][++j])
+				printf("%d %d %d: %s\n", pipe, i, j, (*out_data)[pipe][i][j]);
+		}
+	}
+// //node 1
+// 	printf("\n-----<node 1>--------------------\nredir : %s\n", (*out_data)[0][0][0]);
+// 	printf("redir : %s\n", (*out_data)[0][0][1]);
+// 	printf("redir : %s\n", (*out_data)[0][0][2]);
+// 	printf("redir : %s\n", (*out_data)[0][0][3]);
+// 	printf("redir : %s\n", (*out_data)[0][0][4]);
+// 	printf("redir : %s\n", (*out_data)[0][0][5]);
 
-//node 2
-	printf("\n-----<node 2>--------------------\nredir : %s\n", (*out_data)[1][0][0]);
-	printf("redir : %s\n", (*out_data)[1][0][1]);
-	printf("redir : %s\n", (*out_data)[1][0][2]);
- 	printf("redir : %s\n", (*out_data)[1][0][3]);
- 	printf("redir : %s\n", (*out_data)[1][0][4]);
- 	printf("redir : %s\n", (*out_data)[1][0][5]);
+// 	printf("\ncmd : %s\n", (*out_data)[0][1][0]);
+// 	printf("cmd : %s\n", (*out_data)[0][1][1]);
+// 	printf("cmd : %s\n", (*out_data)[0][1][2]);
 
- 	printf("\ncmd : %s\n", (*out_data)[1][1][0]);
- 	printf("cmd : %s\n", (*out_data)[1][1][1]);
- 	printf("cmd : %s\n", (*out_data)[1][1][2]);
+// //node 2
+// 	printf("\n-----<node 2>--------------------\nredir : %s\n", (*out_data)[1][0][0]);
+// 	printf("redir : %s\n", (*out_data)[1][0][1]);
+// 	printf("redir : %s\n", (*out_data)[1][0][2]);
+//  	printf("redir : %s\n", (*out_data)[1][0][3]);
+//  	printf("redir : %s\n", (*out_data)[1][0][4]);
+//  	printf("redir : %s\n", (*out_data)[1][0][5]);
 
- 	printf("\narray_end : %s\n", (char *)(*out_data)[2]);
+//  	printf("\ncmd : %s\n", (*out_data)[1][1][0]);
+//  	printf("cmd : %s\n", (*out_data)[1][1][1]);
+//  	printf("cmd : %s\n", (*out_data)[1][1][2]);
+
+//  	printf("\narray_end : %s\n", (char *)(*out_data)[2]);
 }
 
 //출력폼

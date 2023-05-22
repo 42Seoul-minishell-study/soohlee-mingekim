@@ -6,7 +6,7 @@
 /*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 15:43:44 by soohlee           #+#    #+#             */
-/*   Updated: 2023/05/22 20:43:58 by soohlee          ###   ########.fr       */
+/*   Updated: 2023/05/22 22:09:57 by soohlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,6 @@ int	cmd_line_expantions(char **out_one_line, char **envp);
 int	cmd_basic_env_input(char **out_str, int *offset, char **envp);
 int	cmd_single_quate(char **out_str, int *offset, char **envp);
 int	cmd_double_quate(char **out_str, int *offset, char **envp);
-
-// int	cmd_join(char **joined_cmd, char ***out_cmd);
-// int cmd_line_expantions(char **out_joined_cmd, char **envp);
-// int	cmd_single_quate(char **out_str, int *offset, char **envp);
-// int	cmd_double_quate(char **out_str, int *offset, char **envp);
 
 int	cmd_expansions(char ***out_cmd, char **envp)
 {	
@@ -139,11 +134,11 @@ int	cmd_double_quate(char **out_str, int *offset, char **envp)
 		*offset = start;
 		return (0);
 	}
-	insert_str = ft_substr(*out_str, start, *offset - start);
+	insert_str = ft_substr(*out_str, start, (*offset + 1) - start);
 	temp = insert_str;
-	insert_str = word_expanding(&insert_str, envp);
+	insert_str = ft_strtrim(temp, "\"");
 	free(temp);
-	temp = 0;
+	word_expanding(&insert_str, envp);
 	res = ft_strinsert(*out_str, insert_str, start, *offset);
 	free(*out_str);
 	*out_str = res;
