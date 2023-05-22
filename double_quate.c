@@ -1,13 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing.c                                          :+:      :+:    :+:   */
+/*   double_quate.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/11 14:53:16 by soohlee           #+#    #+#             */
-/*   Updated: 2023/05/11 14:53:30 by soohlee          ###   ########.fr       */
+/*   Created: 2023/05/15 13:25:31 by soohlee           #+#    #+#             */
+/*   Updated: 2023/05/22 18:20:10 by soohlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-//merge testfile
+#include "minishell.h"
+
+char	*word_expanding(char **out_str, char **envp)
+{
+	int	offset;
+
+	offset = -1;
+	while ((*out_str)[++offset])
+	{
+		if ((*out_str)[offset] == '$')
+			env_input(out_str, &offset, envp);
+	}
+	return (0);
+}

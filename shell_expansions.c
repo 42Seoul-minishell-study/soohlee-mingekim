@@ -1,33 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   shell_expansions.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/02 12:16:38 by soohlee           #+#    #+#             */
-/*   Updated: 2023/05/15 15:45:55 by soohlee          ###   ########.fr       */
+/*   Created: 2023/05/12 19:29:16 by soohlee           #+#    #+#             */
+/*   Updated: 2023/05/21 15:04:45 by soohlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	main(void)
+int	shell_expansions(char *****out_data, char **envp)
 {
-	char	****tokens;
-	char	*str;
+	int	procces_idx;
 
-	while (1)
+	procces_idx = -1;
+	while ((*out_data)[++procces_idx])
 	{
-		str = readline(PROMPT);
-		if (str)
-			tokens = tokenize(str);
-		add_history(str);
-		free(str);
+		redirection_expansions(&((*out_data)[procces_idx][0]), envp);
+		cmd_expansions(&((*out_data)[procces_idx][1]), envp);
 	}
-	// operator_process(cmds, envp);
-	// args_check(argc, argv, envp);
-	// set_signal();
-	// loop_prompt(argc, argv, envp);
 	return (0);
 }
