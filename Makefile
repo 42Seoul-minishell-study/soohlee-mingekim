@@ -13,10 +13,10 @@ SRCS = 	main.c \
 		tokenize_utils.c \
 		tokenize_find_quote.c \
 		translation.c \
-		shell_expansions.c \
-		double_quate.c \
-		redirection_expansions.c \
-		cmd_expansions.c
+		shell_expand.c \
+		expand_utils.c \
+		redirection_expand.c \
+		command_expand.c
 
 NAME = minishell
 CC = cc

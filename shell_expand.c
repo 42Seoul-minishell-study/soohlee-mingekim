@@ -1,26 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   double_quate.c                                     :+:      :+:    :+:   */
+/*   shell_expand.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/15 13:25:31 by soohlee           #+#    #+#             */
-/*   Updated: 2023/05/22 18:20:10 by soohlee          ###   ########.fr       */
+/*   Created: 2023/05/12 19:29:16 by soohlee           #+#    #+#             */
+/*   Updated: 2023/05/23 01:16:49 by soohlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*word_expanding(char **out_str, char **envp)
+int	shell_expand(char *****out_data, char **envp)
 {
-	int	offset;
+	int	procces_idx;
 
-	offset = -1;
-	while ((*out_str)[++offset])
+	procces_idx = -1;
+	while ((*out_data)[++procces_idx])
 	{
-		if ((*out_str)[offset] == '$')
-			env_input(out_str, &offset, envp);
+		redirection_expand(&((*out_data)[procces_idx][0]), envp);
+		cmd_expand(&((*out_data)[procces_idx][1]), envp);
 	}
 	return (0);
 }
