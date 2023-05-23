@@ -14,7 +14,6 @@
 
 int	main(int argc, char **argv, char **envp)
 {
-	char	****tokens;
 	char	*str;
 
 	while (1)

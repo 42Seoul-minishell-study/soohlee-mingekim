@@ -16,10 +16,8 @@ static int	get_pipe_count(char *str)
 
 static char	***split_tokens(char *str)
 {
-//	int		index;//unused 이수하가 주석처리함.
 	char	***ops_and_words;
 
-//	index = 0;
 	ops_and_words = malloc(sizeof(char **) * 3);
 	if (ops_and_words == NULL)
 	{
