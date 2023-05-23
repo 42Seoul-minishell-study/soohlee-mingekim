@@ -15,6 +15,7 @@
 int	main(int argc, char **argv, char **envp)
 {
 	char	*str;
+	char	****tokens;
 
 	while (1)
 	{
