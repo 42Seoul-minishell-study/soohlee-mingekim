@@ -26,6 +26,7 @@ int	main(int argc, char **argv, char **envp)
 		if (str)
 		{
 			tokens = tokenize(str);
+			//when we get <<<< or other error is syntax error (TODO)
 			translation(&tokens, env);
 			//free_all(tokens);
 		}
