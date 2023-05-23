@@ -43,8 +43,8 @@ char	*find_next_word(char *str)
 				return (str);
 			}
 		}
-		if (is_redirection(str) == 1)
-			return (str);
+		//if (is_redirection(str) == 1)
+		//	return (str);
 		str++;
 	}
 	return (str);

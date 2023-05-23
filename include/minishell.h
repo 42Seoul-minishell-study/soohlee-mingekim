@@ -105,4 +105,11 @@ int		double_quate(char **out_str, int *offset, char **envp);
 char	*word_expand(char **out_str, char **envp);
 int		env_trans(char **out_str, int *offset, char **envp);
 
+//env_utils.c
+char	**set_env(char **envp);
+void	add_env(char *new_str, char ***env_out);
+void	delete_env(char *env_name,char ***env_out);
+void	free_env(char ***env);
+void	print_env(char **env);
+
 #endif
