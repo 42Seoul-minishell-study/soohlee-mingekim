@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mingekim <mingekim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 11:28:15 by soohlee           #+#    #+#             */
-/*   Updated: 2023/05/11 16:00:10 by mingekim         ###   ########.fr       */
+/*   Updated: 2023/05/23 02:26:58 by soohlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <signal.h>
 # include <stdio.h>
 # include <stdlib.h>
+# include <sys/errno.h>
 # include <termios.h>
 # include <unistd.h>
 # include "readline/readline.h"
@@ -36,6 +37,12 @@
 # define STDERR 2
 # define PROMPT "minishell$ "
 
+//parsing struct 'only sooha'
+typedef struct s_string
+{
+	int	offset;
+}		t_string;
+
 //args_check.c
 int		args_check(int argc, char **argv, char **envp);
 
@@ -51,10 +58,10 @@ void	free_exit(int flag);
 void	exit_print(int flag);
 
 //interpreter.c
-int		interpreter(char *str);
+int		interpreter(char *out_str, char **envp);
 
 //pipe.c
-int	    operator_process(char ***cmds, char **envp);
+int		operator_process(char ***cmds, char **envp);
 
 //tokenize.c
 char	****tokenize(char *str);
@@ -80,5 +87,22 @@ char	*find_next_word(char *str);
 char	*pass_space(char *str);
 int		is_redirection(char *str);
 char	****free_tokens(char *****tokens);
+
+//translation.c
+int		translation(char *****out_data, char **envp);
+//shell_expansions.c
+int		shell_expand(char *****out_data, char **envp);
+int		redirection_expand(char ***out_redir, char **envp);
+int		cmd_expand(char ***out_cmd, char **envp);
+//redirection_expand
+int		redir_line_expand(char **out_one_line, char **envp);	//한줄만 확장시 사용가능. heredoc의 피연산자는 확장안하는 기능가짐.
+int		redir_env_trans(char **out_str, int *offset, char **envp);
+//cmd_expand
+int		cmd_line_expand(char **out_one_line, char **envp);		//한줄만 확장시 사용가능.
+//expand_utils
+int		single_quate(char **out_str, int *offset, char **envp);
+int		double_quate(char **out_str, int *offset, char **envp);
+char	*word_expand(char **out_str, char **envp);
+int		env_trans(char **out_str, int *offset, char **envp);
 
 #endif

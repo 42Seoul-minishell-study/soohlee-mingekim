@@ -6,7 +6,7 @@
 /*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 15:30:11 by soohlee           #+#    #+#             */
-/*   Updated: 2023/04/21 11:38:21 by soohlee          ###   ########.fr       */
+/*   Updated: 2023/05/21 16:26:56 by soohlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ char	*ft_strtrim(char const *s1, char const *set);
 char	*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 void	ft_striteri(char *s, void (*f)(unsigned int, char*));
 char	**ft_split(char const *s, char c);
+char	**ft_multi_split(char const *s, char c1, char c2);
 int		ft_toupper(int c);
 int		ft_tolower(int c);
 int		ft_atoi(const char *str);
@@ -102,5 +103,8 @@ int		ft_atoi_no_overflow(const char *str);
 
 //piscine
 void	ft_sort_int_tab(int *tab, int size);
+
+//my_function
+char	*ft_strinsert(char *str, char *insert_str, int del_start, int del_len);
 
 #endif
