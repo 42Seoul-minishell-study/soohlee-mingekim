@@ -18,30 +18,127 @@ int	cmd_expand(char ***out_cmd, char **envp)
 
 	cmd_num = -1;
 	while ((*out_cmd)[++cmd_num])
-		cmd_line_expand(&((*out_cmd)[cmd_num]), envp);
+		cmd_line_expand(out_cmd, &cmd_num, envp);
 	if (envp)
 		;
 	return (0);
 }
 
-int	cmd_line_expand(char **out_one_line, char **envp)
+int	cmd_line_expand(char ***out_cmd, int *cmd_num, char **envp)
 {
 	int		offset;
-	char	*out_one_line_temp;
 
 	offset = -1;
-	while ((*out_one_line)[++offset])
+	while ((*out_cmd)[*cmd_num][++offset])
 	{
-		if ((*out_one_line)[offset] == '\'')
-			single_quate(out_one_line, &offset, envp);
-		else if ((*out_one_line)[offset] == '\"')
-			double_quate(out_one_line, &offset, envp);
-		else if ((*out_one_line)[offset] == '$')
-			env_trans(out_one_line, &offset, envp);
+		if ((*out_cmd)[*cmd_num][offset] == '\'')
+			single_quate(&((*out_cmd)[*cmd_num]), &offset, envp);
+		else if ((*out_cmd)[*cmd_num][offset] == '\"')
+			double_quate(&((*out_cmd)[*cmd_num]), &offset, envp);
+		else if ((*out_cmd)[*cmd_num][offset] == '$')
+			cmd_env_trans(out_cmd, cmd_num, &offset, envp);
 	}
-	out_one_line_temp = *out_one_line;
-	*out_one_line = ft_strtrim(out_one_line_temp, " ");
-	free(out_one_line_temp);
-	out_one_line_temp = 0;
+	return (0);
+}
+
+int	cmd_env_trans(char ***out_cmd, int *cmd_num, int *offset, char **envp)
+{
+	t_retokendata db;
+	char	*env_str;
+	char	*insert_str;
+	char	*res;
+
+	db.start = *offset;
+	db.offset = offset;
+	db.cmd_num = cmd_num;
+	while ((*out_cmd)[*cmd_num][++(*offset)])
+		if ((*out_cmd)[*cmd_num][(*offset)] == '\''
+			|| (*out_cmd)[*cmd_num][(*offset)] == '\"'
+				|| (*out_cmd)[*cmd_num][(*offset)] == '$'
+					|| (*out_cmd)[*cmd_num][(*offset)] == ' ')
+			break ;
+	env_str = ft_substr((*out_cmd)[*cmd_num], db.start, *offset - db.start);
+	if (!ft_strchr(env_str, '$'))
+	{
+		*offset = *offset - 1;
+		free(env_str);
+		env_str = 0;
+		return (0);
+	}
+	insert_str = getenv(env_str + 1);
+	if (!insert_str)
+		insert_str = "";
+	if (ft_strchr(insert_str, ' '))
+	{
+		free(env_str);
+		env_str = 0;
+		re_tokenize(out_cmd, db, insert_str);
+		return (2);
+	}
+	free(env_str);
+	env_str = 0;
+	res = ft_strinsert((*out_cmd)[*cmd_num], insert_str, db.start, *offset - 1);
+	free((*out_cmd)[*cmd_num]);
+	(*out_cmd)[*cmd_num] = res;
+	*offset = db.start + ft_strlen(insert_str) - 1;
+	if (envp)
+		;
+	return (0);
+}
+
+int	re_tokenize(char ***out_cmd, t_retokendata db, char *out_insert_str)
+{
+	char	**insert_twod_array;
+	int		len;
+
+	db.front_str = ft_substr((*out_cmd)[*(db.cmd_num)], 0, db.start);
+	db.end_str = ft_substr((*out_cmd)[*(db.cmd_num)], *(db.offset), -1);
+	insert_twod_array = ft_split(out_insert_str, ' ');
+	len = 0;
+	while (insert_twod_array[len++])
+		;
+	insert_two_d_array(out_cmd, db, insert_twod_array, len);
+	two_d_free(insert_twod_array);
+	insert_twod_array = 0;
+	return (0);
+}
+
+int	insert_two_d_array(char ***out_cmd, t_retokendata db, char **insert_twod_array, int twod_len)
+{
+	char	**new_cmd;
+	int		new_cmd_num;
+	int		out_cmd_idx;
+	int		insert_idx;
+
+	out_cmd_idx = 0;
+	while ((*out_cmd)[out_cmd_idx++])
+		;
+	new_cmd = (char **)malloc(sizeof(char *) * (out_cmd_idx + twod_len + 1));
+	new_cmd_num = 0;
+	out_cmd_idx = 0;
+	insert_idx = 0;
+	while (new_cmd_num < *(db.cmd_num))
+	{
+		new_cmd[new_cmd_num++] = ft_strdup((*out_cmd)[out_cmd_idx++]);
+	}
+	if ((db.front_str)[ft_strlen(db.front_str) - 1] != ' ')
+		new_cmd[new_cmd_num++] = ft_strjoin(db.front_str, insert_twod_array[insert_idx++]);
+	else
+		new_cmd[new_cmd_num++] = ft_strdup(db.front_str);
+	out_cmd_idx++;
+	while (insert_twod_array[insert_idx + 1])
+	{
+		new_cmd[new_cmd_num++] = ft_strdup(insert_twod_array[insert_idx++]);
+		*(db.cmd_num) = *(db.cmd_num) + 1;
+	}
+	new_cmd[new_cmd_num++] = ft_strjoin(insert_twod_array[insert_idx], db.end_str);
+	*(db.offset) = db.start + ft_strlen(insert_twod_array[insert_idx++]) - 1;
+	while ((*out_cmd)[out_cmd_idx])
+	{
+		new_cmd[new_cmd_num++] = ft_strdup((*out_cmd)[out_cmd_idx++]);
+	}
+	new_cmd[new_cmd_num] = NULL;
+	two_d_free(*out_cmd);
+	*out_cmd = new_cmd;
 	return (0);
 }

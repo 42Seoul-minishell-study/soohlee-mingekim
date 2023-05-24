@@ -71,6 +71,7 @@ int	redir_env_trans(char **out_str, int *offset, char **envp)
 	insert_str = getenv(env_str + 1);
 	if (!insert_str)
 		insert_str = "";
+	// ft_strchr로 공백있으면 리다이렉션 ambiguous redirect error처리
 	free(env_str);
 	env_str = 0;
 	res = ft_strinsert(*out_str, insert_str, start, *offset - 1);
