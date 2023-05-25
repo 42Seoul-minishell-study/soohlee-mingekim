@@ -54,12 +54,19 @@ int	redir_env_trans(char **out_str, int *offset, char **envp)
 	char	*res;
 
 	start = *offset;
+	while ((*out_str)[++(*offset)] == '$')
+		;
+	if ((*offset - start) > 1)
+		return (0);
+	(*offset)--;
 	while ((*out_str)[++(*offset)])
 		if ((*out_str)[(*offset)] == '\''
 			|| (*out_str)[(*offset)] == '\"'
 				|| (*out_str)[(*offset)] == '$'
 					|| (*out_str)[(*offset)] == ' ')
 			break ;
+	if ((*offset - start) == 1)
+		return (0);
 	env_str = ft_substr(*out_str, start, *offset - start);
 	if (!ft_strchr(env_str, '$') || !ft_strncmp(*out_str, "<<", 2))
 	{
@@ -70,7 +77,8 @@ int	redir_env_trans(char **out_str, int *offset, char **envp)
 	}
 	insert_str = getenv(env_str + 1);
 	if (!insert_str)
-		insert_str = "";
+		insert_str = ft_strdup("");
+	insert_str = ft_strtrim(insert_str, " ");
 	// ft_strchr로 공백있으면 리다이렉션 ambiguous redirect error처리
 	free(env_str);
 	env_str = 0;

@@ -51,12 +51,19 @@ int	cmd_env_trans(char ***out_cmd, int *cmd_num, int *offset, char **envp)
 	db.start = *offset;
 	db.offset = offset;
 	db.cmd_num = cmd_num;
+	while ((*out_cmd)[*cmd_num][++(*offset)] == '$')
+		;
+	if ((*offset - db.start) > 1)
+		return (0);
+	(*offset)--;
 	while ((*out_cmd)[*cmd_num][++(*offset)])
 		if ((*out_cmd)[*cmd_num][(*offset)] == '\''
 			|| (*out_cmd)[*cmd_num][(*offset)] == '\"'
 				|| (*out_cmd)[*cmd_num][(*offset)] == '$'
 					|| (*out_cmd)[*cmd_num][(*offset)] == ' ')
 			break ;
+	if ((*offset - db.start) == 1)
+		return (0);
 	env_str = ft_substr((*out_cmd)[*cmd_num], db.start, *offset - db.start);
 	if (!ft_strchr(env_str, '$'))
 	{
@@ -91,9 +98,12 @@ int	re_tokenize(char ***out_cmd, t_retokendata db, char *out_insert_str)
 	char	**insert_twod_array;
 	int		len;
 
+	db.front_space_exist = 0;
 	db.front_str = ft_substr((*out_cmd)[*(db.cmd_num)], 0, db.start);
 	db.end_str = ft_substr((*out_cmd)[*(db.cmd_num)], *(db.offset), -1);
 	insert_twod_array = ft_split(out_insert_str, ' ');
+	if (out_insert_str[0] == ' ')
+		db.front_space_exist = 1;
 	len = 0;
 	while (insert_twod_array[len++])
 		;
@@ -121,7 +131,8 @@ int	insert_two_d_array(char ***out_cmd, t_retokendata db, char **insert_twod_arr
 	{
 		new_cmd[new_cmd_num++] = ft_strdup((*out_cmd)[out_cmd_idx++]);
 	}
-	if ((db.front_str)[ft_strlen(db.front_str) - 1] != ' ')
+	if ((db.front_str)[ft_strlen(db.front_str) - 1] != ' '
+		&& db.front_space_exist != 1)
 		new_cmd[new_cmd_num++] = ft_strjoin(db.front_str, insert_twod_array[insert_idx++]);
 	else
 		new_cmd[new_cmd_num++] = ft_strdup(db.front_str);
