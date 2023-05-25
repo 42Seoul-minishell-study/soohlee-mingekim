@@ -23,14 +23,13 @@ int	main(int argc, char **argv, char **envp)
 	while (1)
 	{
 		str = readline(PROMPT);
-		if (str)
+		if (str != NULL && ft_strlen(str) != 0)
 		{
 			tokens = tokenize(str);
-			//when we get <<<< or other error is syntax error (TODO)
 			translation(&tokens, env);
 			//free_all(tokens);
+			add_history(str);
 		}
-		add_history(str);
 		free(str);
 	}
 	if (argc || argv || envp)
