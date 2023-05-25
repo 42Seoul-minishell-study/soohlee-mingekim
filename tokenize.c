@@ -60,6 +60,11 @@ char	****tokenize(char *str)
 	char	****tokens;
 
 	index = 0;
+	if (ft_strlen(str) == 0)
+	{
+		printf("null!\n");
+		return (NULL);
+	}
 	tokens_len = get_pipe_count(str) + 1;
 	tokens = malloc(sizeof(char ***) * (tokens_len + 1));
 	if (tokens == NULL)
@@ -78,5 +83,9 @@ char	****tokenize(char *str)
 	}
 	tokens[tokens_len] = NULL;
 	print_all_tree(tokens);
+	if (token_check(&tokens) == 0)
+	{
+		//free_all
+	}
 	return (tokens);
 }

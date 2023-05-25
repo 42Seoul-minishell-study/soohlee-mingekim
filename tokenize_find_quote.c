@@ -11,7 +11,7 @@ char	*find_next_single_quote(char *str)
 		return (str);
 	if (*str == '\0')
 	{
-		while (*temp != '\0' &&*temp != ' ')
+		while (*temp != '\0' && *temp != ' ' && *temp != '|')
 			temp++;
 		return (temp);
 	}
@@ -29,7 +29,7 @@ char	*find_next_double_quote(char *str)
 		return (str);
 	if (*str == '\0')
 	{
-		while (*temp != '\0' &&*temp != ' ')
+		while (*temp != '\0' && *temp != ' ' && *temp != '|')
 			temp++;
 		return (temp);
 	}
