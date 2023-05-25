@@ -6,7 +6,7 @@
 /*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 12:16:38 by soohlee           #+#    #+#             */
-/*   Updated: 2023/05/23 01:16:35 by soohlee          ###   ########.fr       */
+/*   Updated: 2023/05/25 16:22:10 by soohlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	main(int argc, char **argv, char **envp)
 	char	**env;
 
 	env = set_env(envp);
-	print_env(env);
+//	print_env(env);
 	while (1)
 	{
 		str = readline(PROMPT);

@@ -6,7 +6,7 @@
 /*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 11:28:15 by soohlee           #+#    #+#             */
-/*   Updated: 2023/05/23 02:26:58 by soohlee          ###   ########.fr       */
+/*   Updated: 2023/05/25 15:42:10 by soohlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,20 @@
 # define PROMPT "minishell$ "
 
 //parsing struct 'only sooha'
-typedef struct s_string
+typedef struct s_retokendata
 {
-	int	offset;
-}		t_string;
+	int		all_space_check;
+	int		front_space_exist;
+	int		start;
+	int		*offset;
+	int		*cmd_num;
+	int		insert_str_len;
+	char	*front_str;
+	char	*end_str;
+}		t_retokendata;
+
+//free
+void 	two_d_free(char **str);
 
 //args_check.c
 int		args_check(int argc, char **argv, char **envp);
@@ -98,7 +108,10 @@ int		cmd_expand(char ***out_cmd, char **envp);
 int		redir_line_expand(char **out_one_line, char **envp);	//한줄만 확장시 사용가능. heredoc의 피연산자는 확장안하는 기능가짐.
 int		redir_env_trans(char **out_str, int *offset, char **envp);
 //cmd_expand
-int		cmd_line_expand(char **out_one_line, char **envp);		//한줄만 확장시 사용가능.
+int		cmd_line_expand(char ***out_cmd, int *cmd_num, char **envp);	//한줄만 확장시 사용가능.
+int		cmd_env_trans(char ***out_cmd, int *cmd_num, int *offset, char **envp);
+int		re_tokenize(char ***out_cmd, t_retokendata db, char *out_insert_str);
+int		insert_two_d_array(char ***out_cmd, t_retokendata db, char **insert_twod_array, int twod_len);
 //expand_utils
 int		single_quate(char **out_str, int *offset, char **envp);
 int		double_quate(char **out_str, int *offset, char **envp);
@@ -111,5 +124,9 @@ void	add_env(char *new_str, char ***env_out);
 void	delete_env(char *env_name,char ***env_out);
 void	free_env(char ***env);
 void	print_env(char **env);
+
+//echo.c
+int		echo(char **argv);
+int		option_remove(char ***argv);
 
 #endif

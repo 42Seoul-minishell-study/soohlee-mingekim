@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_exit.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mingekim <mingekim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 21:25:43 by soohlee           #+#    #+#             */
-/*   Updated: 2023/05/11 15:51:22 by mingekim         ###   ########.fr       */
+/*   Updated: 2023/05/24 15:50:26 by soohlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,4 +27,19 @@ void	exit_print(int flag)
 		ft_putstr_fd("\033[11C", STDOUT);
 		ft_printf("exit\n");
 	}
+}
+
+void two_d_free(char **str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		free(str[i]);
+		str[i] = 0;
+		i++;
+	}
+	free(str);
+	str = 0;
 }

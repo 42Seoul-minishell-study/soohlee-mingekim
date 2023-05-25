@@ -97,7 +97,7 @@ void	free_env(char ***env)
 char	*get_env(char *env_name, char **env)
 {
 	int		i;
-	int		find_index;
+//	int		find_index;
 	char	*temp;
 	char	*str_env;
 
@@ -105,7 +105,8 @@ char	*get_env(char *env_name, char **env)
 	while (env[++i] != NULL)
 	{
 		if (ft_strncmp(env[i], env_name, get_env_name_len(env[i])) == 0)
-			find_index = i;
+			;
+//			find_index = i;
 	}
 	temp = ft_strchr(env[i], '=');
 	++temp;
@@ -113,16 +114,16 @@ char	*get_env(char *env_name, char **env)
 	return (str_env);
 }
 
-void	print_env(char **env)
-{
-	int	i;
+// void	print_env(char **env)
+// {
+// 	int	i;
 
-	i = 0;
-	printf("-----------------env-----------------\n");
-	while (env[i] != NULL)
-	{
-		printf("%s\n", env[i]);
-		i++;
-	}
-	printf("-----------------env-----------------\n");
-}
+// 	i = 0;
+// 	printf("-----------------env-----------------\n");
+// 	while (env[i] != NULL)
+// 	{
+// 		printf("%s\n", env[i]);
+// 		i++;
+// 	}
+// 	printf("-----------------env-----------------\n");
+// }
