@@ -18,7 +18,7 @@ SRCS = 	main.c \
 		redirection_expand.c \
 		command_expand.c \
 		env_utils.c \
-		echo.c
+		ft_echo.c
 
 NAME = minishell
 CC = cc
