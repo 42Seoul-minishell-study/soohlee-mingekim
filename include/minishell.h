@@ -6,7 +6,7 @@
 /*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 11:28:15 by soohlee           #+#    #+#             */
-/*   Updated: 2023/05/25 12:04:33 by soohlee          ###   ########.fr       */
+/*   Updated: 2023/05/25 13:44:03 by soohlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,5 +123,9 @@ void	add_env(char *new_str, char ***env_out);
 void	delete_env(char *env_name,char ***env_out);
 void	free_env(char ***env);
 void	print_env(char **env);
+
+//echo.c
+int		echo(char **argv);
+int		option_remove(char ***argv);
 
 #endif
