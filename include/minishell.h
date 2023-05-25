@@ -6,7 +6,7 @@
 /*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 11:28:15 by soohlee           #+#    #+#             */
-/*   Updated: 2023/05/25 13:44:03 by soohlee          ###   ########.fr       */
+/*   Updated: 2023/05/25 15:42:10 by soohlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@
 //parsing struct 'only sooha'
 typedef struct s_retokendata
 {
+	int		all_space_check;
 	int		front_space_exist;
 	int		start;
 	int		*offset;

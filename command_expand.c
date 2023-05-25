@@ -98,6 +98,7 @@ int	re_tokenize(char ***out_cmd, t_retokendata db, char *out_insert_str)
 	char	**insert_twod_array;
 	int		len;
 
+	db.all_space_check = 0;
 	db.front_space_exist = 0;
 	db.front_str = ft_substr((*out_cmd)[*(db.cmd_num)], 0, db.start);
 	db.end_str = ft_substr((*out_cmd)[*(db.cmd_num)], *(db.offset), -1);
@@ -129,10 +130,11 @@ int	insert_two_d_array(char ***out_cmd, t_retokendata db, char **insert_twod_arr
 	insert_idx = 0;
 	while (new_cmd_num < *(db.cmd_num))
 	{
+		printf("%d\n", *(db.cmd_num));
 		new_cmd[new_cmd_num++] = ft_strdup((*out_cmd)[out_cmd_idx++]);
 	}
-	if ((db.front_str)[ft_strlen(db.front_str) - 1] != ' '
-		&& db.front_space_exist != 1)
+	if (((db.front_str)[ft_strlen(db.front_str) - 1] != ' '
+		&& db.front_space_exist != 1) || (ft_strlen(db.front_str) == 0))
 		new_cmd[new_cmd_num++] = ft_strjoin(db.front_str, insert_twod_array[insert_idx++]);
 	else
 		new_cmd[new_cmd_num++] = ft_strdup(db.front_str);

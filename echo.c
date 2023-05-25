@@ -6,7 +6,7 @@
 /*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 13:03:16 by soohlee           #+#    #+#             */
-/*   Updated: 2023/05/25 15:05:06 by soohlee          ###   ########.fr       */
+/*   Updated: 2023/05/25 16:22:13 by soohlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ int	echo(char **argv)
 	int	flag;
 
 	flag = 1;
+	if (ft_strlen(*argv) == 0)
+		return (0);
 	if (ft_strncmp(*argv++, "echo\0", 5))
 		return (1);
 	if (*argv == NULL)

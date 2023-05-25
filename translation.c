@@ -6,7 +6,7 @@
 /*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 14:53:16 by soohlee           #+#    #+#             */
-/*   Updated: 2023/05/25 14:37:50 by soohlee          ###   ########.fr       */
+/*   Updated: 2023/05/25 16:22:35 by soohlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,9 @@
 void	tokens_print(char *****out_data);
 
 int	translation(char *****out_data, char **envp)
-{	
+{
+	if (*out_data == NULL)
+		return (0);
 	shell_expand(out_data, envp);
 	tokens_print(out_data);//임시결과확인용
 	if (envp)
@@ -41,6 +43,6 @@ void	tokens_print(char *****out_data)
 				printf("%d %d %d: %s\n", pipe, i, j, (*out_data)[pipe][i][j]);
 		}
 	}
-	printf("\n--------echo---------\n");
-	echo((**out_data)[1]);
+	// printf("\n--------echo---------\n");
+	// echo((**out_data)[1]);
 }
