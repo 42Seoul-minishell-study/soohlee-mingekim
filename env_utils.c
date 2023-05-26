@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   env_utils.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/05/27 01:51:05 by soohlee           #+#    #+#             */
+/*   Updated: 2023/05/27 02:41:52 by soohlee          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 char	**set_env(char **envp)
@@ -44,7 +56,7 @@ static int	get_env_name_len(char *str)
 {
 	char	*temp;
 
-	temp = ++str;
+	temp = str;
 	while (*temp != '=')
 		temp++;
 	return (temp - str);
@@ -105,7 +117,7 @@ char	*get_env(char *env_name, char **env)
 	while (env[++i] != NULL)
 	{
 		if (ft_strncmp(env[i], env_name, get_env_name_len(env[i])) == 0)
-			;
+			break ;
 //			find_index = i;
 	}
 	temp = ft_strchr(env[i], '=');
@@ -114,16 +126,16 @@ char	*get_env(char *env_name, char **env)
 	return (str_env);
 }
 
-// void	print_env(char **env)
-// {
-// 	int	i;
+void	print_env(char **env)
+{
+	int	i;
 
-// 	i = 0;
-// 	printf("-----------------env-----------------\n");
-// 	while (env[i] != NULL)
-// 	{
-// 		printf("%s\n", env[i]);
-// 		i++;
-// 	}
-// 	printf("-----------------env-----------------\n");
-// }
+	i = 0;
+	printf("-----------------env-----------------\n");
+	while (env[i] != NULL)
+	{
+		printf("%s\n", env[i]);
+		i++;
+	}
+	printf("-----------------env-----------------\n");
+}
