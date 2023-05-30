@@ -99,11 +99,14 @@ char	*get_env(char *env_name, char **env)
 	char	*str_env;
 
 	i = -1;
+	find_index = -1;
 	while (env[++i] != NULL)
 	{
 		if (ft_strncmp(env[i], env_name, get_env_name_len(env[i])) == 0)
-		find_index = i;
+			find_index = i;
 	}
+	if (find_index == -1)
+		return (NULL);
 	temp = ft_strchr(env[find_index], '=');
 	++temp;
 	str_env = ft_strdup(temp);

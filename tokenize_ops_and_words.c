@@ -29,7 +29,7 @@ static void	get_ops_and_words_count(char *str, int *ops_count_out, int *words_co
 	}
 }
 
-static char	**split_ops_and_words(char *str, char ***ops_and_words_out)
+static void	split_ops_and_words(char *str, char ***ops_and_words_out)
 {
 	int	index_op;
 	int	index_word;
@@ -53,7 +53,6 @@ static char	**split_ops_and_words(char *str, char ***ops_and_words_out)
 	}
 	ops_and_words_out[0][index_op] = NULL;
 	ops_and_words_out[1][index_word] = NULL;
-	return (NULL);
 }
 
 char	**set_ops_and_words(char *str, char ***ops_and_words_out)

@@ -70,9 +70,6 @@ void	exit_print(int flag);
 //interpreter.c
 int		interpreter(char *out_str, char **envp);
 
-//pipe.c
-int		operator_process(char ***cmds, char **envp);
-
 //tokenize.c
 char	****tokenize(char *str);
 
@@ -131,5 +128,11 @@ void	print_env(char **env);
 //echo.c
 int		echo(char **argv);
 int		option_remove(char ***argv);
+
+//pipe.c
+int		execute(char ****tokens, char **envp);
+
+//pipe_utile.c
+int		parsing_cmd_and_options(char **command_out, char **envp);
 
 #endif

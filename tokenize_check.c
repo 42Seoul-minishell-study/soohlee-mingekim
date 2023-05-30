@@ -2,7 +2,7 @@
 
 int	pipe_check(char ***token)
 {
-	if (token[0] == NULL)
+	if (token[1][0] == NULL)
 		return (0);
 	return (1);
 }
@@ -17,7 +17,7 @@ int	operation_check(char ***token)
 	{
 		temp = find_next_word(token[0][i]);
 		temp++;
-		if (*temp == '<' || *temp == '>')
+		if (*temp == '<' || *temp == '>' || *temp == '\0')
 			return (0);
 		i++;
 	}

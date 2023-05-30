@@ -27,8 +27,11 @@ int	main(int argc, char **argv, char **envp)
 		{
 			tokens = tokenize(str);
 			if (tokens != NULL)
+			{
 				translation(&tokens, env);
-			//free_all(tokens);
+				execute(tokens, env);
+				free_tokens(&tokens);
+			}
 			add_history(str);
 		}
 		free(str);
