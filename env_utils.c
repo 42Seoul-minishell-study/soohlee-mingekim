@@ -6,7 +6,7 @@
 /*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 01:51:05 by soohlee           #+#    #+#             */
-/*   Updated: 2023/05/30 18:29:58 by soohlee          ###   ########.fr       */
+/*   Updated: 2023/05/30 20:13:32 by soohlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,9 @@ void	add_env(char *new_str, char ***env_out)
 		new_env[i] = (*env_out)[i];
 		i++;
 	}
-	new_env[i++] = new_str;
+	new_env[i++] = ft_strdup(new_str);
+	if (!new_env[i - 1])
+		exit (1);
 	new_env[i] = NULL;
 	free(*env_out);
 	*env_out = new_env;

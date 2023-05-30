@@ -1,45 +1,45 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_exit.c                                        :+:      :+:    :+:   */
+/*   ft_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/05 21:25:43 by soohlee           #+#    #+#             */
-/*   Updated: 2023/05/30 19:54:10 by soohlee          ###   ########.fr       */
+/*   Created: 2023/05/30 19:35:44 by soohlee           #+#    #+#             */
+/*   Updated: 2023/05/30 20:08:10 by soohlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	free_exit(int flag)
-{
-	exit_print(flag);
-	exit (0);
-}
+int	del_export(char *argv, char ***env, int *idx);
 
-void	exit_print(int flag)
-{
-	if (flag == EXIT)
-	{
-		rl_on_new_line();
-		ft_putstr_fd("\x1b[1A", STDOUT);
-		ft_putstr_fd("\033[11C", STDOUT);
-		ft_printf("exit\n");
-	}
-}
-
-void two_d_free(char **str)
+int	ft_unset(char **argv, char ***env)
 {
 	int	i;
 
-	i = 0;
-	while (str[i])
+	if (!argv || !argv[0])
+		return (0);
+	if (!(*(++argv)))
+		return (0);
+	i = -1;
+	while (argv[++i])
+		del_export(argv[i], env, &i);
+	return (0);
+}
+
+int	del_export(char *argv, char ***env, int *idx)
+{
+	char	*value;
+
+	value = get_env(argv, *env);
+	if (!value)
+		free(value);
+	else
 	{
-		free(str[i]);
-		str[i] = 0;
-		i++;
+		free(value);
+		delete_env(argv, env);
+		*idx = -1;
 	}
-	free(str);
-	str = 0;
+	return (0);
 }

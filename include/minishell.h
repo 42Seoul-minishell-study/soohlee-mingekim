@@ -6,7 +6,7 @@
 /*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 11:28:15 by soohlee           #+#    #+#             */
-/*   Updated: 2023/05/30 19:29:25 by soohlee          ###   ########.fr       */
+/*   Updated: 2023/05/30 19:39:00 by soohlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,6 +141,9 @@ void	ft_env(char **env);
 
 //ft_export.c
 int		ft_export(char **argv, char ***env);
+
+//ft_unset.c
+int		ft_unset(char **argv, char ***env);
 
 //pipe.c
 int		execute(char ****tokens, char **envp);

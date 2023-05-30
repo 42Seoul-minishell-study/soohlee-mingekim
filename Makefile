@@ -23,6 +23,7 @@ SRCS = 	main.c \
 		ft_pwd.c \
 		ft_env.c \
 		ft_export.c \
+		ft_unset.c \
 		pipe.c \
 		pipe_utiles.c
 
