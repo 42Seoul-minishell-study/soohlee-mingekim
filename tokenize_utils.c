@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   tokenize_utils.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mingekim <mingekim@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/05/30 20:25:49 by mingekim          #+#    #+#             */
+/*   Updated: 2023/05/30 20:25:50 by mingekim         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 char	*find_next_pipe(char *str)
@@ -26,27 +38,13 @@ char	*find_next_word(char *str)
 		if (*str == '\'')
 		{
 			str = find_next_single_quote(str);
-			// if (temp == str)
-			// {
-			// 	while (*str != '\0' && *str != ' ' && *str != '|')
-			// 		str++;
-			// 	return (str);
-			// }
 			return (++str);
 		}
 		else if (*str == '\"')
 		{
 			str = find_next_double_quote(str);
-			// if (temp == str)
-			// {
-			// 	while (*str != '\0' && *str != ' ' && *str != '|')
-			// 		str++;
-			// 	return (str);
-			// }
 			return (++str);
 		}
-		//if (is_redirection(str) == 1)
-		//	return (str);
 		str++;
 	}
 	return (str);
@@ -64,21 +62,13 @@ char	*pass_space(char *str)
 int	is_redirection(char *str)
 {
 	if (ft_strncmp(str, "<<", 2) == 0)
-	{
 		return (1);
-	}
 	else if (ft_strncmp(str, "<", 1) == 0)
-	{
 		return (1);
-	}
 	else if (ft_strncmp(str, ">>", 2) == 0)
-	{
 		return (1);
-	}
 	else if (ft_strncmp(str, ">", 1) == 0)
-	{
 		return (1);
-	}
 	return (0);
 }
 

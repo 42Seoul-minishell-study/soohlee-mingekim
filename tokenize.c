@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   tokenize.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mingekim <mingekim@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/05/30 20:25:39 by mingekim          #+#    #+#             */
+/*   Updated: 2023/05/30 20:25:40 by mingekim         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 static int	get_pipe_count(char *str)
@@ -63,10 +75,7 @@ char	****tokenize(char *str)
 	tokens_len = get_pipe_count(str) + 1;
 	tokens = malloc(sizeof(char ***) * (tokens_len + 1));
 	if (tokens == NULL)
-	{
-		perror("malloc");
-		exit(1);
-	}
+		perror_and_exit("malloc", 1);
 	tokens[index++] = split_tokens(str);
 	while (index < tokens_len)
 	{

@@ -145,7 +145,21 @@ int		ft_export(char **argv, char ***env);
 //pipe.c
 int		execute(char ****tokens, char **envp);
 
+//pipe_check.c
+int		check_input(char *word, int *flag_out);
+int		check_output(char *word, int *flag_out);
+
 //pipe_utile.c
+int		perror_and_return_zero(char *str);
+int		perror_and_exit(char *str, int exit_num);
+void	close_fd(int fd);
+void	set_fds_not_use(int *fd);
+
+//pipe_get_fd.c
+int		get_infile_fd(char ***token, int *last_pipe_fd_out);
+int		get_outfile_fd(char ***token, int *pipe_fd_out);
+
+//pipe_cmd_parsing.c
 int		parsing_cmd_and_options(char **command_out, char **envp);
 
 #endif

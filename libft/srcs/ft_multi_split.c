@@ -82,7 +82,8 @@ char	**ft_m_split(char const *s, char c1, char c2)
 	size_t	i;
 
 	i = 0;
-	new_s = (char **)malloc(sizeof(char *) * (double_m_malcnt((char *)s, c1, c2) + 1));
+	new_s = (char **)malloc(sizeof(char *) * \
+		(double_m_malcnt((char *)s, c1, c2) + 1));
 	if (!new_s)
 		return (0);
 	while (*s)

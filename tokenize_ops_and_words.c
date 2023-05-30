@@ -1,15 +1,28 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   tokenize_ops_and_words.c                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mingekim <mingekim@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/05/30 20:25:47 by mingekim          #+#    #+#             */
+/*   Updated: 2023/05/30 20:25:48 by mingekim         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-static char	*skip_spaces_and_words(char *str, int redirection_index, int *count_out)
+static char	*skip_spaces_and_words(char *str, int redir_index, int *count_out)
 {
-	str += redirection_index;
+	str += redir_index;
 	str = pass_space(str);
 	str = find_next_word(str);
 	(*count_out)++;
 	return (str);
 }
 
-static void	get_ops_and_words_count(char *str, int *ops_count_out, int *words_count_out)
+static void	get_ops_and_words_count(char *str, \
+									int *ops_count_out, int *words_count_out)
 {
 	*ops_count_out = 0;
 	*words_count_out = 0;

@@ -24,7 +24,10 @@ SRCS = 	main.c \
 		ft_env.c \
 		ft_export.c \
 		pipe.c \
-		pipe_utiles.c
+		pipe_check.c \
+		pipe_cmd_parsing.c \
+		pipe_get_fd.c \
+		pipe_utiles.c \
 
 NAME = minishell
 CC = cc
