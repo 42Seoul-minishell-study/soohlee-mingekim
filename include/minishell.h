@@ -6,7 +6,7 @@
 /*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 11:28:15 by soohlee           #+#    #+#             */
-/*   Updated: 2023/05/30 14:56:47 by soohlee          ###   ########.fr       */
+/*   Updated: 2023/05/30 17:00:15 by soohlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,5 +138,8 @@ int		ft_cd(char **argv, char ***indepen_env);
 
 //ft_pwd.c
 int		ft_pwd(void);
+
+//ft_env.c
+void	ft_env(char **env);
 
 #endif
