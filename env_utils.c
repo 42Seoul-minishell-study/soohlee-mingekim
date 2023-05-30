@@ -44,7 +44,7 @@ static int	get_env_name_len(char *str)
 {
 	char	*temp;
 
-	temp = ++str;
+	temp = str;
 	while (*temp != '=')
 		temp++;
 	return (temp - str);
@@ -69,10 +69,7 @@ void	delete_env(char *env_name,char ***env_out)
 	while ((*env_out)[++i] != NULL)
 	{
 		if (i == delete_index)
-		{
-			free((*env_out)[i]);
 			continue ;
-		}
 		new_env[j++] = (*env_out)[i];
 	}
 	new_env[j] = NULL;
@@ -97,7 +94,7 @@ void	free_env(char ***env)
 char	*get_env(char *env_name, char **env)
 {
 	int		i;
-//	int		find_index;
+	int		find_index;
 	char	*temp;
 	char	*str_env;
 
@@ -105,10 +102,9 @@ char	*get_env(char *env_name, char **env)
 	while (env[++i] != NULL)
 	{
 		if (ft_strncmp(env[i], env_name, get_env_name_len(env[i])) == 0)
-			;
-//			find_index = i;
+		find_index = i;
 	}
-	temp = ft_strchr(env[i], '=');
+	temp = ft_strchr(env[find_index], '=');
 	++temp;
 	str_env = ft_strdup(temp);
 	return (str_env);

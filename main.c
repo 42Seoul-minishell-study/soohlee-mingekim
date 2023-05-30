@@ -19,7 +19,7 @@ int	main(int argc, char **argv, char **envp)
 	char	**env;
 
 	env = set_env(envp);
-//	print_env(env);
+	print_env(env);
 	while (1)
 	{
 		str = readline(PROMPT);
