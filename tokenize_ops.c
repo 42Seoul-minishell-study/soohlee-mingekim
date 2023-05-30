@@ -18,7 +18,6 @@ char	*split_ops(char *str, char **op_out)
 		filename = temp;
 		temp = find_next_word(temp);
 		len_filename = temp - filename;
-		printf("%s\n", str);
 	}
 	else if (ft_strncmp(temp, "<", 1) == 0)
 	{
@@ -51,7 +50,7 @@ char	*split_ops(char *str, char **op_out)
 	if (*op_out == NULL)
 	{
 		perror("malloc");
-		return (str);
+		exit(1);
 	}
 	ft_memcpy(*op_out, str, len_op);
 	(*op_out)[len_op] = ' ';

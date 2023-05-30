@@ -14,12 +14,12 @@
 
 int	check_input(char *word, int *flags_out)
 {
-	if (ft_strncmp(word, "<\0", 2) == 0)
+	if (ft_strncmp(word, "< ", 2) == 0)
 	{
 		*flags_out = O_RDONLY;
 		return (1);
 	}
-	else if (ft_strncmp(word, "<<\0", 2) == 0)
+	else if (ft_strncmp(word, "<< ", 3) == 0)
 	{
 		*flags_out = O_RDONLY;
 		return (1);
@@ -29,12 +29,12 @@ int	check_input(char *word, int *flags_out)
 
 int	check_output(char *word, int *flags_out)
 {
-	if (ft_strncmp(word, ">\0", 2) == 0)
+	if (ft_strncmp(word, "> ", 2) == 0)
 	{
 		*flags_out = O_WRONLY | O_CREAT;
 		return (1);
 	}
-	else if (ft_strncmp(word, ">>\0", 2) == 0)
+	else if (ft_strncmp(word, ">> ", 3) == 0)
 	{
 		*flags_out = O_WRONLY | O_CREAT | O_APPEND;
 		return (1);
@@ -65,11 +65,27 @@ void	exec_command(void)
 	perror("execve");
 }
 
-int	pipes(void)
-{
-	
-	return (0);
-}
+// int	pipes(char ****tokens, char **envp)
+// {
+// 	int		wstatus;
+// 	int		pipe_index;
+// 	int		pipefds[2][2];
+// 
+// 	pipe_index = 0;
+// 	//open all outfiles
+// 	while (tokens[pipe_index] != NULL)
+// 	{
+// 		if (pipe(pipefds[1]) == -1)
+// 			perror("pipe");
+// 		//exec_command(tokens, pipefds[1], envp);
+// 		close(pipefds[1][1]);
+// 		pipefds[0][0] = pipefds[1][0];
+// 		pipe_index++;
+// 	}
+// 	while (wait(&wstatus) > 0)
+// 		wstatus++;
+// 	return (1);
+// }
 
 // int	operator_process(char ***cmds, char **envp)
 // {

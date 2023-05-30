@@ -23,25 +23,27 @@ char	*find_next_word(char *str)
 {
 	while (*str != '\0' && *str != ' ' && *str != '|')
 	{
-		if (ft_strncmp(str, "\'", 1) == 0)
+		if (*str == '\'')
 		{
 			str = find_next_single_quote(str);
-			if (*str == '\'')
-			{
-				while (*str != '\0' && *str != ' ' && *str != '|')
-					str++;
-				return (str);
-			}
+			// if (temp == str)
+			// {
+			// 	while (*str != '\0' && *str != ' ' && *str != '|')
+			// 		str++;
+			// 	return (str);
+			// }
+			return (++str);
 		}
-		else if (ft_strncmp(str, "\"", 1) == 0)
+		else if (*str == '\"')
 		{
 			str = find_next_double_quote(str);
-			if (*str == '\"')
-			{
-				while (*str != '\0' && *str != ' ' && *str != '|')
-					str++;
-				return (str);
-			}
+			// if (temp == str)
+			// {
+			// 	while (*str != '\0' && *str != ' ' && *str != '|')
+			// 		str++;
+			// 	return (str);
+			// }
+			return (++str);
 		}
 		//if (is_redirection(str) == 1)
 		//	return (str);
@@ -82,7 +84,23 @@ int	is_redirection(char *str)
 
 char	****free_tokens(char *****tokens)
 {
-	// free();
+	int	i;
+	int	j;
+	int	k;
+
+	i = 0;
+	while ((*tokens)[i] != NULL)
+	{
+		j = 0;
+		while ((*tokens)[i][j] != NULL)
+		{
+			k = 0;
+			while ((*tokens)[i][j][k] != NULL)
+				free((*tokens)[i][j][k++]);
+			free((*tokens)[i][j++]);
+		}
+		free((*tokens)[i++]);
+	}
 	free(*tokens);
 	*tokens = NULL;
 	return (NULL);

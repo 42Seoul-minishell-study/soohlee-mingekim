@@ -11,7 +11,7 @@ char	*split_words(char *str, char **word_out)
 	if (*word_out == NULL)
 	{
 		perror("malloc");
-		return (str);
+		exit(1);
 	}
 	ft_memcpy(*word_out, str, len);
 	(*word_out)[len] = '\0';

@@ -98,6 +98,8 @@ char	*pass_space(char *str);
 int		is_redirection(char *str);
 char	****free_tokens(char *****tokens);
 
+int		tokens_check(char *****tokens);
+
 //translation.c
 int		translation(char *****out_data, char **envp);
 //shell_expansions.c
@@ -121,6 +123,7 @@ int		env_trans(char **out_str, int *offset, char **envp);
 //env_utils.c
 char	**set_env(char **envp);
 void	add_env(char *new_str, char ***env_out);
+char	*get_env(char *env_name, char **env);
 void	delete_env(char *env_name,char ***env_out);
 void	free_env(char ***env);
 void	print_env(char **env);

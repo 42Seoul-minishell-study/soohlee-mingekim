@@ -22,7 +22,7 @@ static char	***split_tokens(char *str)
 	if (ops_and_words == NULL)
 	{
 		perror("malloc");
-		return (NULL);
+		exit(1);
 	}
 	set_ops_and_words(str, ops_and_words);
 	ops_and_words[2] = NULL;
@@ -60,12 +60,17 @@ char	****tokenize(char *str)
 	char	****tokens;
 
 	index = 0;
+	if (ft_strlen(str) == 0)
+	{
+		printf("null!\n");
+		return (NULL);
+	}
 	tokens_len = get_pipe_count(str) + 1;
 	tokens = malloc(sizeof(char ***) * (tokens_len + 1));
 	if (tokens == NULL)
 	{
 		perror("malloc");
-		return (NULL);
+		exit(1);
 	}
 	tokens[index++] = split_tokens(str);
 	while (index < tokens_len)
@@ -78,5 +83,7 @@ char	****tokenize(char *str)
 	}
 	tokens[tokens_len] = NULL;
 	print_all_tree(tokens);
+	if (tokens_check(&tokens) == 0)
+		return (NULL);
 	return (tokens);
 }
