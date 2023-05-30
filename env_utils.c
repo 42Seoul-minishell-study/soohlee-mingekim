@@ -110,16 +110,16 @@ char	*get_env(char *env_name, char **env)
 	return (str_env);
 }
 
-// void	print_env(char **env)
-// {
-// 	int	i;
+void	print_env(char **env)
+{
+	int	i;
 
-// 	i = 0;
-// 	printf("-----------------env-----------------\n");
-// 	while (env[i] != NULL)
-// 	{
-// 		printf("%s\n", env[i]);
-// 		i++;
-// 	}
-// 	printf("-----------------env-----------------\n");
-// }
+	i = 0;
+	printf("-----------------env-----------------\n");
+	while (env[i] != NULL)
+	{
+		printf("%s\n", env[i]);
+		i++;
+	}
+	printf("-----------------env-----------------\n");
+}

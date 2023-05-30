@@ -50,7 +50,7 @@ char	*split_ops(char *str, char **op_out)
 	if (*op_out == NULL)
 	{
 		perror("malloc");
-		return (str);
+		exit(1);
 	}
 	ft_memcpy(*op_out, str, len_op);
 	(*op_out)[len_op] = ' ';

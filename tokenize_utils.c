@@ -84,7 +84,23 @@ int	is_redirection(char *str)
 
 char	****free_tokens(char *****tokens)
 {
-	// free();
+	int	i;
+	int	j;
+	int	k;
+
+	i = 0;
+	while ((*tokens)[i] != NULL)
+	{
+		j = 0;
+		while ((*tokens)[i][j] != NULL)
+		{
+			k = 0;
+			while ((*tokens)[i][j][k] != NULL)
+				free((*tokens)[i][j][k++]);
+			free((*tokens)[i][j++]);
+		}
+		free((*tokens)[i++]);
+	}
 	free(*tokens);
 	*tokens = NULL;
 	return (NULL);

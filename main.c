@@ -26,7 +26,8 @@ int	main(int argc, char **argv, char **envp)
 		if (str != NULL && ft_strlen(str) != 0)
 		{
 			tokens = tokenize(str);
-			translation(&tokens, env);
+			if (tokens != NULL)
+				translation(&tokens, env);
 			//free_all(tokens);
 			add_history(str);
 		}

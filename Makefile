@@ -7,6 +7,7 @@ SRCS = 	main.c \
 		pipe.c \
 		interpreter.c \
 		tokenize.c \
+		tokenize_check.c \
 		tokenize_ops_and_words.c \
 		tokenize_ops.c \
 		tokenize_words.c \

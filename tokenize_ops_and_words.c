@@ -42,21 +42,11 @@ static char	**split_ops_and_words(char *str, char ***ops_and_words_out)
 		if (is_redirection(str) == 1)
 		{
 			str = split_ops(str, &ops_and_words_out[0][index_op]);
-			if (ops_and_words_out[0][index_op] == NULL)
-			{
-				//freeall
-				return (NULL);
-			}
 			index_op++;
 		}
 		else
 		{
 			str = split_words(str, &ops_and_words_out[1][index_word]);
-			if (ops_and_words_out[1][index_word] == NULL)
-			{
-				//freeall
-				return (NULL);
-			}
 			index_word++;
 		}
 		str = pass_space(str);
@@ -76,14 +66,14 @@ char	**set_ops_and_words(char *str, char ***ops_and_words_out)
 	if (ops_and_words_out[0] == NULL)
 	{
 		perror("malloc");
-		return (NULL);
+		exit(1);
 	}
 	ops_and_words_out[1] = malloc(sizeof(char *) * (words_count + 1));
 	if (ops_and_words_out[1] == NULL)
 	{
 		perror("malloc");
-		//free
-		return (NULL);
+		free(ops_and_words_out[0]);
+		exit(1);
 	}
 	split_ops_and_words(str, ops_and_words_out);
 	return (NULL);
