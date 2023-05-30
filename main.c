@@ -20,6 +20,11 @@ int	main(int argc, char **argv, char **envp)
 
 	env = set_env(envp);
 	print_env(env);
+	add_env("AAA=ls -a", &env);
+	print_env(env);
+	delete_env("AAA", &env);
+	print_env(env);
+	printf("%s\n", get_env("PATH", env));
 	while (1)
 	{
 		str = readline(PROMPT);
