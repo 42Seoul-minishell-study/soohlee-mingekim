@@ -6,7 +6,7 @@
 /*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 12:16:38 by soohlee           #+#    #+#             */
-/*   Updated: 2023/05/30 17:01:31 by soohlee          ###   ########.fr       */
+/*   Updated: 2023/05/30 19:26:50 by soohlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ void	test_builtin(char ****tokens, char ***env)
 		ft_echo(argv);
 	else if (!ft_strncmp(argv[0], "env", 4))
 		ft_env(*env);
+	else if (!ft_strncmp(argv[0], "export", 7))
+		ft_export(argv, env);
 }
 
 int	main(int argc, char **argv, char **envp)

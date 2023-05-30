@@ -22,7 +22,8 @@ SRCS = 	main.c \
 		ft_echo.c \
 		ft_cd.c \
 		ft_pwd.c \
-		ft_env.c
+		ft_env.c \
+		ft_export.c
 
 NAME = minishell
 CC = cc

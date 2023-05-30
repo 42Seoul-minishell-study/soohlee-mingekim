@@ -6,7 +6,7 @@
 /*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 11:28:15 by soohlee           #+#    #+#             */
-/*   Updated: 2023/05/30 17:00:15 by soohlee          ###   ########.fr       */
+/*   Updated: 2023/05/30 18:27:26 by soohlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ typedef struct s_retokendata
 }		t_retokendata;
 
 //free
-void 	two_d_free(char **str);
+void	two_d_free(char **str);
 
 //args_check.c
 int		args_check(int argc, char **argv, char **envp);
@@ -141,5 +141,8 @@ int		ft_pwd(void);
 
 //ft_env.c
 void	ft_env(char **env);
+
+//ft_export.c
+int		ft_export(char **argv, char ***env);
 
 #endif
