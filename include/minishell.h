@@ -6,7 +6,7 @@
 /*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 11:28:15 by soohlee           #+#    #+#             */
-/*   Updated: 2023/05/30 18:27:26 by soohlee          ###   ########.fr       */
+/*   Updated: 2023/05/30 19:29:25 by soohlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,9 +69,6 @@ void	exit_print(int flag);
 
 //interpreter.c
 int		interpreter(char *out_str, char **envp);
-
-//pipe.c
-int		operator_process(char ***cmds, char **envp);
 
 //tokenize.c
 char	****tokenize(char *str);
@@ -144,5 +141,11 @@ void	ft_env(char **env);
 
 //ft_export.c
 int		ft_export(char **argv, char ***env);
+
+//pipe.c
+int		execute(char ****tokens, char **envp);
+
+//pipe_utile.c
+int		parsing_cmd_and_options(char **command_out, char **envp);
 
 #endif

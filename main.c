@@ -6,7 +6,7 @@
 /*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 12:16:38 by soohlee           #+#    #+#             */
-/*   Updated: 2023/05/30 19:26:50 by soohlee          ###   ########.fr       */
+/*   Updated: 2023/05/30 19:30:41 by soohlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,11 @@ int	main(int argc, char **argv, char **envp)
 		{
 			tokens = tokenize(str);
 			if (tokens != NULL)
+			{
 				translation(&tokens, env);
-			//free_all(tokens);
-			test_builtin(tokens, &env);
+				execute(tokens, env);
+				free_tokens(&tokens);
+			}
 			add_history(str);
 		}
 		free(str);
