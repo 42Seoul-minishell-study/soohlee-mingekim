@@ -6,7 +6,7 @@
 /*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 11:28:15 by soohlee           #+#    #+#             */
-/*   Updated: 2023/05/27 01:51:58 by soohlee          ###   ########.fr       */
+/*   Updated: 2023/05/30 14:56:47 by soohlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,6 +131,9 @@ int		ft_echo(char **argv);
 int		option_remove(char ***argv);
 
 //ft_cd.c
-int		ft_cd(char **argv, char **indepen_env);
+int		ft_cd(char **argv, char ***indepen_env);
+
+//ft_pwd.c
+int		ft_pwd(void);
 
 #endif
