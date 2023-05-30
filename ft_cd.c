@@ -6,7 +6,7 @@
 /*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 22:10:43 by soohlee           #+#    #+#             */
-/*   Updated: 2023/05/30 14:30:41 by soohlee          ###   ########.fr       */
+/*   Updated: 2023/05/30 15:57:08 by soohlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,12 @@ int	old_path_move(char ***indepen_env)
 	char	*cur_path;
 	char	*new_path;
 
+	move_path = get_env("OLDPWD", *indepen_env);
+	if (!move_path)
+		return (1 && write(2, "cd: OLDPWD not set\n", 19));
 	cur_path = getcwd(NULL, 0);
 	if (!cur_path)
 		exit(1);
-	move_path = get_env("OLDPWD", *indepen_env);
 	if (chdir(move_path))
 		exit(write(2, "chdir_error\n", 12));
 	new_path = ft_strjoin("OLDPWD=", cur_path);

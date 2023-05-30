@@ -6,7 +6,7 @@
 /*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 01:51:05 by soohlee           #+#    #+#             */
-/*   Updated: 2023/05/30 15:10:44 by soohlee          ###   ########.fr       */
+/*   Updated: 2023/05/30 15:56:47 by soohlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,11 +111,14 @@ char	*get_env(char *env_name, char **env)
 	char	*str_env;
 
 	i = -1;
+	find_index = -1;
 	while (env[++i] != NULL)
 	{
 		if (ft_strncmp(env[i], env_name, get_env_name_len(env[i])) == 0)
-		find_index = i;
+			find_index = i;
 	}
+	if (find_index == -1)
+		return (NULL);
 	temp = ft_strchr(env[find_index], '=');
 	++temp;
 	str_env = ft_strdup(temp);
