@@ -6,7 +6,7 @@
 /*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 11:28:15 by soohlee           #+#    #+#             */
-/*   Updated: 2023/06/01 20:57:03 by soohlee          ###   ########.fr       */
+/*   Updated: 2023/06/01 21:46:12 by soohlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,5 +156,6 @@ int		parsing_cmd_and_options(char **command_out, char **envp);
 
 //heredoc.c
 int		heredoc(char ****out_data, char **env);
+int		heredoc_unlink(char ****tokens);
 
 #endif

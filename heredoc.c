@@ -6,7 +6,7 @@
 /*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 15:12:51 by soohlee           #+#    #+#             */
-/*   Updated: 2023/06/01 21:25:13 by soohlee          ###   ########.fr       */
+/*   Updated: 2023/06/01 21:52:55 by soohlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,15 +63,19 @@ int	heredoc_excute(char ***redirs, int redirs_num, char **env)
 		if (!ft_strncmp(str, delimiter, ft_strlen(delimiter) + 1))
 		{
 			free(str);
+			str = 0;
 			break ;
 		}
 		ft_putstr_fd(str, heredoc_fd);
 		write(heredoc_fd, "\n", 1);
 		free(str);
+		str = 0;
 	}
 	close(heredoc_fd);
 	free((*redirs)[redirs_num]);
 	(*redirs)[redirs_num] = ft_strjoin("<< ", filename);
+	free(filename);
+	filename = 0;
 	if (env)
 		;
 	return (0);
@@ -94,6 +98,26 @@ int	make_heredocfile(char **filename)
 		free(*filename);
 		*filename = 0;
 		i++;
+	}
+	return (0);
+}
+
+int	heredoc_unlink(char ****tokens)
+{
+	int	process_idx;
+	int	redir_idx;
+
+	process_idx = -1;
+	while (tokens[++process_idx])
+	{
+		redir_idx = -1;
+		while (tokens[process_idx][0][++redir_idx])
+		{
+			if (!ft_strncmp(tokens[process_idx][0][redir_idx], "<< ", 3))
+			{
+				unlink(ft_strchr(tokens[process_idx][0][redir_idx], ' ') + 1);
+			}
+		}
 	}
 	return (0);
 }
