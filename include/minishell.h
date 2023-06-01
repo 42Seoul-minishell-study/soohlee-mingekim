@@ -6,7 +6,7 @@
 /*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 11:28:15 by soohlee           #+#    #+#             */
-/*   Updated: 2023/05/30 19:39:00 by soohlee          ###   ########.fr       */
+/*   Updated: 2023/06/01 20:57:03 by soohlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,12 @@
 # define STDERR 2
 # define PROMPT "minishell$ "
 
+int g_exit_status;
+
 //parsing struct 'only sooha'
 typedef struct s_retokendata
 {
+	int		tail_space_check;
 	int		all_space_check;
 	int		front_space_exist;
 	int		start;
@@ -150,5 +153,8 @@ int		execute(char ****tokens, char **envp);
 
 //pipe_utile.c
 int		parsing_cmd_and_options(char **command_out, char **envp);
+
+//heredoc.c
+int		heredoc(char ****out_data, char **env);
 
 #endif

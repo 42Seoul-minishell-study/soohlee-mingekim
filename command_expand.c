@@ -43,10 +43,10 @@ int	cmd_line_expand(char ***out_cmd, int *cmd_num, char **envp)
 
 int	cmd_env_trans(char ***out_cmd, int *cmd_num, int *offset, char **envp)
 {
-	t_retokendata db;
-	char	*env_str;
-	char	*insert_str;
-	char	*res;
+	t_retokendata	db;
+	char			*env_str;
+	char			*insert_str;
+	char			*res;
 
 	db.start = *offset;
 	db.offset = offset;
@@ -98,10 +98,13 @@ int	re_tokenize(char ***out_cmd, t_retokendata db, char *out_insert_str)
 	char	**insert_twod_array;
 	int		len;
 
+	db.tail_space_check = 0;
 	db.all_space_check = 0;
 	db.front_space_exist = 0;
 	db.front_str = ft_substr((*out_cmd)[*(db.cmd_num)], 0, db.start);
 	db.end_str = ft_substr((*out_cmd)[*(db.cmd_num)], *(db.offset), -1);
+	if (out_insert_str[ft_strlen(out_insert_str) - 2] == ' ')
+		db.tail_space_check = 1;
 	insert_twod_array = ft_split(out_insert_str, ' ');
 	if (out_insert_str[0] == ' ')
 		db.front_space_exist = 1;
@@ -144,8 +147,17 @@ int	insert_two_d_array(char ***out_cmd, t_retokendata db, char **insert_twod_arr
 		new_cmd[new_cmd_num++] = ft_strdup(insert_twod_array[insert_idx++]);
 		*(db.cmd_num) = *(db.cmd_num) + 1;
 	}
-	new_cmd[new_cmd_num++] = ft_strjoin(insert_twod_array[insert_idx], db.end_str);
-	*(db.offset) = db.start + ft_strlen(insert_twod_array[insert_idx++]) - 1;
+	if (db.tail_space_check == 0)
+	{
+		new_cmd[new_cmd_num++] = ft_strjoin(insert_twod_array[insert_idx], db.end_str);
+		*(db.offset) = db.start + ft_strlen(insert_twod_array[insert_idx++]) - 1;
+	}
+	if (db.tail_space_check == 1)
+	{
+		new_cmd[new_cmd_num++] = ft_strdup(insert_twod_array[insert_idx]);
+		new_cmd[new_cmd_num++] = ft_strdup(db.end_str);
+		*(db.offset) = db.start + ft_strlen(insert_twod_array[insert_idx++]) - 1;
+	}
 	while ((*out_cmd)[out_cmd_idx])
 	{
 		new_cmd[new_cmd_num++] = ft_strdup((*out_cmd)[out_cmd_idx++]);

@@ -6,7 +6,7 @@
 /*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 13:25:31 by soohlee           #+#    #+#             */
-/*   Updated: 2023/05/24 11:57:41 by soohlee          ###   ########.fr       */
+/*   Updated: 2023/06/01 15:10:03 by soohlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,6 @@ int	env_trans(char **out_str, int *offset, char **envp)
 		;
 	return (0);
 }
-
 
 char	*word_expand(char **out_str, char **envp)
 {
