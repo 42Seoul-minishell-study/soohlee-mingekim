@@ -59,6 +59,8 @@ char	****tokenize(char *str)
 	int		tokens_len;
 	char	****tokens;
 
+	if (!str)
+		return (NULL);
 	index = 0;
 	tokens_len = get_pipe_count(str) + 1;
 	tokens = malloc(sizeof(char ***) * (tokens_len + 1));
