@@ -76,8 +76,9 @@ int	redir_env_trans(char **out_str, int *offset, char **envp)
 		return (0);
 	}
 	insert_str = getenv(env_str + 1);
+	printf("%s\n", insert_str);
 	if (!insert_str)
-		insert_str = ft_strdup("");
+		exit (1);
 	insert_str = ft_strtrim(insert_str, " ");
 	if (ft_strchr(insert_str, ' '))
 		out_str[0][0] = 'e';
@@ -87,6 +88,8 @@ int	redir_env_trans(char **out_str, int *offset, char **envp)
 	free(*out_str);
 	*out_str = res;
 	*offset = start + ft_strlen(insert_str) - 1;
+	free(insert_str);
+	insert_str = 0;
 	if (envp)
 		;
 	return (0);

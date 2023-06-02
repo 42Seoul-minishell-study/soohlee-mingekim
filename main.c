@@ -6,7 +6,7 @@
 /*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 12:16:38 by soohlee           #+#    #+#             */
-/*   Updated: 2023/06/01 21:50:58 by soohlee          ###   ########.fr       */
+/*   Updated: 2023/06/02 18:18:53 by soohlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,11 +52,12 @@ int	main(int argc, char **argv, char **envp)
 			if (tokens != NULL)
 			{
 				translation(&tokens, env);
-//				test_builtin(tokens, &env);
-				heredoc(tokens, env);
+				system("leaks minishell");
+				test_builtin(tokens, &env);
+			//	heredoc(tokens, env);
 			//	execute(tokens, env);
-				heredoc_unlink(tokens);
-			//	free_tokens(&tokens);
+	//			heredoc_unlink(tokens);
+				free_tokens(&tokens);
 			}  
 			add_history(str);
 		}

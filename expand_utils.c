@@ -6,7 +6,7 @@
 /*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 13:25:31 by soohlee           #+#    #+#             */
-/*   Updated: 2023/06/01 15:10:03 by soohlee          ###   ########.fr       */
+/*   Updated: 2023/06/02 14:51:27 by soohlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,12 @@ int	single_quate(char **out_str, int *offset, char **envp)
 	}
 	insert_str = ft_substr(*out_str, start, *offset - start);
 	temp = insert_str;
-	insert_str = ft_strtrim(insert_str, "\'");
+	insert_str = ft_strtrim(temp, "\'");
 	free(temp);
 	temp = 0;
 	res = ft_strinsert(*out_str, insert_str, start, *offset);
+	free(insert_str);
+	insert_str = 0;
 	free(*out_str);
 	*out_str = res;
 	*offset = start + *offset - start - 2;
@@ -67,6 +69,8 @@ int	double_quate(char **out_str, int *offset, char **envp)
 	free(*out_str);
 	*out_str = res;
 	*offset = start + ft_strlen(insert_str) - 1;
+	free(insert_str);
+	insert_str = 0;
 	if (envp)
 		;
 	return (0);
