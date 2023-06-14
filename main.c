@@ -28,7 +28,6 @@ int	main(int argc, char **argv, char **envp)
 		if (!tokens)
 			break ;
 		translation(&tokens, env);
-		heredoc(tokens, env);
 		execute(tokens, &env);
 		heredoc_unlink(tokens);
 		free_tokens(&tokens);

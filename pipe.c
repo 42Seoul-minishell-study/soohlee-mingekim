@@ -14,6 +14,8 @@
 
 static void	builtin(char **cmd, char ***env)
 {
+	if (cmd[0] == NULL)
+		return ;
 	if (ft_strlen(cmd[0]) == 2 && !ft_strncmp(cmd[0], "cd", 3))
 		ft_cd(cmd, env);
 	else if (ft_strlen(cmd[0]) == 3 && !ft_strncmp(cmd[0], "pwd", 4))
@@ -30,6 +32,8 @@ static void	builtin(char **cmd, char ***env)
 
 int	is_builtin(char **cmd)
 {
+	if (cmd[0] == NULL)
+		return (0);
 	if (ft_strlen(cmd[0]) == 2 && !ft_strncmp(cmd[0], "cd", 3))
 		return (1);
 	else if (ft_strlen(cmd[0]) == 3 && !ft_strncmp(cmd[0], "pwd", 4))
@@ -100,7 +104,7 @@ int	pipe_and_cmd(char ****tokens, char ***envp, int pipe_count)
 		}
 		else
 			fd[1] = -1;
-		if (parsing_cmd_and_options(tokens[i][1], *envp) == 1)
+		if (tokens[i][1][0] != NULL && parsing_cmd_and_options(tokens[i][1], *envp) == 1)
 			exec_command(tokens[i], last_pipe_write_fd, fd, envp);
 		close_fd(last_pipe_write_fd);
 		close(fd[1]);
@@ -119,6 +123,12 @@ int	execute(char ****tokens, char ***envp)
 	pipe_count = 0;
 	while (tokens[pipe_count] != NULL)
 		pipe_count++;
+	heredoc(tokens, *envp);
+	if (g_exit_status == -3)
+	{
+		g_exit_status = 0;
+		return (1);
+	}
 	if (pipe_and_cmd(tokens, envp, pipe_count) == 0)
 	{
 		return (0);

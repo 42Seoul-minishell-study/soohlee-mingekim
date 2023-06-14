@@ -26,7 +26,7 @@ int	heredoc(char ****out_data, char **env)
 	{
 		find_heredoc(&(out_data[process_idx][0]), env);
 	}
-	g_exit_status = 0;
+	// g_exit_status = 0;
 	return (0);
 }
 
