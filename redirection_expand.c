@@ -15,7 +15,7 @@
 int	redirection_expand(char ***out_redir, char **envp)
 {	
 	int	redir_num;
-
+	//< infile < infile < infeil < infielj
 	redir_num = -1;
 	while ((*out_redir)[++redir_num])
 		redir_line_expand(&((*out_redir)[redir_num]), envp);
@@ -76,16 +76,20 @@ int	redir_env_trans(char **out_str, int *offset, char **envp)
 		return (0);
 	}
 	insert_str = getenv(env_str + 1);
+	printf("%s\n", insert_str);
 	if (!insert_str)
-		insert_str = ft_strdup("");
+		exit (1);
 	insert_str = ft_strtrim(insert_str, " ");
-	// ft_strchr로 공백있으면 리다이렉션 ambiguous redirect error처리 (ambigouso 후에도 나머지 파이프 정상작동)
+	if (ft_strchr(insert_str, ' '))
+		out_str[0][0] = 'e';
 	free(env_str);
 	env_str = 0;
 	res = ft_strinsert(*out_str, insert_str, start, *offset - 1);
 	free(*out_str);
 	*out_str = res;
 	*offset = start + ft_strlen(insert_str) - 1;
+	free(insert_str);
+	insert_str = 0;
 	if (envp)
 		;
 	return (0);

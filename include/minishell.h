@@ -6,7 +6,7 @@
 /*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 11:28:15 by soohlee           #+#    #+#             */
-/*   Updated: 2023/05/30 19:29:25 by soohlee          ###   ########.fr       */
+/*   Updated: 2023/06/02 18:03:10 by soohlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,12 @@
 # define STDERR 2
 # define PROMPT "minishell$ "
 
+int g_exit_status;
+
 //parsing struct 'only sooha'
 typedef struct s_retokendata
 {
+	int		tail_space_check;
 	int		all_space_check;
 	int		front_space_exist;
 	int		start;
@@ -125,6 +128,7 @@ void	delete_env(char *env_name,char ***env_out);
 void	free_env(char ***env);
 void	print_env(char **env);
 char	*get_env(char *env_name, char **env);
+int		get_env_name_len(char *str);
 
 //ft_echo.c
 int		ft_echo(char **argv);
@@ -141,6 +145,9 @@ void	ft_env(char **env);
 
 //ft_export.c
 int		ft_export(char **argv, char ***env);
+
+//ft_unset.c
+int		ft_unset(char **argv, char ***env);
 
 //pipe.c
 int		execute(char ****tokens, char **envp);
@@ -161,5 +168,9 @@ int		get_outfile_fd(char ***token, int *pipe_fd_out);
 
 //pipe_cmd_parsing.c
 int		parsing_cmd_and_options(char **command_out, char **envp);
+
+//heredoc.c
+int		heredoc(char ****out_data, char **env);
+int		heredoc_unlink(char ****tokens);
 
 #endif

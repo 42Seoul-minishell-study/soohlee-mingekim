@@ -23,11 +23,13 @@ SRCS = 	main.c \
 		ft_pwd.c \
 		ft_env.c \
 		ft_export.c \
+		ft_unset.c \
 		pipe.c \
 		pipe_check.c \
 		pipe_cmd_parsing.c \
 		pipe_get_fd.c \
 		pipe_utiles.c \
+		heredoc.c
 
 NAME = minishell
 CC = cc
@@ -35,7 +37,7 @@ LIBFT_DIR = ./libft
 OBJS = $(SRCS:.c=.o)
 
 #complie auto option
-CFLAGS = -Wall -Wextra -Werror -g
+CFLAGS = -Wall -Wextra -Werror
 
 #header includes
 #CPPFLAGS : 환경변수로 readline library 경로 등록해놓고 사용함. 
