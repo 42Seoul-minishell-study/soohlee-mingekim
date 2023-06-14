@@ -34,7 +34,7 @@ LIBFT_DIR = ./libft
 OBJS = $(SRCS:.c=.o)
 
 #complie auto option
-CFLAGS = -Wall -Wextra -Werror -g3 -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror
 
 #header includes
 #CPPFLAGS : 환경변수로 readline library 경로 등록해놓고 사용함. 
