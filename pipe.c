@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mingekim <mingekim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 15:09:28 by mingekim          #+#    #+#             */
-/*   Updated: 2023/05/30 20:25:11 by mingekim         ###   ########.fr       */
+/*   Updated: 2023/06/14 18:58:39 by soohlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,10 @@ void	exec_command(char ***token, int last_pipe_write_fd, int *fd, char ***envp)
 	close_fd(fd[0]);
 	close_fd(fd[1]);
 	if (is_builtin(token[1]) == 1)
+	{
 		builtin(token[1], envp);
+		exit(0);
+	}
 	else
 	{
 		execve(token[1][0], token[1], *envp);
@@ -83,7 +86,7 @@ int	pipe_and_cmd(char ****tokens, char ***envp, int pipe_count)
 	set_fds_not_use(fd);
 	last_pipe_write_fd = -1;
 	i = -1;
-	if (pipe_count == 1 && is_builtin(tokens[0][1]) == 1)
+	if (pipe_count == 1 && is_builtin(tokens[0][1]) == 1 && tokens[0][0][0] == NULL)
 	{
 		builtin(tokens[0][1], envp);
 		return (1);
@@ -116,7 +119,6 @@ int	execute(char ****tokens, char ***envp)
 	pipe_count = 0;
 	while (tokens[pipe_count] != NULL)
 		pipe_count++;
-	//here_doc
 	if (pipe_and_cmd(tokens, envp, pipe_count) == 0)
 	{
 		return (0);

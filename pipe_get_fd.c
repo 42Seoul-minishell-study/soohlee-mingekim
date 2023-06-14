@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_get_fd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mingekim <mingekim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 20:25:27 by mingekim          #+#    #+#             */
-/*   Updated: 2023/05/30 20:25:29 by mingekim         ###   ########.fr       */
+/*   Updated: 2023/06/14 17:06:04 by soohlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,8 @@ int	get_outfile_fd(char ***token, int *pipe_fd_out)
 	}
 	if (fd == -1)
 		return (1);
-	close(pipe_fd_out[1]);
+	if (pipe_fd_out[1] != -1)
+		close(pipe_fd_out[1]);
 	pipe_fd_out[1] = fd;
 	return (1);
 }

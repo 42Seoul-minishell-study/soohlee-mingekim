@@ -6,7 +6,7 @@
 /*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 22:10:43 by soohlee           #+#    #+#             */
-/*   Updated: 2023/05/30 15:57:08 by soohlee          ###   ########.fr       */
+/*   Updated: 2023/06/14 19:21:27 by soohlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,25 @@ int	ft_cd(char **argv, char ***indepen_env)
 
 int	home_path_move(char ***indepen_env)
 {
-	char	*path;
+	char	*cur_path;
+	char	*move_path;
+	char	*pull_path;
 
-	path = get_env("HOME", *indepen_env);
-	chdir(path);
+	cur_path = getcwd(NULL, 0);
+	pull_path = ft_strjoin("OLDPWD=", cur_path);
+	if (!pull_path)
+		exit(1);
+	change_env(pull_path, "OLDPWD", indepen_env);
+	free(pull_path);
+	move_path = get_env("HOME", *indepen_env);
+	chdir(move_path);
+	pull_path = ft_strjoin("PWD=", move_path);
+	if (!pull_path)
+		exit(1);
+	change_env(pull_path, "PWD", indepen_env);
+	free(cur_path);
+	free(move_path);
+	free(pull_path);
 	return (0);
 }
 
@@ -66,7 +81,6 @@ int	old_path_move(char ***indepen_env)
 		exit(write(2, "new_path << malloc error\n", 25));
 	free(move_path);
 	change_env(new_path, "PWD", indepen_env);
-	printf("%s\n", getcwd(NULL, 0));
 	return (0);
 }
 
@@ -78,8 +92,13 @@ int	move_path(char *argv, char ***indepen_env)
 	if (!access(argv, F_OK))
 	{
 		cur_path = getcwd(NULL, 0);
-		if (chdir(argv) || !cur_path)
-			exit(1);
+		if (chdir(argv))
+		{
+			write(2, "cd: ", 4);
+			write(2, argv, ft_strlen(argv));
+			write(2, ": Not a directory\n", 19);
+			return (0);
+		}
 		else
 		{
 			pull_path = ft_strjoin("OLDPWD=", cur_path);
@@ -92,9 +111,11 @@ int	move_path(char *argv, char ***indepen_env)
 			free(cur_path);
 			change_env(pull_path, "PWD", indepen_env);
 		}
+		return (0);
 	}
-	else if (write(2, "cd: ", 4) && write(2, argv, ft_strlen(argv)))
-		perror(" \b");
+	write(2, "cd: ", 4);
+	write(2, argv, ft_strlen(argv));
+	write(2, ": No such file or directory\n", 29);
 	return (0);
 }
 

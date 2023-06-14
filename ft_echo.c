@@ -6,7 +6,7 @@
 /*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 13:03:16 by soohlee           #+#    #+#             */
-/*   Updated: 2023/05/25 17:00:12 by soohlee          ###   ########.fr       */
+/*   Updated: 2023/06/14 16:45:41 by soohlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,9 @@ int	ft_echo(char **argv)
 		return (printf("\n"));
 	if (!ft_strncmp(*argv, "-n", 2))
 		flag = option_remove(&argv);
+	printf("%s", *argv++);
 	while (*argv)
-		printf("%s", *argv++);
+		printf(" %s", *argv++);
 	if (flag == 1)
 		printf("\n");
 	return (0);
