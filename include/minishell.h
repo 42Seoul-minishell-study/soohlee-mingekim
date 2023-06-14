@@ -150,7 +150,8 @@ int		ft_export(char **argv, char ***env);
 int		ft_unset(char **argv, char ***env);
 
 //pipe.c
-int		execute(char ****tokens, char **envp);
+int		is_builtin(char **cmd);
+int		execute(char ****tokens, char ***envp);
 
 //pipe_check.c
 int		check_input(char *word, int *flag_out);

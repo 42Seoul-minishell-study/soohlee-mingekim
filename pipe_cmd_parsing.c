@@ -70,6 +70,8 @@ int	parsing_cmd_and_options(char **command_out, char **envp)
 
 	envp_index = 0;
 	result = command_out[0];
+	if (is_builtin(command_out) == 1)
+		return (1);
 	if (access(command_out[0], X_OK) == 0)
 		return (1);
 	envp_split = parsing_path_or_null(envp);

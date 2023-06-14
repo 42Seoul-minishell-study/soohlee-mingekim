@@ -12,7 +12,40 @@
 
 #include "minishell.h"
 
-void	exec_command(char ***token, int last_pipe_write_fd, int *fd, char **envp)
+static void	builtin(char **cmd, char ***env)
+{
+	if (ft_strlen(cmd[0]) == 2 && !ft_strncmp(cmd[0], "cd", 3))
+		ft_cd(cmd, env);
+	else if (ft_strlen(cmd[0]) == 3 && !ft_strncmp(cmd[0], "pwd", 4))
+		ft_pwd();
+	else if (ft_strlen(cmd[0]) == 4 && !ft_strncmp(cmd[0], "echo", 5))
+		ft_echo(cmd);
+	else if (ft_strlen(cmd[0]) == 3 && !ft_strncmp(cmd[0], "env", 4))
+		ft_env(*env);
+	else if (ft_strlen(cmd[0]) == 6 && !ft_strncmp(cmd[0], "export", 7))
+		ft_export(cmd, env);
+	else if (ft_strlen(cmd[0]) == 5 && !ft_strncmp(cmd[0], "unset", 6))
+		ft_unset(cmd, env);
+}
+
+int	is_builtin(char **cmd)
+{
+	if (ft_strlen(cmd[0]) == 2 && !ft_strncmp(cmd[0], "cd", 3))
+		return (1);
+	else if (ft_strlen(cmd[0]) == 3 && !ft_strncmp(cmd[0], "pwd", 4))
+		return (1);
+	else if (ft_strlen(cmd[0]) == 4 && !ft_strncmp(cmd[0], "echo", 5))
+		return (1);
+	else if (ft_strlen(cmd[0]) == 3 && !ft_strncmp(cmd[0], "env", 4))
+		return (1);
+	else if (ft_strlen(cmd[0]) == 6 && !ft_strncmp(cmd[0], "export", 7))
+		return (1);
+	else if (ft_strlen(cmd[0]) == 5 && !ft_strncmp(cmd[0], "unset", 6))
+		return (1);
+	return (0);
+}
+
+void	exec_command(char ***token, int last_pipe_write_fd, int *fd, char ***envp)
 {
 	pid_t	cpid;
 
@@ -32,11 +65,16 @@ void	exec_command(char ***token, int last_pipe_write_fd, int *fd, char **envp)
 	close_fd(last_pipe_write_fd);
 	close_fd(fd[0]);
 	close_fd(fd[1]);
-	execve(token[1][0], token[1], envp);
-	perror_and_exit("execve", 1);
+	if (is_builtin(token[1]) == 1)
+		builtin(token[1], envp);
+	else
+	{
+		execve(token[1][0], token[1], *envp);
+		perror_and_exit("execve", 1);
+	}
 }
 
-int	pipe_and_cmd(char ****tokens, char **envp, int pipe_count)
+int	pipe_and_cmd(char ****tokens, char ***envp, int pipe_count)
 {
 	int		i;
 	int		last_pipe_write_fd;
@@ -45,6 +83,11 @@ int	pipe_and_cmd(char ****tokens, char **envp, int pipe_count)
 	set_fds_not_use(fd);
 	last_pipe_write_fd = -1;
 	i = -1;
+	if (pipe_count == 1 && is_builtin(tokens[0][1]) == 1)
+	{
+		builtin(tokens[0][1], envp);
+		return (1);
+	}
 	while (++i < pipe_count)
 	{
 		if (i != pipe_count - 1)
@@ -53,10 +96,9 @@ int	pipe_and_cmd(char ****tokens, char **envp, int pipe_count)
 				perror_and_exit("pipe", 1);
 		}
 		else
-			set_fds_not_use(fd);
-		if (parsing_cmd_and_options(tokens[i][1], envp) == 0)
-			return (0);
-		exec_command(tokens[i], last_pipe_write_fd, fd, envp);
+			fd[1] = -1;
+		if (parsing_cmd_and_options(tokens[i][1], *envp) == 1)
+			exec_command(tokens[i], last_pipe_write_fd, fd, envp);
 		close_fd(last_pipe_write_fd);
 		close(fd[1]);
 		last_pipe_write_fd = fd[0];
@@ -67,7 +109,7 @@ int	pipe_and_cmd(char ****tokens, char **envp, int pipe_count)
 	return (1);
 }
 
-int	execute(char ****tokens, char **envp)
+int	execute(char ****tokens, char ***envp)
 {
 	int		pipe_count;
 
