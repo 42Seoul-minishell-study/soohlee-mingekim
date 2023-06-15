@@ -6,7 +6,7 @@
 /*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 01:51:05 by soohlee           #+#    #+#             */
-/*   Updated: 2023/06/14 19:42:14 by soohlee          ###   ########.fr       */
+/*   Updated: 2023/06/15 12:50:34 by soohlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ char	**set_env(char **envp)
 {
 	int		i;
 	char	**env;
+	char	*del_s[3];
 
 	i = 0;
 	while (envp[i] != NULL)
@@ -27,6 +28,11 @@ char	**set_env(char **envp)
 		env[i] = ft_strdup(envp[i]);
 		i++;
 	}
+	del_s[0] = "unset";
+	del_s[1] = "OLDPWD";
+	del_s[2] = NULL;
+	ft_unset(del_s, &env);
+	only_name_add(del_s[1], &env);
 	env[i] = NULL;
 	return (env);
 }

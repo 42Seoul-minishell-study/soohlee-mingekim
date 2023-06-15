@@ -6,7 +6,7 @@
 /*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 15:09:28 by mingekim          #+#    #+#             */
-/*   Updated: 2023/06/14 18:58:39 by soohlee          ###   ########.fr       */
+/*   Updated: 2023/06/15 14:17:17 by soohlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,6 +129,8 @@ int	execute(char ****tokens, char ***envp)
 		g_exit_status = 0;
 		return (1);
 	}
+	else
+		g_exit_status = 0;
 	if (pipe_and_cmd(tokens, envp, pipe_count) == 0)
 	{
 		return (0);

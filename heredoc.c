@@ -6,7 +6,7 @@
 /*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 15:12:51 by soohlee           #+#    #+#             */
-/*   Updated: 2023/06/02 20:29:46 by soohlee          ###   ########.fr       */
+/*   Updated: 2023/06/15 14:50:41 by soohlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,17 +26,24 @@ int	heredoc(char ****out_data, char **env)
 	{
 		find_heredoc(&(out_data[process_idx][0]), env);
 	}
-	// g_exit_status = 0;
 	return (0);
 }
 
 int	find_heredoc(char ***redirs, char **env)
 {
-	int	i;
+	int		i;
+	char	*temp_s;
 
 	i = -1;
 	while ((*redirs)[++i])
 	{
+		if (ft_strlen((*redirs)[i]) == 2 && !ft_strncmp((*redirs)[i], "<<", 3))
+		{
+			temp_s = (*redirs)[i];
+			(*redirs)[i] = ft_strjoin(temp_s, " ");
+			free(temp_s);
+			temp_s = 0;
+		}
 		if (ft_strlen((*redirs)[i]) >= 3 && !ft_strncmp((*redirs)[i], "<< ", 3))
 			heredoc_excute(redirs, i, env);
 	}
@@ -49,7 +56,9 @@ int	heredoc_excute(char ***redirs, int redirs_num, char **env)
 	int		heredoc_fd;
 	char	*filename;
 	char	*delimiter;
+	int		stdinfd;
 
+	stdinfd = dup(0);
 	if (g_exit_status != -2)
 		return (0);
 	delimiter = ft_strchr((*redirs)[redirs_num], ' ') + 1;
@@ -70,6 +79,10 @@ int	heredoc_excute(char ***redirs, int redirs_num, char **env)
 		write(heredoc_fd, "\n", 1);
 		free(str);
 		str = 0;
+	}
+	if (g_exit_status == -3)
+	{
+		dup2(stdinfd, 0);
 	}
 	close(heredoc_fd);
 	free((*redirs)[redirs_num]);
