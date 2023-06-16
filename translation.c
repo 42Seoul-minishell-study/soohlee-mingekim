@@ -6,7 +6,7 @@
 /*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 14:22:42 by soohlee           #+#    #+#             */
-/*   Updated: 2023/06/14 14:22:44 by soohlee          ###   ########.fr       */
+/*   Updated: 2023/06/15 14:36:33 by soohlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,5 +43,4 @@ void	tokens_print(char *****out_data)
 				printf("%d %d %d: %s\n", pipe, i, j, (*out_data)[pipe][i][j]);
 		}
 	}
-	write(2, "\n", 1);
 }

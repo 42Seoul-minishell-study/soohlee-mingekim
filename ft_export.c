@@ -6,16 +6,16 @@
 /*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 18:25:46 by soohlee           #+#    #+#             */
-/*   Updated: 2023/06/02 18:17:15 by soohlee          ###   ########.fr       */
+/*   Updated: 2023/06/15 13:39:29 by soohlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 int	add_export(char *argv, char ***env);
-int	only_name_add(char *argv, char ***env);
 int	print_export(char **env);
 int	is_export_str(char *s);
+int	make_sort_hash(int *sort_hash, char **env);
 
 int	ft_export(char **argv, char ***env)
 {
@@ -69,23 +69,33 @@ int	add_export(char *argv, char ***env)
 
 int	print_export(char **env)
 {
-	int	i;
-	int	j;
+	int				i;
+	int				j;
+	int				sort_i;
+	int				sort_hash[1028];
 
-	i = -1;
-	while (env[++i])
+	ft_memset(sort_hash, '\0', sizeof(int) * 1028);
+	make_sort_hash(sort_hash, env);
+	sort_i = -1;
+	while (++sort_i < 1028)
 	{
-		j = -1;
-		while (env[i][++j])
+		i = -1;
+		while (env[++i])
 		{
-			write(1, &(env[i][j]), 1);
-			if (env[i][j] == '=')
-				write(1, "\"", 1);
+			if (!(sort_hash[sort_i] == 1 && sort_i == (int)env[i][0]))
+				continue ;
+			j = -1;
+			while (env[i][++j])
+			{
+				write(1, &(env[i][j]), 1);
+				if (env[i][j] == '=')
+					write(1, "\"", 1);
+			}
+			if (ft_strchr(env[i], '='))
+				write(1, "\"\n", 2);
+			else
+				write(1, "\n", 1);
 		}
-		if (ft_strchr(env[i], '='))
-			write(1, "\"\n", 2);
-		else
-			write(1, "\n", 1);
 	}
 	return (0);
 }
@@ -121,5 +131,15 @@ int	only_name_add(char *argv, char ***env)
 			return (0);
 	}
 	add_env(argv, env);
+	return (0);
+}
+
+int	make_sort_hash(int *sort_hash, char **env)
+{
+	int	i;
+
+	i = -1;
+	while (env[++i])
+		sort_hash[(int)(env[i][0])] = 1;
 	return (0);
 }

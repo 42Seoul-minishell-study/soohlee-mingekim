@@ -6,7 +6,7 @@
 /*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 11:28:15 by soohlee           #+#    #+#             */
-/*   Updated: 2023/06/02 18:03:10 by soohlee          ###   ########.fr       */
+/*   Updated: 2023/06/16 13:14:22 by soohlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,6 @@
 # define COMMAND 4
 
 //ect flags
-# define STDOUT 0
-# define STDIN 1
 # define STDERR 2
 # define PROMPT "minishell$ "
 
@@ -145,13 +143,14 @@ void	ft_env(char **env);
 
 //ft_export.c
 int		ft_export(char **argv, char ***env);
+int		only_name_add(char *argv, char ***env);
 
 //ft_unset.c
 int		ft_unset(char **argv, char ***env);
 
 //pipe.c
 int		is_builtin(char **cmd);
-int		execute(char ****tokens, char ***envp);
+int		execute(char ****tokens, char ***envp, int *ctrl_cnt);
 
 //pipe_check.c
 int		check_input(char *word, int *flag_out);
