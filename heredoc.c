@@ -6,7 +6,7 @@
 /*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 15:12:51 by soohlee           #+#    #+#             */
-/*   Updated: 2023/06/15 14:50:41 by soohlee          ###   ########.fr       */
+/*   Updated: 2023/06/16 13:09:17 by soohlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,10 @@ int	heredoc_excute(char ***redirs, int redirs_num, char **env)
 	int		heredoc_fd;
 	char	*filename;
 	char	*delimiter;
-	int		stdinfd;
+	int		stdfd[2];
 
-	stdinfd = dup(0);
+	stdfd[0] = dup(0);
+	stdfd[1] = dup(1);
 	if (g_exit_status != -2)
 		return (0);
 	delimiter = ft_strchr((*redirs)[redirs_num], ' ') + 1;
@@ -82,7 +83,8 @@ int	heredoc_excute(char ***redirs, int redirs_num, char **env)
 	}
 	if (g_exit_status == -3)
 	{
-		dup2(stdinfd, 0);
+		dup2(stdfd[0], 0);
+		dup2(stdfd[1], 1);
 	}
 	close(heredoc_fd);
 	free((*redirs)[redirs_num]);
