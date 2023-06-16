@@ -6,7 +6,7 @@
 /*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 21:25:43 by soohlee           #+#    #+#             */
-/*   Updated: 2023/06/14 14:22:20 by soohlee          ###   ########.fr       */
+/*   Updated: 2023/06/16 17:25:06 by soohlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ void	exit_print(int flag)
 	if (flag == EXIT)
 	{
 		rl_on_new_line();
-		ft_putstr_fd("\x1b[1A", STDOUT);
-		ft_putstr_fd("\033[11C", STDOUT);
+		ft_putstr_fd("\x1b[1A", STDOUT_FILENO);
+		ft_putstr_fd("\033[11C", STDOUT_FILENO);
 		ft_printf("exit\n");
 	}
 }
