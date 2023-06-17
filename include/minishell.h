@@ -75,13 +75,12 @@ int		interpreter(char *out_str, char **envp);
 char	****tokenize(char *str);
 
 //tokenize_ops_and_words
+int		is_redirection(char *str);
 char	**set_ops_and_words(char *str, char ***ops_and_words_out);
 
 //tokenize_find_quote.c
 char	*find_next_single_quote(char *str);
 char	*find_next_double_quote(char *str);
-
-char	*find_next_word(char *str);
 
 //tokenize_ops.c
 char	*split_ops(char *str, char **op_out);
@@ -90,10 +89,10 @@ char	*split_ops(char *str, char **op_out);
 char	*split_words(char *str, char **word_out);
 
 //tokenize_utils.c
+int		is_space(char ch);
 char	*find_next_pipe(char *str);
 char	*find_next_word(char *str);
 char	*pass_space(char *str);
-int		is_redirection(char *str);
 char	****free_tokens(char *****tokens);
 
 //tokenize_check.c

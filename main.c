@@ -42,6 +42,8 @@ int	main(int argc, char **argv, char **envp)
 		}
 		else
 			ctrl_cnt = 0;
+		if (str == NULL) //ctrl-D
+			break ;
 		if (g_exit_status == -4) //ctrl-D
 			exit(0);
 		if (*str == '\0')

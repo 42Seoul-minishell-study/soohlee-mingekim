@@ -12,6 +12,14 @@
 
 #include "minishell.h"
 
+int	is_space(char ch)
+{
+	if (ch == ' ' || ch == '\t')
+		return (1);
+	//escape sequences (new line, carriage return, form feed) no need to add
+	return (0);
+}
+
 char	*find_next_pipe(char *str)
 {
 	while (*str != '\0' && *str != '|')
@@ -33,7 +41,7 @@ char	*find_next_pipe(char *str)
 
 char	*find_next_word(char *str)
 {
-	while (*str != '\0' && *str != ' ' && *str != '|')
+	while (*str != '\0' && is_space(*str) == 0  && *str != '|')
 	{
 		if (*str == '\'')
 		{
@@ -52,25 +60,13 @@ char	*find_next_word(char *str)
 
 char	*pass_space(char *str)
 {
-	while (*str != '\0' && *str == ' ' && *str != '|')
+	while (*str != '\0' && is_space(*str) == 1 && *str != '|')
 	{
 		str++;
 	}
 	return (str);
 }
 
-int	is_redirection(char *str)
-{
-	if (ft_strncmp(str, "<<", 2) == 0)
-		return (1);
-	else if (ft_strncmp(str, "<", 1) == 0)
-		return (1);
-	else if (ft_strncmp(str, ">>", 2) == 0)
-		return (1);
-	else if (ft_strncmp(str, ">", 1) == 0)
-		return (1);
-	return (0);
-}
 
 char	****free_tokens(char *****tokens)
 {

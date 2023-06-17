@@ -12,6 +12,19 @@
 
 #include "minishell.h"
 
+int	is_redirection(char *str)
+{
+	if (ft_strncmp(str, "<<", 2) == 0)
+		return (1);
+	else if (ft_strncmp(str, "<", 1) == 0)
+		return (1);
+	else if (ft_strncmp(str, ">>", 2) == 0)
+		return (1);
+	else if (ft_strncmp(str, ">", 1) == 0)
+		return (1);
+	return (0);
+}
+
 static char	*skip_spaces_and_words(char *str, int redir_index, int *count_out)
 {
 	str += redir_index;
