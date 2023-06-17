@@ -89,7 +89,5 @@ char	****tokenize(char *str)
 	}
 	tokens[tokens_len] = NULL;
 	print_all_tree(tokens);
-//	if (tokens_check(&tokens) == 0)
-//		return (NULL);
 	return (tokens);
 }

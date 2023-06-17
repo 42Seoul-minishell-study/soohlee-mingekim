@@ -2,9 +2,7 @@
 SRCS = 	main.c \
 		signal.c \
 		args_check.c \
-		loop_prompt.c \
 		free_exit.c \
-		interpreter.c \
 		tokenize.c \
 		tokenize_check.c \
 		tokenize_ops_and_words.c \

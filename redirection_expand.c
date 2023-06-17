@@ -75,7 +75,7 @@ int	redir_env_trans(char **out_str, int *offset, char **envp)
 		env_str = 0;
 		return (0);
 	}
-	insert_str = getenv(env_str + 1);
+	insert_str = get_env(env_str + 1, envp);
 	printf("%s\n", insert_str);
 	if (!insert_str)
 		exit (1);
