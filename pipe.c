@@ -6,7 +6,7 @@
 /*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 15:09:28 by mingekim          #+#    #+#             */
-/*   Updated: 2023/06/16 13:14:25 by soohlee          ###   ########.fr       */
+/*   Updated: 2023/06/17 18:57:23 by soohlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,16 +121,17 @@ int	pipe_and_cmd(char ****tokens, char ***envp, int pipe_count)
 	return (1);
 }
 
-int	execute(char ****tokens, char ***envp, int *ctrl_cnt)
+int	execute(char ****tokens, char ***envp, int *stdinout_copy)
 {
 	int		pipe_count;
 
 	pipe_count = 0;
 	while (tokens[pipe_count] != NULL)
 		pipe_count++;
-	if (heredoc(tokens, *envp, ctrl_cnt) == 0)
+	if (heredoc(tokens, *envp, stdinout_copy) == 0)
 		return (0);
 	if (pipe_and_cmd(tokens, envp, pipe_count) == 0)
 		return (0);
+	heredoc_unlink(tokens);
 	return (1);
 }

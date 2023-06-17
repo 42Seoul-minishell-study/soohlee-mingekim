@@ -6,7 +6,7 @@
 /*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 11:28:15 by soohlee           #+#    #+#             */
-/*   Updated: 2023/06/16 13:14:22 by soohlee          ###   ########.fr       */
+/*   Updated: 2023/06/17 19:02:33 by soohlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@
 //ect flags
 # define STDERR 2
 # define PROMPT "minishell$ "
+# define CTRL_C_COUNT 2
+# define CTRL_C -1
 
 int g_exit_status;
 
@@ -60,6 +62,8 @@ int		args_check(int argc, char **argv, char **envp);
 //signal
 void	set_signal(void);
 void	ctrl_c_handler(int signum);
+int		stdin_dup2(int *stdinout_copy);
+int		stdin_dup(int *stdinout_copy);
 
 //shell
 void	loop_prompt(int argc, char **argv, char **envp);
@@ -170,7 +174,7 @@ int		get_outfile_fd(char ***token, int *pipe_fd_out);
 void	parsing_cmd_and_options(char **command_out, char **envp);
 
 //heredoc.c
-int		heredoc(char ****out_data, char **env, int *ctrl_cnt);
+int		heredoc(char ****out_data, char **env, int *stdinout_copy);
 int		heredoc_unlink(char ****tokens);
 
 #endif

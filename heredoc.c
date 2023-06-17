@@ -6,7 +6,7 @@
 /*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 15:12:51 by soohlee           #+#    #+#             */
-/*   Updated: 2023/06/16 13:09:17 by soohlee          ###   ########.fr       */
+/*   Updated: 2023/06/17 18:59:40 by soohlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	find_heredoc(char ***redirs, char **env);
 int	heredoc_excute(char ***redirs, int redirs_num, char **env);
 int	make_heredocfile(char **filename);
 
-int	heredoc(char ****out_data, char **env, int *ctrl_cnt)
+int	heredoc(char ****out_data, char **env, int *stdinout_copy)
 {
 	int	process_idx;
 	int	previous_exit_status;
@@ -30,7 +30,7 @@ int	heredoc(char ****out_data, char **env, int *ctrl_cnt)
 	}
 	if (g_exit_status == -3)
 	{
-		(*ctrl_cnt)++;
+		stdinout_copy[CTRL_C_COUNT]++;
 		g_exit_status = 1;
 		return (0);
 	}

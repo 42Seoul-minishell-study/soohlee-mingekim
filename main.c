@@ -6,7 +6,7 @@
 /*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 12:16:38 by soohlee           #+#    #+#             */
-/*   Updated: 2023/06/16 17:19:51 by soohlee          ###   ########.fr       */
+/*   Updated: 2023/06/17 19:06:38 by soohlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,31 +17,17 @@ int	main(int argc, char **argv, char **envp)
 	char	*str;
 	char	****tokens;
 	char	**env;
-	int		stdin_copy;
-	int		stdout_copy;
-	int		ctrl_cnt;
+	int		stdinout_copy[3];
 
-	ctrl_cnt = 0;
-	stdin_copy = dup(0);
-	stdout_copy = dup(1);
+	stdin_dup(stdinout_copy);
 	args_check(argc, argv, envp);
 	set_signal();
 	env = set_env(envp);
 	while (1)
 	{
 		str = readline(PROMPT);
-		if (g_exit_status == -1)
-		{
-			dup2(stdin_copy, 0);
-			dup2(stdout_copy, 1);
-			if (ctrl_cnt == 0)
-				write(1, "\n", 1);
-			ctrl_cnt++;
-			g_exit_status = 1;
+		if (!stdin_dup2(stdinout_copy))
 			continue ;
-		}
-		else
-			ctrl_cnt = 0;
 		if (str == NULL) //ctrl-D
 			break ;
 		if (g_exit_status == -4) //ctrl-D
@@ -59,12 +45,11 @@ int	main(int argc, char **argv, char **envp)
 			continue ;
 		}
 		translation(&tokens, env);
-		execute(tokens, &env, &ctrl_cnt);
-		heredoc_unlink(tokens);
+		execute(tokens, &env, stdinout_copy);
 		free_tokens(&tokens);
 		add_history(str);
 		free(str);
 	}
-	free_env(&env);
+	free_env(&env);	//ctrl-D 후 여기서 abort error 뜸
 	return (0);
 }
