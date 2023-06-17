@@ -54,15 +54,15 @@ void	free_all_cmd_str(char **command_split)
 	free(command_split);
 }
 
-static int	free_and_error(char **envp_split, char *command)
+static int	free_and_exit(char **envp_split, char *command)
 {
 	free_all_cmd_str(envp_split);
 	write(2, command, ft_strlen(command));
 	write(2, ": command not found\n", 21);
-	return (0);
+	exit(127);
 }
 
-int	parsing_cmd_and_options(char **command_out, char **envp)
+void	parsing_cmd_and_options(char **command_out, char **envp)
 {
 	int		envp_index;
 	char	*result;
@@ -71,9 +71,9 @@ int	parsing_cmd_and_options(char **command_out, char **envp)
 	envp_index = 0;
 	result = command_out[0];
 	if (is_builtin(command_out) == 1)
-		return (1);
+		return ;
 	if (access(command_out[0], X_OK) == 0)
-		return (1);
+		return ;
 	envp_split = parsing_path_or_null(envp);
 	while (envp_split[envp_index] != NULL)
 	{
@@ -83,9 +83,9 @@ int	parsing_cmd_and_options(char **command_out, char **envp)
 			free(command_out[0]);
 			command_out[0] = result;
 			free_all_cmd_str(envp_split);
-			return (1);
+			return ;
 		}
 		free(result);
 	}
-	return (free_and_error(envp_split, command_out[0]));
+	free_and_exit(envp_split, command_out[0]);
 }

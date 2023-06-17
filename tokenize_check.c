@@ -14,7 +14,7 @@
 
 int	pipe_check(char ***token)
 {
-	if (token[1][0] == NULL)
+	if (token[1][0] == NULL && token[0][0] == NULL)
 		return (0);
 	return (1);
 }
@@ -47,12 +47,14 @@ int	tokens_check(char *****tokens)
 		{
 			free_tokens(tokens);
 			write(2, "syntax error\n", 14);
+			g_exit_status = 258;
 			return (0);
 		}
 		if (operation_check((*tokens)[index]) == 0)
 		{
 			free_tokens(tokens);
 			write(2, "syntax error\n", 14);
+			g_exit_status = 258;
 			return (0);
 		}
 		index++;

@@ -35,7 +35,7 @@ void	ctrl_c_handler(int signum)
 	}
 	if (signum)
 		;
-	g_exit_status = 1;
+	g_exit_status = -1;
 	close(0);
 	close(1);
 	// rl_replace_line("", 0); //readline 입력값 수정 함수.
@@ -43,3 +43,5 @@ void	ctrl_c_handler(int signum)
 	// write(1, "M_\n", 3);
 	// rl_redisplay(); //readline prompt 재출력 함수, readline 입력값 존재시 같이 출력함.
 }
+
+//when ctrl-D set g_exit_status to -4

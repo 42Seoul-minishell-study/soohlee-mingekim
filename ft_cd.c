@@ -116,6 +116,7 @@ int	move_path(char *argv, char ***indepen_env)
 	write(2, "cd: ", 4);
 	write(2, argv, ft_strlen(argv));
 	write(2, ": No such file or directory\n", 29);
+	g_exit_status = 1;
 	return (0);
 }
 

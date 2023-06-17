@@ -30,21 +30,32 @@ int	main(int argc, char **argv, char **envp)
 	while (1)
 	{
 		str = readline(PROMPT);
-		if (g_exit_status == 1)
+		if (g_exit_status == -1)
 		{
 			dup2(stdin_copy, 0);
 			dup2(stdout_copy, 1);
 			if (ctrl_cnt == 0)
 				write(1, "\n", 1);
-			g_exit_status = 0;
 			ctrl_cnt++;
+			g_exit_status = 1;
 			continue ;
 		}
 		else
 			ctrl_cnt = 0;
+		if (g_exit_status == -4) //ctrl-D
+			exit(0);
+		if (*str == '\0')
+		{
+			free(str);
+			continue ;
+		}
 		tokens = tokenize(str);
-		if (!tokens)
-			break ;
+		if (tokens == NULL)
+		{
+			add_history(str);
+			free(str);
+			continue ;
+		}
 		translation(&tokens, env);
 		execute(tokens, &env, &ctrl_cnt);
 		heredoc_unlink(tokens);

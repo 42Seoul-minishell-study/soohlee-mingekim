@@ -72,7 +72,10 @@ int	cmd_env_trans(char ***out_cmd, int *cmd_num, int *offset, char **envp)
 		env_str = 0;
 		return (0);
 	}
-	insert_str = getenv(env_str + 1);
+	if (!ft_strncmp(env_str + 1, "?", 1))
+		insert_str = ft_itoa(g_exit_status);
+	else
+		insert_str = get_env(env_str + 1, envp);
 	if (!insert_str)
 		insert_str = "";
 	if (ft_strchr(insert_str, ' '))

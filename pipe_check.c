@@ -28,6 +28,7 @@ int	check_input(char *word, int *flag_out)
 	{
 		ft_putstr_fd(word + 2, 2);
 		ft_putstr_fd(": ambiguous redirect\n", 2);
+		*flag_out = -1;
 		return (0);
 	}
 	*flag_out = 0;
@@ -50,6 +51,7 @@ int	check_output(char *word, int *flag_out)
 	{
 		ft_putstr_fd(word + 2, 2);
 		ft_putstr_fd(": ambiguous redirect\n", 2);
+		*flag_out = -1;
 		return (0);
 	}
 	*flag_out = 0;

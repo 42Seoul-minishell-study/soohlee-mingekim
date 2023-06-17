@@ -16,17 +16,26 @@ int	find_heredoc(char ***redirs, char **env);
 int	heredoc_excute(char ***redirs, int redirs_num, char **env);
 int	make_heredocfile(char **filename);
 
-int	heredoc(char ****out_data, char **env)
+int	heredoc(char ****out_data, char **env, int *ctrl_cnt)
 {
 	int	process_idx;
+	int	previous_exit_status;
 
+	previous_exit_status = g_exit_status;
 	process_idx = -1;
 	g_exit_status = -2;
 	while (out_data[++process_idx])
 	{
 		find_heredoc(&(out_data[process_idx][0]), env);
 	}
-	return (0);
+	if (g_exit_status == -3)
+	{
+		(*ctrl_cnt)++;
+		g_exit_status = 1;
+		return (0);
+	}
+	g_exit_status = previous_exit_status;
+	return (1);
 }
 
 int	find_heredoc(char ***redirs, char **env)

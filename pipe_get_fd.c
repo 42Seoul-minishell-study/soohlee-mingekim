@@ -56,15 +56,11 @@ int	get_infile_fd(char ***token, int *last_pipe_fd_out)
 		{
 			if (fd != -1)
 				close(fd);
+			if (flag == -1)
+				return (0);
 			fd = file_open(token[0][i], flag);
 			if (fd < 0)
 				return (0);
-		}
-		else
-		{
-			if (fd != -1)
-				close(fd);
-			return (0);
 		}
 	}
 	if (fd == -1)
@@ -89,15 +85,11 @@ int	get_outfile_fd(char ***token, int *pipe_fd_out)
 		{
 			if (fd != -1)
 				close(fd);
+			if (flag == -1)
+				return (0);
 			fd = file_write_open(token[0][i], flag);
 			if (fd < 0)
 				return (0);
-		}
-		else
-		{
-			if (fd != -1)
-				close(fd);
-			return (0);
 		}
 	}
 	if (fd == -1)

@@ -96,6 +96,7 @@ char	*pass_space(char *str);
 int		is_redirection(char *str);
 char	****free_tokens(char *****tokens);
 
+//tokenize_check.c
 int		tokens_check(char *****tokens);
 
 //translation.c
@@ -167,10 +168,10 @@ int		get_infile_fd(char ***token, int *last_pipe_fd_out);
 int		get_outfile_fd(char ***token, int *pipe_fd_out);
 
 //pipe_cmd_parsing.c
-int		parsing_cmd_and_options(char **command_out, char **envp);
+void	parsing_cmd_and_options(char **command_out, char **envp);
 
 //heredoc.c
-int		heredoc(char ****out_data, char **env);
+int		heredoc(char ****out_data, char **env, int *ctrl_cnt);
 int		heredoc_unlink(char ****tokens);
 
 #endif

@@ -49,19 +49,20 @@ int	is_builtin(char **cmd)
 	return (0);
 }
 
-void	exec_command(char ***token, int last_pipe_write_fd, int *fd, char ***envp)
+pid_t	exec_command(char ***token, int last_pipe_write_fd, int *fd, char ***envp)
 {
 	pid_t	cpid;
 
 	cpid = fork();
 	if (cpid > 0)
-		return ;
+		return (cpid);
 	else if (cpid < 0)
 		perror_and_exit("fork", 1);
 	if (get_infile_fd(token, &last_pipe_write_fd) == 0)
 		exit(1);
 	if (get_outfile_fd(token, fd) == 0)
 		exit(1);
+	parsing_cmd_and_options(token[1], *envp);
 	if (last_pipe_write_fd != -1 && dup2(last_pipe_write_fd, STDIN_FILENO) < 0)
 		perror_and_exit("dup2", 1);
 	if (fd[1] != -1 && dup2(fd[1], STDOUT_FILENO) < 0)
@@ -72,19 +73,21 @@ void	exec_command(char ***token, int last_pipe_write_fd, int *fd, char ***envp)
 	if (is_builtin(token[1]) == 1)
 	{
 		builtin(token[1], envp);
-		exit(0);
+		exit(g_exit_status);
 	}
 	else
 	{
 		execve(token[1][0], token[1], *envp);
 		perror_and_exit("execve", 1);
 	}
+	return (-1);
 }
 
 int	pipe_and_cmd(char ****tokens, char ***envp, int pipe_count)
 {
 	int		i;
 	int		last_pipe_write_fd;
+	pid_t	last_pid;
 	int		fd[2];
 
 	set_fds_not_use(fd);
@@ -104,15 +107,17 @@ int	pipe_and_cmd(char ****tokens, char ***envp, int pipe_count)
 		}
 		else
 			fd[1] = -1;
-		if (tokens[i][1][0] != NULL && parsing_cmd_and_options(tokens[i][1], *envp) == 1)
-			exec_command(tokens[i], last_pipe_write_fd, fd, envp);
+		last_pid = exec_command(tokens[i], last_pipe_write_fd, fd, envp);
 		close_fd(last_pipe_write_fd);
 		close(fd[1]);
 		last_pipe_write_fd = fd[0];
 	}
 	close(fd[0]);
+	while (waitpid(last_pid, &g_exit_status, 0) == 0)
+		;
 	while (wait(0) > 0)
 		;
+	printf("g_exit %d\n", WEXITSTATUS(g_exit_status));
 	return (1);
 }
 
@@ -123,18 +128,9 @@ int	execute(char ****tokens, char ***envp, int *ctrl_cnt)
 	pipe_count = 0;
 	while (tokens[pipe_count] != NULL)
 		pipe_count++;
-	heredoc(tokens, *envp);
-	if (g_exit_status == -3)
-	{
-		(*ctrl_cnt)++;
-		g_exit_status = 0;
-		return (1);
-	}
-	else
-		g_exit_status = 0;
-	if (pipe_and_cmd(tokens, envp, pipe_count) == 0)
-	{
+	if (heredoc(tokens, *envp, ctrl_cnt) == 0)
 		return (0);
-	}
+	if (pipe_and_cmd(tokens, envp, pipe_count) == 0)
+		return (0);
 	return (1);
 }
