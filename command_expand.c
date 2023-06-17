@@ -76,6 +76,7 @@ int	cmd_env_trans(char ***out_cmd, int *cmd_num, int *offset, char **envp)
 		insert_str = ft_itoa(g_exit_status);
 	else
 		insert_str = get_env(env_str + 1, envp);
+	printf("num:%s\n", insert_str);
 	if (!insert_str)
 		insert_str = "";
 	if (ft_strchr(insert_str, ' '))

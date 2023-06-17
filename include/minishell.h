@@ -6,7 +6,7 @@
 /*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 11:28:15 by soohlee           #+#    #+#             */
-/*   Updated: 2023/06/17 19:02:33 by soohlee          ###   ########.fr       */
+/*   Updated: 2023/06/17 23:46:25 by soohlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@
 # define PROMPT "minishell$ "
 # define CTRL_C_COUNT 2
 # define CTRL_C -1
+# define NULL_CTRL_D 0
 
 int g_exit_status;
 
@@ -64,6 +65,7 @@ void	set_signal(void);
 void	ctrl_c_handler(int signum);
 int		stdin_dup2(int *stdinout_copy);
 int		stdin_dup(int *stdinout_copy);
+// int		ctrl_d_exit(char *str, int *stdinout_copy);
 
 //shell
 void	loop_prompt(int argc, char **argv, char **envp);
@@ -135,6 +137,9 @@ int		get_env_name_len(char *str);
 //ft_echo.c
 int		ft_echo(char **argv);
 int		option_remove(char ***argv);
+
+//ft_exit.c
+int		ft_exit(char **argv, char ***env);
 
 //ft_cd.c
 int		ft_cd(char **argv, char ***indepen_env);

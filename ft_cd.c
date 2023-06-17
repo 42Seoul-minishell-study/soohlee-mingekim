@@ -6,7 +6,7 @@
 /*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 22:10:43 by soohlee           #+#    #+#             */
-/*   Updated: 2023/06/14 19:21:27 by soohlee          ###   ########.fr       */
+/*   Updated: 2023/06/18 00:32:37 by soohlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,10 @@ int	ft_cd(char **argv, char ***indepen_env)
 	if (ft_strlen(*argv) == 2 && !ft_strncmp(*argv, "--", 2))
 		argv++;
 	if (ft_strlen(*argv) >= 3 && !ft_strncmp(*argv, "--", 2))
+	{
+		g_exit_status = 1;
 		return (1 && write(2, "cd: --: invalid option\n", 23));
+	}
 	if (ft_strlen(*argv) >= 1 && !ft_strncmp(*argv, "-\0", 2))
 		return (old_path_move(indepen_env));
 	else
@@ -97,6 +100,7 @@ int	move_path(char *argv, char ***indepen_env)
 			write(2, "cd: ", 4);
 			write(2, argv, ft_strlen(argv));
 			write(2, ": Not a directory\n", 19);
+			g_exit_status = 1;
 			return (0);
 		}
 		else

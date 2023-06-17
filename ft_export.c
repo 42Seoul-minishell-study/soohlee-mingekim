@@ -6,7 +6,7 @@
 /*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 18:25:46 by soohlee           #+#    #+#             */
-/*   Updated: 2023/06/15 13:39:29 by soohlee          ###   ########.fr       */
+/*   Updated: 2023/06/18 01:19:59 by soohlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,24 +22,22 @@ int	ft_export(char **argv, char ***env)
 	char	**temp;
 	int		flag;
 
-	if (!argv || !argv[0])
-		return (0);
 	if (!(*(++argv)))
 		return (print_export(*env));
 	temp = argv;
 	flag = 0;
 	while (*temp)
 	{
-		flag = (1 && is_export_str(*temp));
+		flag = flag + (is_export_str(*temp));
 		temp++;
 	}
-	if (flag == 1)
-		return (1);
 	while (*argv)
 	{
 		add_export(*argv, env);
 		argv++;
 	}
+	if (flag >= 1)
+		g_exit_status = 1;
 	return (0);
 }
 
@@ -64,6 +62,7 @@ int	add_export(char *argv, char ***env)
 		add_env(argv, env);
 		free(name);
 	}
+	g_exit_status = 0;
 	return (0);
 }
 
@@ -97,6 +96,7 @@ int	print_export(char **env)
 				write(1, "\n", 1);
 		}
 	}
+	g_exit_status = 0;
 	return (0);
 }
 
@@ -105,7 +105,7 @@ int	is_export_str(char *s)
 	char	*temp;
 
 	temp = s;
-	while (*s && *s != '=')
+	while (*s && *s == '=')
 	{
 		if (!(ft_isalnum(*s) || *s == '_'))
 		{

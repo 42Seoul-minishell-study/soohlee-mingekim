@@ -6,7 +6,7 @@
 /*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 15:09:28 by mingekim          #+#    #+#             */
-/*   Updated: 2023/06/17 18:57:23 by soohlee          ###   ########.fr       */
+/*   Updated: 2023/06/18 00:45:37 by soohlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ static void	builtin(char **cmd, char ***env)
 		ft_export(cmd, env);
 	else if (ft_strlen(cmd[0]) == 5 && !ft_strncmp(cmd[0], "unset", 6))
 		ft_unset(cmd, env);
+	else if (ft_strlen(cmd[0]) == 4 && !ft_strncmp(cmd[0], "exit", 5))
+		ft_exit(cmd, env);
 }
 
 int	is_builtin(char **cmd)
@@ -45,6 +47,8 @@ int	is_builtin(char **cmd)
 	else if (ft_strlen(cmd[0]) == 6 && !ft_strncmp(cmd[0], "export", 7))
 		return (1);
 	else if (ft_strlen(cmd[0]) == 5 && !ft_strncmp(cmd[0], "unset", 6))
+		return (1);
+	else if (ft_strlen(cmd[0]) == 4 && !ft_strncmp(cmd[0], "exit", 5))
 		return (1);
 	return (0);
 }

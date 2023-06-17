@@ -6,7 +6,7 @@
 /*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 16:59:06 by soohlee           #+#    #+#             */
-/*   Updated: 2023/05/30 17:00:50 by soohlee          ###   ########.fr       */
+/*   Updated: 2023/06/18 00:33:39 by soohlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,4 +15,5 @@
 void	ft_env(char **env)
 {
 	print_env(env);
+	g_exit_status = 0;
 }

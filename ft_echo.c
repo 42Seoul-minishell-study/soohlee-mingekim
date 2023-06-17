@@ -6,7 +6,7 @@
 /*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 13:03:16 by soohlee           #+#    #+#             */
-/*   Updated: 2023/06/14 16:45:41 by soohlee          ###   ########.fr       */
+/*   Updated: 2023/06/18 00:27:38 by soohlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,13 @@ int	ft_echo(char **argv)
 	int	flag;
 
 	flag = 1;
-	if (ft_strlen(*argv) == 0)
-		return (0);
 	if (ft_strncmp(*argv++, "echo\0", 5))
 		return (1);
 	if (*argv == NULL)
+	{
+		g_exit_status = 0;
 		return (printf("\n"));
+	}
 	if (!ft_strncmp(*argv, "-n", 2))
 		flag = option_remove(&argv);
 	printf("%s", *argv++);
@@ -30,6 +31,7 @@ int	ft_echo(char **argv)
 		printf(" %s", *argv++);
 	if (flag == 1)
 		printf("\n");
+	g_exit_status = 0;
 	return (0);
 }
 

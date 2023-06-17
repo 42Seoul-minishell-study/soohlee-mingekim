@@ -5,3 +5,5 @@ a.out
 *.dSYM
 *.o
 *.a
+infile
+outfile
