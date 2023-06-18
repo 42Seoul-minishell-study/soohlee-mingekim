@@ -6,7 +6,7 @@
 /*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 19:05:31 by soohlee           #+#    #+#             */
-/*   Updated: 2023/06/17 23:12:27 by soohlee          ###   ########.fr       */
+/*   Updated: 2023/06/18 14:59:08 by soohlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,6 @@ void	ctrl_c_handler(int signum)
 	g_exit_status = CTRL_C;
 	close(0);
 	close(1);
-	// rl_replace_line("", 0); //readline 입력값 수정 함수.
-	// rl_on_new_line();	//readline prompt출력 위치 한줄 내리는 역할하는 함수.
-	// write(1, "M_\n", 3);
-	// rl_redisplay(); //readline prompt 재출력 함수, readline 입력값 존재시 같이 출력함.
 }
 
 int	stdin_dup(int *stdinout_copy)
@@ -69,4 +65,12 @@ int	stdin_dup2(int *stdinout_copy)
 	return (1);
 }
 
-//when ctrl-D set g_exit_status to -4
+int	ctrl_d_continue(char *str)
+{
+	if (str == NULL_CTRL_D)
+	{
+		if (waitpid(0, &g_exit_status, WNOHANG) == CHILD_EXIT_CHECK)
+			return (1);
+	}
+	return (0);
+}

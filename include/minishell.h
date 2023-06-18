@@ -6,7 +6,7 @@
 /*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 11:28:15 by soohlee           #+#    #+#             */
-/*   Updated: 2023/06/18 13:53:26 by soohlee          ###   ########.fr       */
+/*   Updated: 2023/06/18 14:58:10 by soohlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@
 # define CTRL_C_COUNT 2
 # define CTRL_C -1
 # define NULL_CTRL_D 0
+# define ONLY_NEWLINE '\0'
+# define CHILD_EXIT_CHECK 0
 
 int g_exit_status;
 
@@ -55,7 +57,8 @@ typedef struct s_retokendata
 }		t_retokendata;
 
 //free
-void	two_d_free(char **str);
+int		two_d_free_null(char ***str);
+int		one_d_free_null(char **str);
 
 //args_check.c
 int		args_check(int argc, char **argv, char **envp);
@@ -65,10 +68,8 @@ void	set_signal(void);
 void	ctrl_c_handler(int signum);
 int		stdin_dup2(int *stdinout_copy);
 int		stdin_dup(int *stdinout_copy);
+int		ctrl_d_continue(char *str);
 // int		ctrl_d_exit(char *str, int *stdinout_copy);
-
-//shell
-void	loop_prompt(int argc, char **argv, char **envp);
 
 //shell terminate
 void	free_exit(int flag);
@@ -159,7 +160,7 @@ int		ft_unset(char **argv, char ***env);
 
 //pipe.c
 int		is_builtin(char **cmd);
-int		execute(char ****tokens, char ***envp, int *ctrl_cnt);
+int		execute(char *****tokens, char ***envp, int *ctrl_cnt);
 
 //pipe_check.c
 int		check_input(char *word, int *flag_out);
