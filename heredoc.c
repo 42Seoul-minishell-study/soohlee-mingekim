@@ -6,7 +6,7 @@
 /*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 15:12:51 by soohlee           #+#    #+#             */
-/*   Updated: 2023/06/18 12:25:54 by soohlee          ###   ########.fr       */
+/*   Updated: 2023/06/18 13:54:17 by soohlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ int	heredoc_excute(char ***redirs, int redirs_num, char **env)
 			str = 0;
 			break ;
 		}
+		word_expand(&str, env);
 		ft_putstr_fd(str, heredoc_fd);
 		write(heredoc_fd, "\n", 1);
 		free(str);

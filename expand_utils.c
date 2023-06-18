@@ -6,7 +6,7 @@
 /*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 14:22:34 by soohlee           #+#    #+#             */
-/*   Updated: 2023/06/14 14:22:38 by soohlee          ###   ########.fr       */
+/*   Updated: 2023/06/18 13:58:05 by soohlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,15 +98,16 @@ int	env_trans(char **out_str, int *offset, char **envp)
 		env_str = 0;
 		return (0);
 	}
-	insert_str = getenv(env_str + 1);
+	insert_str = get_env(env_str + 1, envp);
 	if (!insert_str)
-		insert_str = "";
+		insert_str = ft_strdup("");
 	free(env_str);
 	env_str = 0;
 	res = ft_strinsert(*out_str, insert_str, start, *offset - 1);
 	free(*out_str);
 	*out_str = res;
 	*offset = start + ft_strlen(insert_str) - 1;
+	free(insert_str);
 	if (envp)
 		;
 	return (0);
