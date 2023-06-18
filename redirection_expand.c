@@ -12,83 +12,86 @@
 
 #include "minishell.h"
 
-int	redirection_expand(char ***out_redir, char **envp)
+int	redirection_expand(char ***tokens, char **env)
 {	
 	int	redir_num;
 
 	redir_num = -1;
-	while ((*out_redir)[++redir_num])
-		redir_line_expand(&((*out_redir)[redir_num]), envp);
+	while ((*tokens)[++redir_num])
+		redir_line_expand(&((*tokens)[redir_num]), env);
 	return (0);
 }
 
-int	redir_line_expand(char **out_one_line, char **envp)
+int	redir_line_expand(char **tokens, char **env)
 {
 	int		offset;
-	char	*out_one_line_temp;
+	char	*tokens_temp;
 
 	offset = -1;
-	while ((*out_one_line)[++offset])
+	while ((*tokens)[++offset])
 	{
-		if ((*out_one_line)[offset] == '\'')
-			single_quate(out_one_line, &offset, envp);
-		else if ((*out_one_line)[offset] == '\"')
-			double_quate(out_one_line, &offset, envp);
-		else if ((*out_one_line)[offset] == '$')
-			redir_env_trans(out_one_line, &offset, envp);
+		if ((*tokens)[offset] == '\'')
+			single_quate(tokens, &offset);
+		else if ((*tokens)[offset] == '\"')
+			double_quate(tokens, &offset, env);
+		else if ((*tokens)[offset] == '$')
+			redir_env_check(tokens, &offset, env);
 	}
-	out_one_line_temp = *out_one_line;
-	*out_one_line = ft_strtrim(out_one_line_temp, " ");
-	free(out_one_line_temp);
-	out_one_line_temp = 0;
+	tokens_temp = *tokens;
+	*tokens = ft_strtrim(tokens_temp, " ");
+	free(tokens_temp);
+	tokens_temp = 0;
 	return (0);
 }
 
-int	redir_env_trans(char **out_str, int *offset, char **envp)
+int	redir_env_check(char **tokens, int *offset, char **env)
 {
 	int		start;
 	char	*env_str;
-	char	*insert_str;
-	char	*res;
 
 	start = *offset;
-	while ((*out_str)[++(*offset)] == '$')
+	while ((*tokens)[++(*offset)] == '$')
 		;
 	if ((*offset - start) > 1)
 		return (0);
 	(*offset)--;
-	while ((*out_str)[++(*offset)])
-		if ((*out_str)[(*offset)] == '\''
-			|| (*out_str)[(*offset)] == '\"'
-				|| (*out_str)[(*offset)] == '$'
-					|| (*out_str)[(*offset)] == ' ')
+	while ((*tokens)[++(*offset)])
+		if ((*tokens)[(*offset)] == '\''
+			|| (*tokens)[(*offset)] == '\"'
+				|| (*tokens)[(*offset)] == '$'
+					|| (*tokens)[(*offset)] == ' ')
 			break ;
 	if ((*offset - start) == 1)
 		return (0);
-	env_str = ft_substr(*out_str, start, *offset - start);
-	if (!ft_strchr(env_str, '$') || !ft_strncmp(*out_str, "<<", 2))
-	{
-		(*offset)--;
-		free(env_str);
-		env_str = 0;
-		return (0);
-	}
-	insert_str = get_env(env_str + 1, envp);
-	free(env_str);
-	env_str = 0;
+	env_str = ft_substr(*tokens, start, *offset - start);
+	if (!ft_strchr(env_str, '$') || !ft_strncmp(*tokens, "<<", 2))
+		return ((one_d_free_null(&env_str) + (*offset)--) * 0);
+	one_d_free_null(&env_str);
+	return (redir_env_trans(tokens, &start, offset, env));
+}
+
+int	redir_env_trans(char **tokens, int *start, int *offset, char **env)
+{
+	char	*insert_str;
+	char	*temp;
+	char	*env_str;
+
+	env_str = ft_substr(*tokens, *start, *offset - *start);
+	if (!env_str)
+		exit (1);
+	insert_str = get_env(env_str + 1, env);
 	if (!insert_str)
-		ft_strdup("");
-	res = insert_str;
-	insert_str = ft_strtrim(res, " ");
-	one_d_free_null(&res);
+		insert_str = ft_strdup("");
+	one_d_free_null(&env_str);
+	temp = insert_str;
+	insert_str = ft_strtrim(temp, " ");
+	one_d_free_null(&temp);
 	if (ft_strchr(insert_str, ' '))
-		out_str[0][0] = 'e';
-	res = ft_strinsert(*out_str, insert_str, start, *offset - 1);
-	free(*out_str);
-	*out_str = res;
-	res = 0;
-	*offset = start + ft_strlen(insert_str) - 1;
-	free(insert_str);
-	insert_str = 0;
+		tokens[0][0] = 'e';
+	temp = *tokens;
+	*tokens = ft_strinsert(temp, insert_str, *start, *offset - 1);
+	one_d_free_null(&temp);
+	*offset = *start + ft_strlen(insert_str) - 1;
+	one_d_free_null(&insert_str);
 	return (0);
 }

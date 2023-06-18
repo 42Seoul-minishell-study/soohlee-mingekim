@@ -6,7 +6,7 @@
 /*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 12:16:38 by soohlee           #+#    #+#             */
-/*   Updated: 2023/06/18 18:01:20 by soohlee          ###   ########.fr       */
+/*   Updated: 2023/06/18 20:15:21 by soohlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,9 @@
 
 void	asdf(void)
 {
-	system("leaks minishell | grep Process");
+	ft_putstr_fd("atexit: ", 2);
+	system("leaks minishell | grep process");
+	ft_putstr_fd("\n", 2);
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -30,8 +32,10 @@ int	main(int argc, char **argv, char **envp)
 	env = set_env(envp);
 	while (1)
 	{
-		system("leaks minishell | grep Process");
-		str = readline("minishell$ ");
+		ft_putstr_fd("while: ", 2);
+		system("leaks minishell | grep process");
+		ft_putstr_fd("\n", 2);
+		str = readline("\U0001F60Aminishell$ ");
 		if (!stdin_dup2(stdinout_copy) || ctrl_d_continue(str))
 			continue ;
 		else if (str == NULL)
@@ -45,6 +49,8 @@ int	main(int argc, char **argv, char **envp)
 		execute(&tokens, &env, stdinout_copy);
 	}
 	free_env(&env);
-	system("leaks minishell | grep Process");
+	ft_putstr_fd("end: ", 2);
+	system("\nleaks minishell | grep process");
+	ft_putstr_fd("\n", 2);
 	return (0);
 }

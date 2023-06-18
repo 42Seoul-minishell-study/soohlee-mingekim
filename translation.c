@@ -6,24 +6,24 @@
 /*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 14:22:42 by soohlee           #+#    #+#             */
-/*   Updated: 2023/06/18 16:29:10 by soohlee          ###   ########.fr       */
+/*   Updated: 2023/06/18 20:08:15 by soohlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	tokens_print(char *****out_data);
+void	tokens_print(char *****tokens);
 
-int	translation(char *****out_data, char **envp)
+int	translation(char *****tokens, char **envp)
 {
-	if (*out_data == NULL)
+	if (*tokens == NULL)
 		return (0);
-	shell_expand(out_data, envp);
-	tokens_print(out_data);
+	shell_expand(tokens, envp);
+	tokens_print(tokens);
 	return (0);
 }
 
-void	tokens_print(char *****out_data)
+void	tokens_print(char *****tokens)
 {
 	int	pipe;
 	int	i;
@@ -31,14 +31,14 @@ void	tokens_print(char *****out_data)
 
 	pipe = -1;
 	printf("---------------------------expantion-----------------------------\n");
-	while ((*out_data)[++pipe])
+	while ((*tokens)[++pipe])
 	{
 		i = -1;
-		while ((*out_data)[pipe][++i])
+		while ((*tokens)[pipe][++i])
 		{
 			j = -1;
-			while ((*out_data)[pipe][i][++j])
-				printf("%d %d %d: %s\n", pipe, i, j, (*out_data)[pipe][i][j]);
+			while ((*tokens)[pipe][i][++j])
+				printf("%d %d %d: %s\n", pipe, i, j, (*tokens)[pipe][i][j]);
 		}
 	}
 }

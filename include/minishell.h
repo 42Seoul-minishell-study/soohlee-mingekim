@@ -6,7 +6,7 @@
 /*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 11:28:15 by soohlee           #+#    #+#             */
-/*   Updated: 2023/06/18 17:21:28 by soohlee          ###   ########.fr       */
+/*   Updated: 2023/06/18 21:06:24 by soohlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,9 +73,6 @@ int		ctrl_d_continue(char *str);
 void	free_exit(int flag);
 void	exit_print(int flag);
 
-//interpreter.c
-int		interpreter(char *out_str, char **envp);
-
 //tokenize.c
 char	****tokenize(char *str);
 
@@ -104,27 +101,29 @@ char	****free_tokens(char *****tokens);
 int		tokens_check(char *****tokens);
 
 //translation.c
-int		translation(char *****out_data, char **envp);
+int		translation(char *****tokens, char **envp);
 
 //shell_expansions.c
-int		shell_expand(char *****out_data, char **envp);
-int		redirection_expand(char ***out_redir, char **envp);
-int		cmd_expand(char ***out_cmd, char **envp);
+int		shell_expand(char *****tokens, char **env);
+int		redirection_expand(char ***tokens, char **env);
+int		cmd_expand(char ***tokens, char **env);
 
 //redirection_expand
-int		redir_line_expand(char **out_one_line, char **envp);	//한줄만 확장시 사용가능. heredoc의 피연산자는 확장안하는 기능가짐.
-int		redir_env_trans(char **out_str, int *offset, char **envp);
+int		redir_line_expand(char **tokens, char **envp);	//한줄만 확장시 사용가능. heredoc의 피연산자는 확장안하는 기능가짐.
+int		redir_env_check(char **tokens, int *offset, char **envp);
+int		redir_env_trans(char **tokens, int *start, int *offset, char **env);
 
 //cmd_expand
-int		cmd_line_expand(char ***out_cmd, int *cmd_num, char **envp);	//한줄만 확장시 사용가능.
-int		cmd_env_trans(char ***out_cmd, int *cmd_num, int *offset, char **envp);
-int		re_tokenize(char ***out_cmd, t_retokendata db, char *out_insert_str);
-int		insert_two_d_array(char ***out_cmd, t_retokendata db, char **insert_twod_array, int twod_len);
+int		cmd_line_expand(char ***tokens, int *cmd_num, char **env);	//한줄만 확장시 사용가능.
+int		cmd_env_check(char ***tokens, int *cmd_num, int *offset, char **env);
+int		cmd_env_trans(char ***tokens, t_retokendata *db, char **env);
+int		re_tokenize(char ***tokens, t_retokendata db, char *out_insert_str);
+int		insert_two_d_array(char ***tokens, t_retokendata db, char **insert_twod_array, int twod_len);
 //expand_utils
-int		single_quate(char **out_str, int *offset, char **envp);
-int		double_quate(char **out_str, int *offset, char **envp);
-char	*word_expand(char **out_str, char **envp);
-int		env_trans(char **out_str, int *offset, char **envp);
+int		single_quate(char **tokens, int *offset);
+int		double_quate(char **tokens, int *offset, char **env);
+char	*word_expand(char **tokens, char **env);
+int		env_trans(char **tokens, int *offset, char **env);
 
 //env_utils.c
 char	*get_env(char *env_name, char **env);

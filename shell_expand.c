@@ -12,15 +12,15 @@
 
 #include "minishell.h"
 
-int	shell_expand(char *****out_data, char **envp)
+int	shell_expand(char *****tokens, char **env)
 {
-	int	procces_idx;
+	int	idx;
 
-	procces_idx = -1;
-	while ((*out_data)[++procces_idx])
+	idx = -1;
+	while ((*tokens)[++idx])
 	{
-		redirection_expand(&((*out_data)[procces_idx][0]), envp);
-		cmd_expand(&((*out_data)[procces_idx][1]), envp);
+		redirection_expand(&((*tokens)[idx][0]), env);
+		cmd_expand(&((*tokens)[idx][1]), env);
 	}
 	return (0);
 }
