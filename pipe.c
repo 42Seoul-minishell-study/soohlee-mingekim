@@ -6,7 +6,7 @@
 /*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 15:09:28 by mingekim          #+#    #+#             */
-/*   Updated: 2023/06/18 00:45:37 by soohlee          ###   ########.fr       */
+/*   Updated: 2023/06/18 12:56:58 by soohlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,8 @@ int	pipe_and_cmd(char ****tokens, char ***envp, int pipe_count)
 		;
 	while (wait(0) > 0)
 		;
-	printf("g_exit %d\n", WEXITSTATUS(g_exit_status));
+	g_exit_status = WEXITSTATUS(g_exit_status);
+	printf("g_exit %d\n", g_exit_status);
 	return (1);
 }
 
@@ -133,9 +134,9 @@ int	execute(char ****tokens, char ***envp, int *stdinout_copy)
 	while (tokens[pipe_count] != NULL)
 		pipe_count++;
 	if (heredoc(tokens, *envp, stdinout_copy) == 0)
-		return (0);
+		return (heredoc_unlink(tokens));
 	if (pipe_and_cmd(tokens, envp, pipe_count) == 0)
-		return (0);
+		return (heredoc_unlink(tokens));
 	heredoc_unlink(tokens);
 	return (1);
 }

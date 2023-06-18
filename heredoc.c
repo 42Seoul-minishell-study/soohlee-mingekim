@@ -6,7 +6,7 @@
 /*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 15:12:51 by soohlee           #+#    #+#             */
-/*   Updated: 2023/06/17 18:59:40 by soohlee          ###   ########.fr       */
+/*   Updated: 2023/06/18 12:25:54 by soohlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ int	heredoc(char ****out_data, char **env, int *stdinout_copy)
 	while (out_data[++process_idx])
 	{
 		find_heredoc(&(out_data[process_idx][0]), env);
+		if (g_exit_status == -3)
+			break ;
 	}
 	if (g_exit_status == -3)
 	{
@@ -55,6 +57,8 @@ int	find_heredoc(char ***redirs, char **env)
 		}
 		if (ft_strlen((*redirs)[i]) >= 3 && !ft_strncmp((*redirs)[i], "<< ", 3))
 			heredoc_excute(redirs, i, env);
+		if (g_exit_status == -3)
+			break ;
 	}
 	return (0);
 }
