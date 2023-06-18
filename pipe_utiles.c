@@ -12,12 +12,6 @@
 
 #include "minishell.h"
 
-int	perror_and_return_zero(char *str)
-{
-	perror(str);
-	return (0);
-}
-
 int	perror_and_exit(char *str, int exit_num)
 {
 	perror(str);
@@ -34,4 +28,9 @@ void	set_fds_not_use(int *fd)
 {
 	fd[0] = -1;
 	fd[1] = -1;
+}
+
+void	set_child_exit_status(void)
+{
+	g_exit_status = (g_exit_status >> 8) & 0x000000ff;
 }

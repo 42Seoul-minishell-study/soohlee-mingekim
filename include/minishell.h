@@ -166,10 +166,10 @@ int		check_input(char *word, int *flag_out);
 int		check_output(char *word, int *flag_out);
 
 //pipe_utile.c
-int		perror_and_return_zero(char *str);
 int		perror_and_exit(char *str, int exit_num);
 void	close_fd(int fd);
 void	set_fds_not_use(int *fd);
+void	set_child_exit_status(void);
 
 //pipe_get_fd.c
 int		get_infile_fd(char ***token, int *last_pipe_fd_out);
@@ -181,5 +181,9 @@ void	parsing_cmd_and_options(char **command_out, char **envp);
 //heredoc.c
 int		heredoc(char ****out_data, char **env, int *stdinout_copy);
 int		heredoc_unlink(char ****tokens);
+
+//builtin.c
+void	builtin(char **cmd, char ***env);
+int		is_builtin(char **cmd);
 
 #endif

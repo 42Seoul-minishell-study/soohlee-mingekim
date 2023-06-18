@@ -16,7 +16,6 @@ int	is_space(char ch)
 {
 	if (ch == ' ' || ch == '\t')
 		return (1);
-	//escape sequences (new line, carriage return, form feed) no need to add
 	return (0);
 }
 
@@ -41,7 +40,7 @@ char	*find_next_pipe(char *str)
 
 char	*find_next_word(char *str)
 {
-	while (*str != '\0' && is_space(*str) == 0  && *str != '|')
+	while (*str != '\0' && is_space(*str) == 0 && *str != '|')
 	{
 		if (*str == '\'')
 		{
@@ -66,7 +65,6 @@ char	*pass_space(char *str)
 	}
 	return (str);
 }
-
 
 char	****free_tokens(char *****tokens)
 {

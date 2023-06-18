@@ -28,7 +28,8 @@ SRCS = 	main.c \
 		pipe_cmd_parsing.c \
 		pipe_get_fd.c \
 		pipe_utiles.c \
-		heredoc.c
+		heredoc.c \
+		builtin.c
 
 NAME = minishell
 CC = cc

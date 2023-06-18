@@ -12,48 +12,29 @@
 
 #include "minishell.h"
 
-static void	builtin(char **cmd, char ***env)
+static void	exec_settings(char ***token, int last_fd, int *fd, char ***envp)
 {
-	if (cmd[0] == NULL)
-		return ;
-	if (ft_strlen(cmd[0]) == 2 && !ft_strncmp(cmd[0], "cd", 3))
-		ft_cd(cmd, env);
-	else if (ft_strlen(cmd[0]) == 3 && !ft_strncmp(cmd[0], "pwd", 4))
-		ft_pwd();
-	else if (ft_strlen(cmd[0]) == 4 && !ft_strncmp(cmd[0], "echo", 5))
-		ft_echo(cmd);
-	else if (ft_strlen(cmd[0]) == 3 && !ft_strncmp(cmd[0], "env", 4))
-		ft_env(*env);
-	else if (ft_strlen(cmd[0]) == 6 && !ft_strncmp(cmd[0], "export", 7))
-		ft_export(cmd, env);
-	else if (ft_strlen(cmd[0]) == 5 && !ft_strncmp(cmd[0], "unset", 6))
-		ft_unset(cmd, env);
-	else if (ft_strlen(cmd[0]) == 4 && !ft_strncmp(cmd[0], "exit", 5))
-		ft_exit(cmd, env);
+	if (get_infile_fd(token, &last_fd) == 0)
+		exit(1);
+	if (get_outfile_fd(token, fd) == 0)
+		exit(1);
+	parsing_cmd_and_options(token[1], *envp);
+	if (last_fd != -1)
+	{
+		if (dup2(last_fd, STDIN_FILENO) < 0)
+			perror_and_exit("dup2", 1);
+	}
+	if (fd[1] != -1)
+	{
+		if (dup2(fd[1], STDOUT_FILENO) < 0)
+			perror_and_exit("dup2", 1);
+	}
+	close_fd(last_fd);
+	close_fd(fd[0]);
+	close_fd(fd[1]);
 }
 
-int	is_builtin(char **cmd)
-{
-	if (cmd[0] == NULL)
-		return (0);
-	if (ft_strlen(cmd[0]) == 2 && !ft_strncmp(cmd[0], "cd", 3))
-		return (1);
-	else if (ft_strlen(cmd[0]) == 3 && !ft_strncmp(cmd[0], "pwd", 4))
-		return (1);
-	else if (ft_strlen(cmd[0]) == 4 && !ft_strncmp(cmd[0], "echo", 5))
-		return (1);
-	else if (ft_strlen(cmd[0]) == 3 && !ft_strncmp(cmd[0], "env", 4))
-		return (1);
-	else if (ft_strlen(cmd[0]) == 6 && !ft_strncmp(cmd[0], "export", 7))
-		return (1);
-	else if (ft_strlen(cmd[0]) == 5 && !ft_strncmp(cmd[0], "unset", 6))
-		return (1);
-	else if (ft_strlen(cmd[0]) == 4 && !ft_strncmp(cmd[0], "exit", 5))
-		return (1);
-	return (0);
-}
-
-pid_t	exec_command(char ***token, int last_pipe_write_fd, int *fd, char ***envp)
+pid_t	exec_command(char ***token, int last_pipe_fd, int *fd, char ***envp)
 {
 	pid_t	cpid;
 
@@ -62,18 +43,7 @@ pid_t	exec_command(char ***token, int last_pipe_write_fd, int *fd, char ***envp)
 		return (cpid);
 	else if (cpid < 0)
 		perror_and_exit("fork", 1);
-	if (get_infile_fd(token, &last_pipe_write_fd) == 0)
-		exit(1);
-	if (get_outfile_fd(token, fd) == 0)
-		exit(1);
-	parsing_cmd_and_options(token[1], *envp);
-	if (last_pipe_write_fd != -1 && dup2(last_pipe_write_fd, STDIN_FILENO) < 0)
-		perror_and_exit("dup2", 1);
-	if (fd[1] != -1 && dup2(fd[1], STDOUT_FILENO) < 0)
-		perror_and_exit("dup2", 1);
-	close_fd(last_pipe_write_fd);
-	close_fd(fd[0]);
-	close_fd(fd[1]);
+	exec_settings(token, last_pipe_fd, fd, envp);
 	if (is_builtin(token[1]) == 1)
 	{
 		builtin(token[1], envp);
@@ -87,21 +57,16 @@ pid_t	exec_command(char ***token, int last_pipe_write_fd, int *fd, char ***envp)
 	return (-1);
 }
 
-int	pipe_and_cmd(char ****tokens, char ***envp, int pipe_count)
+static pid_t	pipe_while(char ****tokens, char ***envp, int pipe_count)
 {
 	int		i;
 	int		last_pipe_write_fd;
-	pid_t	last_pid;
 	int		fd[2];
+	pid_t	last_pid;
 
-	set_fds_not_use(fd);
-	last_pipe_write_fd = -1;
 	i = -1;
-	if (pipe_count == 1 && is_builtin(tokens[0][1]) == 1 && tokens[0][0][0] == NULL)
-	{
-		builtin(tokens[0][1], envp);
-		return (1);
-	}
+	last_pipe_write_fd = -1;
+	set_fds_not_use(fd);
 	while (++i < pipe_count)
 	{
 		if (i != pipe_count - 1)
@@ -117,11 +82,25 @@ int	pipe_and_cmd(char ****tokens, char ***envp, int pipe_count)
 		last_pipe_write_fd = fd[0];
 	}
 	close(fd[0]);
+	return (last_pid);
+}
+
+int	pipe_and_cmd(char ****tokens, char ***envp, int pipe_count)
+{
+	pid_t	last_pid;
+
+	if (pipe_count == 1 && is_builtin(tokens[0][1]) == 1 && \
+		tokens[0][0][0] == NULL)
+	{
+		builtin(tokens[0][1], envp);
+		return (1);
+	}
+	last_pid = pipe_while(tokens, envp, pipe_count);
 	while (waitpid(last_pid, &g_exit_status, 0) == 0)
 		;
 	while (wait(0) > 0)
 		;
-	g_exit_status = WEXITSTATUS(g_exit_status);
+	set_child_exit_status();
 	printf("g_exit %d\n", g_exit_status);
 	return (1);
 }
