@@ -125,13 +125,9 @@ char	*word_expand(char **out_str, char **envp);
 int		env_trans(char **out_str, int *offset, char **envp);
 
 //env_utils.c
-char	**set_env(char **envp);
-void	add_env(char *new_str, char ***env_out);
 char	*get_env(char *env_name, char **env);
 void	delete_env(char *env_name,char ***env_out);
 void	free_env(char ***env);
-void	print_env(char **env);
-char	*get_env(char *env_name, char **env);
 size_t	get_env_name_len(char *str);
 
 //ft_echo.c
@@ -148,6 +144,9 @@ int		ft_cd(char **argv, char ***indepen_env);
 int		ft_pwd(void);
 
 //ft_env.c
+char	**set_env(char **envp);
+void	add_env(char *new_str, char ***env_out);
+void	print_env(char **env);
 void	ft_env(char **env);
 
 //ft_export.c
