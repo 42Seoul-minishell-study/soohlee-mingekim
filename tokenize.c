@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mingekim <mingekim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 20:25:39 by mingekim          #+#    #+#             */
-/*   Updated: 2023/05/30 20:25:40 by mingekim         ###   ########.fr       */
+/*   Updated: 2023/06/18 14:32:53 by soohlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ char	****tokenize(char *str)
 	int		tokens_len;
 	char	****tokens;
 
+	add_history(str);
 	index = 0;
 	tokens_len = get_pipe_count(str) + 1;
 	tokens = malloc(sizeof(char ***) * (tokens_len + 1));

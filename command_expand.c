@@ -116,8 +116,7 @@ int	re_tokenize(char ***out_cmd, t_retokendata db, char *out_insert_str)
 	while (insert_twod_array[len++])
 		;
 	insert_two_d_array(out_cmd, db, insert_twod_array, len);
-	two_d_free(insert_twod_array);
-	insert_twod_array = 0;
+	two_d_free_null(&insert_twod_array);
 	return (0);
 }
 
@@ -167,7 +166,7 @@ int	insert_two_d_array(char ***out_cmd, t_retokendata db, char **insert_twod_arr
 		new_cmd[new_cmd_num++] = ft_strdup((*out_cmd)[out_cmd_idx++]);
 	}
 	new_cmd[new_cmd_num] = NULL;
-	two_d_free(*out_cmd);
+	two_d_free_null(&(*out_cmd));
 	*out_cmd = new_cmd;
 	return (0);
 }

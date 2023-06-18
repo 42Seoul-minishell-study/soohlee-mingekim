@@ -6,7 +6,7 @@
 /*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 21:25:43 by soohlee           #+#    #+#             */
-/*   Updated: 2023/06/16 17:25:06 by soohlee          ###   ########.fr       */
+/*   Updated: 2023/06/18 14:34:24 by soohlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,17 +29,25 @@ void	exit_print(int flag)
 	}
 }
 
-void	two_d_free(char **str)
+int	two_d_free_null(char ***str)
 {
 	int	i;
 
 	i = 0;
-	while (str[i])
+	while ((*str)[i])
 	{
-		free(str[i]);
-		str[i] = 0;
+		free((*str)[i]);
+		(*str)[i] = 0;
 		i++;
 	}
-	free(str);
+	free(*str);
 	str = 0;
+	return (0);
+}
+
+int	one_d_free_null(char **str)
+{
+	free(*str);
+	*str = 0;
+	return (0);
 }
