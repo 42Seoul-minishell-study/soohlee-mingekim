@@ -15,12 +15,10 @@
 int	redirection_expand(char ***out_redir, char **envp)
 {	
 	int	redir_num;
-	//< infile < infile < infeil < infielj
+
 	redir_num = -1;
 	while ((*out_redir)[++redir_num])
 		redir_line_expand(&((*out_redir)[redir_num]), envp);
-	if (envp)
-		;
 	return (0);
 }
 
@@ -76,21 +74,21 @@ int	redir_env_trans(char **out_str, int *offset, char **envp)
 		return (0);
 	}
 	insert_str = get_env(env_str + 1, envp);
-	printf("%s\n", insert_str);
-	if (!insert_str)
-		exit (1);
-	insert_str = ft_strtrim(insert_str, " ");
-	if (ft_strchr(insert_str, ' '))
-		out_str[0][0] = 'e';
 	free(env_str);
 	env_str = 0;
+	if (!insert_str)
+		ft_strdup("");
+	res = insert_str;
+	insert_str = ft_strtrim(res, " ");
+	one_d_free_null(&res);
+	if (ft_strchr(insert_str, ' '))
+		out_str[0][0] = 'e';
 	res = ft_strinsert(*out_str, insert_str, start, *offset - 1);
 	free(*out_str);
 	*out_str = res;
+	res = 0;
 	*offset = start + ft_strlen(insert_str) - 1;
 	free(insert_str);
 	insert_str = 0;
-	if (envp)
-		;
 	return (0);
 }

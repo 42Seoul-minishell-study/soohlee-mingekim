@@ -6,7 +6,7 @@
 /*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 19:05:31 by soohlee           #+#    #+#             */
-/*   Updated: 2023/06/18 14:59:08 by soohlee          ###   ########.fr       */
+/*   Updated: 2023/06/18 15:26:54 by soohlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,9 +67,9 @@ int	stdin_dup2(int *stdinout_copy)
 
 int	ctrl_d_continue(char *str)
 {
-	if (str == NULL_CTRL_D)
+	if (str == NULL)
 	{
-		if (waitpid(0, &g_exit_status, WNOHANG) == CHILD_EXIT_CHECK)
+		if (waitpid(0, &g_exit_status, WNOHANG) == 0)
 			return (1);
 	}
 	return (0);

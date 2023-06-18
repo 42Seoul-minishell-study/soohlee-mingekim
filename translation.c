@@ -6,7 +6,7 @@
 /*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 14:22:42 by soohlee           #+#    #+#             */
-/*   Updated: 2023/06/15 14:36:33 by soohlee          ###   ########.fr       */
+/*   Updated: 2023/06/18 16:29:10 by soohlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,7 @@ int	translation(char *****out_data, char **envp)
 	if (*out_data == NULL)
 		return (0);
 	shell_expand(out_data, envp);
-	tokens_print(out_data);//임시결과확인용
-	if (envp)
-		;
+	tokens_print(out_data);
 	return (0);
 }
 

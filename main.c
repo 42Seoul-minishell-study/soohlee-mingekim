@@ -6,11 +6,16 @@
 /*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 12:16:38 by soohlee           #+#    #+#             */
-/*   Updated: 2023/06/18 15:06:06 by soohlee          ###   ########.fr       */
+/*   Updated: 2023/06/18 18:01:20 by soohlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	asdf(void)
+{
+	system("leaks minishell | grep Process");
+}
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -19,17 +24,19 @@ int	main(int argc, char **argv, char **envp)
 	char	**env;
 	int		stdinout_copy[3];
 
+	atexit(asdf);
 	if (!stdin_dup(stdinout_copy) && !args_check(argc, argv, envp))
 		set_signal();
 	env = set_env(envp);
 	while (1)
 	{
+		system("leaks minishell | grep Process");
 		str = readline("minishell$ ");
 		if (!stdin_dup2(stdinout_copy) || ctrl_d_continue(str))
 			continue ;
-		else if (str == NULL_CTRL_D)
+		else if (str == NULL)
 			break ;
-		else if (*str == ONLY_NEWLINE && !one_d_free_null(&str))
+		else if (*str == '\0' && !one_d_free_null(&str))
 			continue ;
 		tokens = tokenize(str);
 		if (!one_d_free_null(&str) && tokens == NULL)
@@ -38,5 +45,6 @@ int	main(int argc, char **argv, char **envp)
 		execute(&tokens, &env, stdinout_copy);
 	}
 	free_env(&env);
+	system("leaks minishell | grep Process");
 	return (0);
 }

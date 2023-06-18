@@ -6,7 +6,7 @@
 /*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 11:28:15 by soohlee           #+#    #+#             */
-/*   Updated: 2023/06/18 14:58:10 by soohlee          ###   ########.fr       */
+/*   Updated: 2023/06/18 17:21:28 by soohlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,16 +31,11 @@
 # define ACCESS 3
 # define COMMAND 4
 
-//ect flags
-# define STDERR 2
-# define PROMPT "minishell$ "
-# define CTRL_C_COUNT 2
-# define CTRL_C -1
-# define NULL_CTRL_D 0
-# define ONLY_NEWLINE '\0'
-# define CHILD_EXIT_CHECK 0
-
-int g_exit_status;
+typedef enum e_ctrl
+{
+	CTRL_C = -1,
+	CTRL_C_COUNT = 2
+}	t_ctrl;
 
 //parsing struct 'only sooha'
 typedef struct s_retokendata
@@ -55,6 +50,9 @@ typedef struct s_retokendata
 	char	*front_str;
 	char	*end_str;
 }		t_retokendata;
+
+//global variable
+int		g_exit_status;
 
 //free
 int		two_d_free_null(char ***str);
@@ -107,13 +105,16 @@ int		tokens_check(char *****tokens);
 
 //translation.c
 int		translation(char *****out_data, char **envp);
+
 //shell_expansions.c
 int		shell_expand(char *****out_data, char **envp);
 int		redirection_expand(char ***out_redir, char **envp);
 int		cmd_expand(char ***out_cmd, char **envp);
+
 //redirection_expand
 int		redir_line_expand(char **out_one_line, char **envp);	//한줄만 확장시 사용가능. heredoc의 피연산자는 확장안하는 기능가짐.
 int		redir_env_trans(char **out_str, int *offset, char **envp);
+
 //cmd_expand
 int		cmd_line_expand(char ***out_cmd, int *cmd_num, char **envp);	//한줄만 확장시 사용가능.
 int		cmd_env_trans(char ***out_cmd, int *cmd_num, int *offset, char **envp);
@@ -179,7 +180,7 @@ int		get_outfile_fd(char ***token, int *pipe_fd_out);
 void	parsing_cmd_and_options(char **command_out, char **envp);
 
 //heredoc.c
-int		heredoc(char ****out_data, char **env, int *stdinout_copy);
+int		heredoc(char ****tokens, char **env, int *stdinout_copy);
 int		heredoc_unlink(char ****tokens);
 
 //builtin.c
