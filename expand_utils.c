@@ -6,7 +6,7 @@
 /*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 14:22:34 by soohlee           #+#    #+#             */
-/*   Updated: 2023/06/19 21:25:46 by soohlee          ###   ########.fr       */
+/*   Updated: 2023/06/19 22:12:04 by soohlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,8 @@ int	single_quate(char **tokens, int *offset)
 		return (0);
 	}
 	insert_str = mi_substr(*tokens, start, (*offset + 1) - start);
-	printf("insert:-%s-\n", insert_str);
 	temp = insert_str;
 	insert_str = mi_strtrim(temp, "\'");
-	printf("insert:~%s~\n", insert_str);
 	one_d_free_null(&temp);
 	temp = mi_strinsert(*tokens, insert_str, start, *offset + 1);
 	free(*tokens);

@@ -31,14 +31,12 @@ int	cmd_line_expand(char ***tokens, int *cmd_num, char **env)
 	offset = -1;
 	while ((*tokens)[*cmd_num][++offset])
 	{
-		printf("be_cmd_num:%d offset%d\n", *cmd_num, offset);
 		if ((*tokens)[*cmd_num][offset] == '\'')
 			single_quate(&((*tokens)[*cmd_num]), &offset);
 		else if ((*tokens)[*cmd_num][offset] == '\"')
 			double_quate(&((*tokens)[*cmd_num]), &offset, env);
 		else if ((*tokens)[*cmd_num][offset] == '$')
 			cmd_env_check(tokens, cmd_num, &offset, env);
-		printf("af_cmd_num:%d offset%d\n", *cmd_num, offset);
 	}
 	return (0);
 }
