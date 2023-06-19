@@ -32,5 +32,8 @@ void	set_fds_not_use(int *fd)
 
 void	set_child_exit_status(void)
 {
-	g_exit_status = (g_exit_status >> 8) & 0x000000ff;
+	if (WIFEXITED(g_exit_status))
+		g_exit_status = WEXITSTATUS(g_exit_status);
+	else if (WIFSIGNALED(g_exit_status))
+		g_exit_status = WTERMSIG(g_exit_status) + 128;
 }

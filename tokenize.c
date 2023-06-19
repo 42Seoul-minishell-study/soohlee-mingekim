@@ -72,19 +72,20 @@ char	****tokenize(char *str)
 	char	****tokens;
 
 	add_history(str);
+	if (*(pass_space(str)) == '\0')
+		return (NULL);
 	index = 0;
 	tokens_len = get_pipe_count(str) + 1;
 	tokens = malloc(sizeof(char ***) * (tokens_len + 1));
 	if (tokens == NULL)
 		perror_and_exit("malloc", 1);
-	tokens[index++] = split_tokens(str);
-	while (index < tokens_len)
+	tokens[index] = split_tokens(str);
+	while (++index < tokens_len)
 	{
 		str = find_next_pipe(str);
 		tokens[index] = split_tokens(str);
 		if (tokens[index] == NULL)
 			return (free_tokens(&tokens));
-		index++;
 	}
 	tokens[tokens_len] = NULL;
 	print_all_tree(tokens);

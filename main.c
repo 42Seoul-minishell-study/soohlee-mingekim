@@ -44,6 +44,7 @@ int	main(int argc, char **argv, char **envp)
 			continue ;
 		translation(&tokens, env);
 		execute(&tokens, &env, stdinout_copy);
+		printf("g_exit %d\n", g_exit_status);
 	}
 	free_env(&env);
 	return (0);

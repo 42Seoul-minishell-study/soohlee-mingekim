@@ -54,7 +54,7 @@ pid_t	exec_command(char ***token, int last_pipe_fd, int *fd, char ***envp)
 		execve(token[1][0], token[1], *envp);
 		perror_and_exit("execve", 1);
 	}
-	return (-1);
+	return (cpid);
 }
 
 static pid_t	pipe_while(char ****tokens, char ***envp, int pipe_count)
@@ -98,10 +98,9 @@ int	pipe_and_cmd(char ****tokens, char ***envp, int pipe_count)
 	last_pid = pipe_while(tokens, envp, pipe_count);
 	while (waitpid(last_pid, &g_exit_status, 0) == 0)
 		;
-	while (wait(0) > 0)
+	while (wait(&g_exit_status) > 0)
 		;
 	set_child_exit_status();
-	printf("g_exit %d\n", g_exit_status);
 	return (1);
 }
 
@@ -121,5 +120,10 @@ int	execute(char *****tokens, char ***envp, int *stdinout_copy)
 	pipe_and_cmd(*tokens, envp, pipe_count);
 	heredoc_unlink(*tokens);
 	free_tokens(tokens);
+	if (g_exit_status == 130)
+	{
+		dup2(stdinout_copy[0], STDIN_FILENO);
+		dup2(stdinout_copy[1], STDOUT_FILENO);
+	}
 	return (1);
 }
