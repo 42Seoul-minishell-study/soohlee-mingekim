@@ -6,7 +6,7 @@
 /*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 01:51:05 by soohlee           #+#    #+#             */
-/*   Updated: 2023/06/18 13:52:47 by soohlee          ###   ########.fr       */
+/*   Updated: 2023/06/19 14:37:18 by soohlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,8 +83,8 @@ char	*get_env(char *env_name, char **env)
 		return (NULL);
 	temp = ft_strchr(env[find_index], '=');
 	if (!temp)
-		return (ft_strdup(""));
+		return (mi_strdup(""));
 	++temp;
-	str_env = ft_strdup(temp);
+	str_env = mi_strdup(temp);
 	return (str_env);
 }

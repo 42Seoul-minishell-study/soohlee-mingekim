@@ -6,7 +6,7 @@
 /*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 14:22:34 by soohlee           #+#    #+#             */
-/*   Updated: 2023/06/18 20:45:00 by soohlee          ###   ########.fr       */
+/*   Updated: 2023/06/19 14:41:58 by soohlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,11 @@ int	single_quate(char **tokens, int *offset)
 		*offset = start;
 		return (0);
 	}
-	insert_str = ft_substr(*tokens, start, *offset - start);
+	insert_str = mi_substr(*tokens, start, *offset - start);
 	temp = insert_str;
-	insert_str = ft_strtrim(temp, "\'");
+	insert_str = mi_strtrim(temp, "\'");
 	one_d_free_null(&temp);
-	temp = ft_strinsert(*tokens, insert_str, start, *offset);
+	temp = mi_strinsert(*tokens, insert_str, start, *offset);
 	one_d_free_null(&insert_str);
 	free(*tokens);
 	*tokens = temp;
@@ -55,12 +55,12 @@ int	double_quate(char **tokens, int *offset, char **env)
 		*offset = start;
 		return (0);
 	}
-	insert_str = ft_substr(*tokens, start, (*offset + 1) - start);
+	insert_str = mi_substr(*tokens, start, (*offset + 1) - start);
 	temp = insert_str;
-	insert_str = ft_strtrim(temp, "\"");
+	insert_str = mi_strtrim(temp, "\"");
 	one_d_free_null(&temp);
 	word_expand(&insert_str, env);
-	temp = ft_strinsert(*tokens, insert_str, start, *offset);
+	temp = mi_strinsert(*tokens, insert_str, start, *offset);
 	free(*tokens);
 	*tokens = temp;
 	*offset = start + ft_strlen(insert_str) - 1;
@@ -82,15 +82,15 @@ int	env_trans(char **tokens, int *offset, char **env)
 				|| (*tokens)[(*offset)] == '$'
 					|| (*tokens)[(*offset)] == ' ')
 			break ;
-	env_str = ft_substr(*tokens, start, *offset - start);
+	env_str = mi_substr(*tokens, start, *offset - start);
 	if (!ft_strchr(env_str, '$'))
 		return ((one_d_free_null(&env_str) + (*offset)--) * 0);
 	insert_str = get_env(env_str + 1, env);
 	if (!insert_str)
-		insert_str = ft_strdup("");
+		insert_str = mi_strdup("");
 	one_d_free_null(&env_str);
 	temp = *tokens;
-	*tokens = ft_strinsert(temp, insert_str, start, *offset - 1);
+	*tokens = mi_strinsert(temp, insert_str, start, *offset - 1);
 	one_d_free_null(&temp);
 	*offset = start + ft_strlen(insert_str) - 1;
 	one_d_free_null(&insert_str);

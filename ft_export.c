@@ -6,7 +6,7 @@
 /*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 18:25:46 by soohlee           #+#    #+#             */
-/*   Updated: 2023/06/18 01:19:59 by soohlee          ###   ########.fr       */
+/*   Updated: 2023/06/19 14:41:07 by soohlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	add_export(char *argv, char ***env)
 	char	*name;
 
 	if (ft_strchr(argv, '='))
-		name = ft_substr(argv, 0, ft_strchr(argv, '=') - argv);
+		name = mi_substr(argv, 0, ft_strchr(argv, '=') - argv);
 	else
 		return (only_name_add(argv, env));
 	value = get_env(name, *env);

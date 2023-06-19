@@ -6,7 +6,7 @@
 /*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 16:59:06 by soohlee           #+#    #+#             */
-/*   Updated: 2023/06/18 16:25:38 by soohlee          ###   ########.fr       */
+/*   Updated: 2023/06/19 14:38:04 by soohlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ char	**set_env(char **envp)
 	{
 		if (ft_strlen(envp[i]) >= 6 && !ft_strncmp(envp[i], "OLDPWD", 6)
 			&& (envp[i][6] == '=' || envp[i][6] == '\0' ))
-			env[i++] = ft_strdup("OLDPWD");
-		env[i] = ft_strdup(envp[i]);
+			env[i++] = mi_strdup("OLDPWD");
+		env[i] = mi_strdup(envp[i]);
 		i++;
 	}
 	env[i] = NULL;
@@ -49,7 +49,7 @@ void	add_env(char *new_str, char ***env_out)
 		new_env[i] = (*env_out)[i];
 		i++;
 	}
-	new_env[i++] = ft_strdup(new_str);
+	new_env[i++] = mi_strdup(new_str);
 	if (!new_env[i - 1])
 		exit (1);
 	new_env[i] = NULL;

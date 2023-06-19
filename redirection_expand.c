@@ -38,7 +38,7 @@ int	redir_line_expand(char **tokens, char **env)
 			redir_env_check(tokens, &offset, env);
 	}
 	tokens_temp = *tokens;
-	*tokens = ft_strtrim(tokens_temp, " ");
+	*tokens = mi_strtrim(tokens_temp, " ");
 	free(tokens_temp);
 	tokens_temp = 0;
 	return (0);
@@ -63,7 +63,7 @@ int	redir_env_check(char **tokens, int *offset, char **env)
 			break ;
 	if ((*offset - start) == 1)
 		return (0);
-	env_str = ft_substr(*tokens, start, *offset - start);
+	env_str = mi_substr(*tokens, start, *offset - start);
 	if (!ft_strchr(env_str, '$') || !ft_strncmp(*tokens, "<<", 2))
 		return ((one_d_free_null(&env_str) + (*offset)--) * 0);
 	one_d_free_null(&env_str);
@@ -76,20 +76,20 @@ int	redir_env_trans(char **tokens, int *start, int *offset, char **env)
 	char	*temp;
 	char	*env_str;
 
-	env_str = ft_substr(*tokens, *start, *offset - *start);
+	env_str = mi_substr(*tokens, *start, *offset - *start);
 	if (!env_str)
 		exit (1);
 	insert_str = get_env(env_str + 1, env);
 	if (!insert_str)
-		insert_str = ft_strdup("");
+		insert_str = mi_strdup("");
 	one_d_free_null(&env_str);
 	temp = insert_str;
-	insert_str = ft_strtrim(temp, " ");
+	insert_str = mi_strtrim(temp, " ");
 	one_d_free_null(&temp);
 	if (ft_strchr(insert_str, ' '))
 		tokens[0][0] = 'e';
 	temp = *tokens;
-	*tokens = ft_strinsert(temp, insert_str, *start, *offset - 1);
+	*tokens = mi_strinsert(temp, insert_str, *start, *offset - 1);
 	one_d_free_null(&temp);
 	*offset = *start + ft_strlen(insert_str) - 1;
 	one_d_free_null(&insert_str);

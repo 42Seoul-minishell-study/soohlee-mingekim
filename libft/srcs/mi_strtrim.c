@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strtrim.c                                       :+:      :+:    :+:   */
+/*   mi_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 10:24:12 by soohlee           #+#    #+#             */
-/*   Updated: 2023/06/19 14:27:10 by soohlee          ###   ########.fr       */
+/*   Updated: 2023/06/19 14:29:12 by soohlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strtrim(char const *s1, char const *set)
+char	*mi_strtrim(char const *s1, char const *set)
 {
 	size_t	start;
 	size_t	end;
@@ -25,5 +25,7 @@ char	*ft_strtrim(char const *s1, char const *set)
 	while (end && s1[end - 1] && ft_strchr(set, s1[end - 1]))
 		end--;
 	ms1 = ft_substr(s1, start, end - start);
+	if (!ms1)
+		exit(1);
 	return (ms1);
 }

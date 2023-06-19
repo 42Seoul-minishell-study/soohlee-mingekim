@@ -6,7 +6,7 @@
 /*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 15:12:51 by soohlee           #+#    #+#             */
-/*   Updated: 2023/06/18 17:31:00 by soohlee          ###   ########.fr       */
+/*   Updated: 2023/06/19 14:40:02 by soohlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	make_heredocfile(char **filename)
 	while (1)
 	{
 		str_num = ft_itoa(i);
-		*filename = ft_strjoin(".heredoc_", str_num);
+		*filename = mi_strjoin(".heredoc_", str_num);
 		free(str_num);
 		str_num = 0;
 		if (access(*filename, F_OK | R_OK | W_OK) != 0)
@@ -72,7 +72,7 @@ int	heredoc_excute(char **ops, int redirs_num, char **env)
 	}
 	close(heredoc_fd);
 	free(ops[redirs_num]);
-	ops[redirs_num] = ft_strjoin("<< ", filename);
+	ops[redirs_num] = mi_strjoin("<< ", filename);
 	free(filename);
 	filename = NULL;
 	return (0);

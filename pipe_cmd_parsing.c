@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_cmd_parsing.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mingekim <mingekim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 20:25:17 by mingekim          #+#    #+#             */
-/*   Updated: 2023/05/30 20:25:25 by mingekim         ###   ########.fr       */
+/*   Updated: 2023/06/19 14:40:12 by soohlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ char	*join_path(char *envp_path, char *command)
 	char	*temp;
 	char	*command_path;
 
-	temp = ft_strjoin(envp_path, "/");
-	command_path = ft_strjoin(temp, command);
+	temp = mi_strjoin(envp_path, "/");
+	command_path = mi_strjoin(temp, command);
 	free(temp);
 	return (command_path);
 }
