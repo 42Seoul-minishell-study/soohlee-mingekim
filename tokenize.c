@@ -30,6 +30,7 @@ static char	***split_tokens(char *str)
 {
 	char	***ops_and_words;
 
+	str = pass_space(str);
 	ops_and_words = malloc(sizeof(char **) * 3);
 	if (ops_and_words == NULL)
 	{
@@ -51,7 +52,7 @@ void	print_all_tree(char ****tokens)
 	while (tokens[i] != NULL)
 	{
 		j = 0;
-		while (tokens[i][j] != NULL)
+		while (j < 2)
 		{
 			k = 0;
 			while (tokens[i][j][k] != NULL)
