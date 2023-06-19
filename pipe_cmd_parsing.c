@@ -78,6 +78,8 @@ void	parsing_cmd_and_options(char **command_out, char **envp)
 	while (envp_split[envp_index] != NULL)
 	{
 		result = join_path(envp_split[envp_index++], command_out[0]);
+		write(2, result, ft_strlen(result));
+		write(2, "\n", 1);
 		if (access(result, X_OK) == 0)
 		{
 			free(command_out[0]);

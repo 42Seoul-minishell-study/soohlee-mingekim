@@ -34,7 +34,7 @@ static void	exec_settings(char ***token, int last_fd, int *fd, char ***envp)
 	close_fd(fd[1]);
 }
 
-pid_t	exec_command(char ***token, int last_pipe_fd, int *fd, char ***envp)
+static pid_t	exec_command(char ***token, int last_pipe_fd, int *fd, char ***envp)
 {
 	pid_t	cpid;
 
@@ -43,9 +43,9 @@ pid_t	exec_command(char ***token, int last_pipe_fd, int *fd, char ***envp)
 		return (cpid);
 	else if (cpid < 0)
 		perror_and_exit("fork", 1);
+	exec_settings(token, last_pipe_fd, fd, envp);
 	if (token[1][0] == NULL)
 		exit(0);
-	exec_settings(token, last_pipe_fd, fd, envp);
 	if (is_builtin(token[1]) == 1)
 	{
 		builtin(token[1], envp);
@@ -53,6 +53,7 @@ pid_t	exec_command(char ***token, int last_pipe_fd, int *fd, char ***envp)
 	}
 	else
 	{
+		//print_all_tree(token);
 		execve(token[1][0], token[1], *envp);
 		perror_and_exit("execve", 1);
 	}
@@ -87,7 +88,7 @@ static pid_t	pipe_while(char ****tokens, char ***envp, int pipe_count)
 	return (last_pid);
 }
 
-int	pipe_and_cmd(char ****tokens, char ***envp, int pipe_count)
+static int	pipe_and_cmd(char ****tokens, char ***envp, int pipe_count)
 {
 	pid_t	last_pid;
 
@@ -103,7 +104,6 @@ int	pipe_and_cmd(char ****tokens, char ***envp, int pipe_count)
 	while (wait(NULL) > 0)
 		;
 	set_child_exit_status();
-	printf("after pipe %d\n", g_exit_status);
 	return (1);
 }
 
@@ -114,14 +114,12 @@ int	execute(char *****tokens, char ***envp, int *stdinout_copy)
 	pipe_count = 0;
 	while ((*tokens)[pipe_count] != NULL)
 		pipe_count++;
-	printf("before heredoc %d\n", g_exit_status);
 	if (heredoc(*tokens, *envp, stdinout_copy) == 0)
 	{
 		heredoc_unlink(*tokens);
 		free_tokens(tokens);
 		return (0);
 	}
-	printf("before pipe %d\n", g_exit_status);
 	pipe_and_cmd(*tokens, envp, pipe_count);
 	heredoc_unlink(*tokens);
 	free_tokens(tokens);
