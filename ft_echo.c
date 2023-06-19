@@ -6,11 +6,13 @@
 /*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 13:03:16 by soohlee           #+#    #+#             */
-/*   Updated: 2023/06/18 00:27:38 by soohlee          ###   ########.fr       */
+/*   Updated: 2023/06/19 21:59:15 by soohlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	ehco_print(char **argv);
 
 int	ft_echo(char **argv)
 {
@@ -26,11 +28,7 @@ int	ft_echo(char **argv)
 	}
 	if (!ft_strncmp(*argv, "-n", 2))
 		flag = option_remove(&argv);
-	printf("%s", *argv++);
-	while (*argv)
-		printf(" %s", *argv++);
-	if (flag == 1)
-		printf("\n");
+	ehco_print(argv);
 	g_exit_status = 0;
 	return (0);
 }
@@ -56,4 +54,26 @@ int	option_remove(char ***argv)
 	}
 	flag = 0;
 	return (flag);
+}
+
+int	ehco_print(char **argv)
+{
+	int	flag;
+
+	flag = 1;
+	if ((*argv)[0] == '\0')
+		flag = 0;
+	printf("%s", *argv++);
+	while (*argv)
+	{
+		if (flag == 1)
+			printf(" ");
+		if ((*argv)[0] == '\0')
+			flag = 0;
+		printf("%s", *argv++);
+		flag = 1;
+	}
+	if (flag == 1)
+		printf("\n");
+	return (0);
 }

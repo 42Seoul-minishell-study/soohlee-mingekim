@@ -6,7 +6,7 @@
 /*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 11:28:15 by soohlee           #+#    #+#             */
-/*   Updated: 2023/06/19 15:18:45 by soohlee          ###   ########.fr       */
+/*   Updated: 2023/06/19 20:18:53 by soohlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ typedef enum e_ctrl
 //parsing struct 'only sooha'
 typedef struct s_retoken
 {
+	int		last_flag;
 	int		all_space_check;
 	int		front_space_exist;
 	int		tail_space_exist;
@@ -123,6 +124,7 @@ int		cmd_env_trans(char ***tokens, t_retoken *db, char **env);
 int		re_tokenize(char ***tokens, t_retoken db, char *out_insert_str);
 int		insert_two_d_array(char ***tokens, t_retoken db);
 int		mid_insert(t_retoken *db, char ***new_cmd, int *idx, int *insert_idx);
+int		mi_isalnum(int c);
 
 //expand_utils
 int		single_quate(char **tokens, int *offset);

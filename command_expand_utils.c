@@ -6,7 +6,7 @@
 /*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 14:04:44 by soohlee           #+#    #+#             */
-/*   Updated: 2023/06/19 14:40:50 by soohlee          ###   ########.fr       */
+/*   Updated: 2023/06/19 21:01:19 by soohlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,11 @@ int	re_tokenize(char ***tokens, t_retoken db, char *out_insert_str)
 		;
 	db.front = mi_substr((*tokens)[*(db.cmd_num)], 0, db.start);
 	db.end = mi_substr((*tokens)[*(db.cmd_num)], *(db.offset), -1);
-	if (out_insert_str[0] == ' ')
+	if (out_insert_str[0] == ' ' && *(db.cmd_num) != 0)
 		db.front_space_exist = 1;
 	if (ft_strlen(out_insert_str) >= 2 \
-		&& out_insert_str[ft_strlen(out_insert_str) - 2] == ' ')
+		&& out_insert_str[ft_strlen(out_insert_str) - 2] == ' ' && \
+			db.last_flag == 0)
 		db.tail_space_exist = 1;
 	db.insert_twod = ft_split(out_insert_str, ' ');
 	if (db.insert_twod[1] != 0)
@@ -31,6 +32,8 @@ int	re_tokenize(char ***tokens, t_retoken db, char *out_insert_str)
 	db.twod_len = db.twod_len + db.front_space_exist + db.tail_space_exist;
 	insert_two_d_array(tokens, db);
 	two_d_free_null(&(db.insert_twod));
+	one_d_free_null(&db.front);
+	one_d_free_null(&db.end);
 	return (2);
 }
 
