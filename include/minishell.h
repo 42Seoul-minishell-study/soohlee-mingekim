@@ -6,7 +6,7 @@
 /*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 11:28:15 by soohlee           #+#    #+#             */
-/*   Updated: 2023/06/19 20:18:53 by soohlee          ###   ########.fr       */
+/*   Updated: 2023/06/19 23:38:26 by soohlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,6 +141,7 @@ size_t	get_env_name_len(char *str);
 //ft_echo.c
 int		ft_echo(char **argv);
 int		option_remove(char ***argv);
+int		ehco_print(char **argv);
 
 //ft_exit.c
 int		ft_exit(char **argv, char ***env);

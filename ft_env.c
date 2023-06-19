@@ -6,7 +6,7 @@
 /*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 16:59:06 by soohlee           #+#    #+#             */
-/*   Updated: 2023/06/19 14:38:04 by soohlee          ###   ########.fr       */
+/*   Updated: 2023/06/20 01:25:14 by soohlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,16 @@ char	**set_env(char **envp)
 	while (envp[i] != NULL)
 	{
 		if (ft_strlen(envp[i]) >= 6 && !ft_strncmp(envp[i], "OLDPWD", 6)
-			&& (envp[i][6] == '=' || envp[i][6] == '\0' ))
+			&& (envp[i][6] == '\0' || envp[i][6] == '=' ))
+		{
 			env[i++] = mi_strdup("OLDPWD");
+			continue ;
+		}
 		env[i] = mi_strdup(envp[i]);
 		i++;
 	}
 	env[i] = NULL;
+	//OLDPWD아예 없으면 추가; export 만든거 활용;;
 	return (env);
 }
 

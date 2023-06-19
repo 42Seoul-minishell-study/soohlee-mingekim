@@ -41,5 +41,5 @@ fclean : clean
 	rm -f $(NAME)
 
 re: 
-	$(MAKE) fclean
-	$(MAKE) all
+	$(MAKE) fclean;
+	$(MAKE) all;

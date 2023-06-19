@@ -6,7 +6,7 @@
 /*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 01:51:05 by soohlee           #+#    #+#             */
-/*   Updated: 2023/06/19 14:37:18 by soohlee          ###   ########.fr       */
+/*   Updated: 2023/06/20 01:14:06 by soohlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ void	delete_env(char *env_name, char ***env_out)
 	char	**new_env;
 
 	i = -1;
+	//delete_index = -1; 추가시 릭하나 잡힘
 	while ((*env_out)[++i] != NULL)
 	{
 		if (ft_strncmp((*env_out)[i], env_name, \

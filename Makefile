@@ -54,7 +54,7 @@ SILENT = -s
 all : $(NAME)
 
 $(NAME) : $(LIBFT_A) $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) $(LIBFT_A) $(LDFLAGS) -lreadline -lhistory -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJS) $(LIBFT_A) $(LDFLAGS) -lreadline -lhistory -o $(NAME);
 
 $(LIBFT_A) :
 	cd ./libft; make $(SILENT);
@@ -67,16 +67,16 @@ $(MINI_HEADER) :
 
 clean :
 	cd ./libft; make $(SILENT) clean;
-	rm -f $(OBJS)
+	rm -f $(OBJS);
 
 fclean :
 	cd ./libft; make $(SILENT) fclean;
-	rm -f $(OBJS)
-	rm -f $(NAME)
+	rm -f $(OBJS);
+	rm -f $(NAME);
 
 re :
-	make $(SILENT) fclean
+	make $(SILENT) fclean;
 	cd ./libft; make $(SILENT) re;
-	make $(SILENT) all
+	make $(SILENT) all;
 
-.SILENT : all $(NAME) $(OBJS) $(LIBFT_A) clean fclean re
+.SILENT : all $(NAME) $(OBJS) $(LIBFT_A) clean fclean re;
