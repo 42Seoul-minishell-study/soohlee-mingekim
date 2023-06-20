@@ -59,7 +59,7 @@ int	add_export(char *argv, char ***env)
 	}
 	else
 	{
-		delete_env(name, env);
+		delete_env(name, env, 0);
 		add_env(argv, env);
 		free(name);
 	}

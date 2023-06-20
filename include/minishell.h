@@ -137,7 +137,7 @@ int		env_trans(char **tokens, int *offset, char **env);
 
 //env_utils.c
 char	*get_env(char *env_name, char **env);
-void	delete_env(char *env_name, char ***env_out);
+void	delete_env(char *env_name, char ***env_out, int delete_index);
 void	free_env(char ***env);
 size_t	get_env_name_len(char *str);
 
