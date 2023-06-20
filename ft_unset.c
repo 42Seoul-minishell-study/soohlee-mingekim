@@ -51,7 +51,7 @@ int	del_export(char *argv, char ***env, int *idx)
 	else
 	{
 		free(value);
-		delete_env(argv, env);
+		delete_env(argv, env, 0);
 		*idx = -1;
 	}
 	return (0);

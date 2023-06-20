@@ -136,7 +136,7 @@ int	move_path(char *argv, char ***indepen_env)
 
 int	change_env(char *new_str, char *del_name, char ***indepen_env)
 {
-	delete_env(del_name, indepen_env);
+	delete_env(del_name, indepen_env, 0);
 	add_env(new_str, indepen_env);
 	return (0);
 }

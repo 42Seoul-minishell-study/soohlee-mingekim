@@ -22,33 +22,33 @@ size_t	get_env_name_len(char *str)
 	return (temp - str);
 }
 
-void	delete_env(char *env_name, char ***env_out)
+void	delete_env(char *env_name, char ***env, int delete_index)
 {
-	int		i;
-	int		j;
-	int		delete_index;
+	int		index[3];
 	char	**new_env;
 
-	i = -1;
-	if (is_compare(env_name, *env_out))
+	index[0] = -1;
+	if (is_compare(env_name, *env))
 		return ;
-	while ((*env_out)[++i] != NULL)
+	while ((*env)[++index[0]] != NULL)
 	{
-		if (ft_strncmp((*env_out)[i], env_name, \
-			get_env_name_len((*env_out)[i])) == 0)
-			delete_index = i;
+		if (ft_strncmp((*env)[index[0]], env_name, \
+			get_env_name_len((*env)[index[0]])) == 0)
+			delete_index = index[0];
 	}
-	new_env = malloc(sizeof(char *) * ft_twod_strlen(*env_out));
-	i = -1;
-	j = 0;
-	while ((*env_out)[++i] != NULL)
+	new_env = malloc(sizeof(char *) * ft_twod_strlen(*env));
+	if (new_env == NULL)
+		perror_and_exit("malloc", 1);
+	index[0] = -1;
+	index[1] = 0;
+	while ((*env)[++index[0]] != NULL)
 	{
-		if (i != delete_index)
-			new_env[j++] = ft_strdup((*env_out)[i]);
+		if (index[0] != delete_index)
+			new_env[index[1]++] = ft_strdup((*env)[index[0]]);
 	}
-	new_env[j] = NULL;
-	free_env(env_out);
-	*env_out = new_env;
+	new_env[index[1]] = NULL;
+	free_env(env);
+	*env = new_env;
 }
 
 void	free_env(char ***env)
