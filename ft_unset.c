@@ -25,6 +25,7 @@ int	ft_unset(char **argv, char ***env)
 		return (0);
 	if (!(*(++argv)))
 		return (0);
+	g_exit_status = 0;
 	temp = argv;
 	flag = 0;
 	while (*temp)
