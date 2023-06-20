@@ -34,7 +34,8 @@ static void	exec_settings(char ***token, int last_fd, int *fd, char ***envp)
 	close_fd(fd[1]);
 }
 
-static pid_t	exec_command(char ***token, int last_pipe_fd, int *fd, char ***envp)
+static pid_t	exec_command(char ***token, int last_pipe_fd, \
+						int *fd, char ***envp)
 {
 	pid_t	cpid;
 
@@ -53,7 +54,6 @@ static pid_t	exec_command(char ***token, int last_pipe_fd, int *fd, char ***envp
 	}
 	else
 	{
-		//print_all_tree(token);
 		execve(token[1][0], token[1], *envp);
 		perror_and_exit("execve", 1);
 	}

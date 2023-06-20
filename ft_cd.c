@@ -49,7 +49,6 @@ int	home_path_move(char ***indepen_env)
 	if (!cur_path)
 		exit(1);
 	pull_path = mi_strjoin("OLDPWD=", cur_path);
-	printf("-%s-\n", pull_path);
 	one_d_free_null(&cur_path);
 	change_env(pull_path, "OLDPWD", indepen_env);
 	one_d_free_null(&pull_path);
@@ -61,6 +60,7 @@ int	home_path_move(char ***indepen_env)
 	one_d_free_null(&move_path);
 	change_env(pull_path, "PWD", indepen_env);
 	one_d_free_null(&pull_path);
+	g_exit_status = 0;
 	return (0);
 }
 
@@ -72,10 +72,13 @@ int	old_path_move(char ***indepen_env)
 
 	move_path = get_env("OLDPWD", *indepen_env);
 	if (!move_path)
+	{
+		g_exit_status = 1;
 		return (1 && write(2, "cd: OLDPWD not set\n", 19));
+	}
 	cur_path = getcwd(NULL, 0);
 	if (chdir(move_path))
-		exit(write(2, "chdir_error\n", 12));
+		exit(write(2, "chdir_error\n", 12) && 1);
 	new_path = mi_strjoin("OLDPWD=", cur_path);
 	one_d_free_null(&cur_path);
 	change_env(new_path, "OLDPWD", indepen_env);
@@ -84,6 +87,7 @@ int	old_path_move(char ***indepen_env)
 	one_d_free_null(&move_path);
 	change_env(new_path, "PWD", indepen_env);
 	one_d_free_null(&new_path);
+	g_exit_status = 0;
 	return (0);
 }
 
@@ -119,6 +123,7 @@ int	move_path(char *argv, char ***indepen_env)
 			one_d_free_null(&cur_path);
 			change_env(pull_path, "PWD", indepen_env);
 			one_d_free_null(&pull_path);
+			g_exit_status = 0;
 		}
 		return (0);
 	}
@@ -131,17 +136,8 @@ int	move_path(char *argv, char ***indepen_env)
 
 int	change_env(char *new_str, char *del_name, char ***indepen_env)
 {
-	printf("new_str: %s del: %s\n", new_str, del_name);
-	ft_putstr_fd("delete_env_before: ", 2);
-	system("leaks minishell");
 	delete_env(del_name, indepen_env);
-	ft_putstr_fd("delete_env_after: ", 2);
-	system("leaks minishell");
-	ft_putstr_fd("add_env_before: ", 2);
-	system("leaks minishell");
 	add_env(new_str, indepen_env);
-	ft_putstr_fd("add_env_after: ", 2);
-	system("leaks minishell");
 	return (0);
 }
 

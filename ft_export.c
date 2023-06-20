@@ -22,6 +22,7 @@ int	ft_export(char **argv, char ***env)
 	char	**temp;
 	int		flag;
 
+	g_exit_status = 0;
 	if (!(*(++argv)))
 		return (print_export(*env));
 	temp = argv;
@@ -73,7 +74,7 @@ int	print_export(char **env)
 	int				sort_i;
 	int				sort_hash[1028];
 
-	ft_memset(sort_hash, '\0', sizeof(int) * 1028);
+	ft_memset(sort_hash, 0, sizeof(int) * 1028);
 	make_sort_hash(sort_hash, env);
 	sort_i = -1;
 	while (++sort_i < 1028)
@@ -107,8 +108,9 @@ int	is_export_str(char *s)
 	temp = s;
 	while (*s && *s == '=')
 	{
-		if (!(ft_isalnum(*s) || *s == '_'))
+		if (!ft_isalnum(*s))
 		{
+			g_exit_status = 1;
 			write(2, "export: \'", 9);
 			write(2, temp, ft_strlen(temp));
 			write(2, "\'", 1);
