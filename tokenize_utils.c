@@ -45,12 +45,10 @@ char	*find_next_word(char *str)
 		if (*str == '\'')
 		{
 			str = find_next_single_quote(str);
-			return (++str);
 		}
 		else if (*str == '\"')
 		{
 			str = find_next_double_quote(str);
-			return (++str);
 		}
 		str++;
 	}
