@@ -6,7 +6,7 @@
 /*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 11:28:15 by soohlee           #+#    #+#             */
-/*   Updated: 2023/06/19 23:38:26 by soohlee          ###   ########.fr       */
+/*   Updated: 2023/06/20 11:53:00 by soohlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,9 @@ typedef struct s_retoken
 
 //global variable
 int		g_exit_status;
+
+//test
+int		ft_twod_strlen(char **str);
 
 //free
 int		two_d_free_null(char ***str);
@@ -157,6 +160,7 @@ char	**set_env(char **envp);
 void	add_env(char *new_str, char ***env_out);
 void	print_env(char **env);
 void	ft_env(char **env);
+int		is_compare(char *compare, char **envp);
 
 //ft_export.c
 int		ft_export(char **argv, char ***env);

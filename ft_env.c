@@ -6,7 +6,7 @@
 /*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 16:59:06 by soohlee           #+#    #+#             */
-/*   Updated: 2023/06/20 01:25:14 by soohlee          ###   ########.fr       */
+/*   Updated: 2023/06/20 13:04:34 by soohlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,21 +20,25 @@ char	**set_env(char **envp)
 	i = 0;
 	while (envp[i] != NULL)
 		i++;
-	env = malloc(sizeof(char *) * (i + 1));
+	env = malloc(sizeof(char *) * (i + 1 + is_compare("OLDPWD", envp)));
 	i = 0;
 	while (envp[i] != NULL)
 	{
-		if (ft_strlen(envp[i]) >= 6 && !ft_strncmp(envp[i], "OLDPWD", 6)
+		if ((ft_strlen(envp[i]) >= 6) && (!ft_strncmp(envp[i], "OLDPWD", 6)) \
 			&& (envp[i][6] == '\0' || envp[i][6] == '=' ))
 		{
-			env[i++] = mi_strdup("OLDPWD");
-			continue ;
+			env[i] = mi_strdup("OLDPWD");
+			i++;
 		}
-		env[i] = mi_strdup(envp[i]);
-		i++;
+		else
+		{
+			env[i] = mi_strdup(envp[i]);
+			i++;
+		}
 	}
+	if (is_compare("OLDPWD", envp) == 1)
+		env[i++] = mi_strdup("OLDPWD");
 	env[i] = NULL;
-	//OLDPWD아예 없으면 추가; export 만든거 활용;;
 	return (env);
 }
 
@@ -78,4 +82,17 @@ void	ft_env(char **env)
 {
 	print_env(env);
 	g_exit_status = 0;
+}
+
+int	is_compare(char *compare, char **envp)
+{
+	int	i;
+
+	i = -1;
+	while (envp[++i])
+	{
+		if (ft_strncmp(envp[i], compare, ft_strlen(compare)) == 0)
+			return (0);
+	}
+	return (1);
 }
