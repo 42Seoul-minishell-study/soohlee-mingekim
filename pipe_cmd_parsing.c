@@ -33,6 +33,8 @@ char	**parsing_path_or_null(char **envp)
 			break ;
 		envp++;
 	}
+	if (*envp == NULL)
+		return (NULL);
 	if (ft_strncmp("PATH=", *envp, 5) == 0)
 	{
 		path = *envp + 5;
@@ -56,15 +58,15 @@ void	free_all_cmd_str(char **command_split)
 
 static int	free_and_exit(char **envp_split, char *command)
 {
-	free_all_cmd_str(envp_split);
+	if (envp_split != NULL)
+		free_all_cmd_str(envp_split);
 	write(2, command, ft_strlen(command));
 	write(2, ": command not found\n", 21);
 	exit(127);
 }
 
-void	parsing_cmd_and_options(char **command_out, char **envp)
+void	parsing_cmd_and_options(char **command_out, char **envp, int envp_index)
 {
-	int		envp_index;
 	char	*result;
 	char	**envp_split;
 
@@ -75,11 +77,11 @@ void	parsing_cmd_and_options(char **command_out, char **envp)
 	if (access(command_out[0], X_OK) == 0)
 		return ;
 	envp_split = parsing_path_or_null(envp);
+	if (envp_split == NULL)
+		perror_and_exit(result, 127);
 	while (envp_split[envp_index] != NULL)
 	{
 		result = join_path(envp_split[envp_index++], command_out[0]);
-		write(2, result, ft_strlen(result));
-		write(2, "\n", 1);
 		if (access(result, X_OK) == 0)
 		{
 			free(command_out[0]);

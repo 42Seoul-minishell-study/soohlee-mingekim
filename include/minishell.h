@@ -188,7 +188,7 @@ int		get_infile_fd(char ***token, int *last_pipe_fd_out);
 int		get_outfile_fd(char ***token, int *pipe_fd_out);
 
 //pipe_cmd_parsing.c
-void	parsing_cmd_and_options(char **command_out, char **envp);
+void	parsing_cmd_and_options(char **command_out, char **envp, int index);
 
 //heredoc.c
 int		heredoc(char ****tokens, char **env, int *stdinout_copy);

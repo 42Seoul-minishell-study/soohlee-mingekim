@@ -18,7 +18,7 @@ static void	exec_settings(char ***token, int last_fd, int *fd, char ***envp)
 		exit(1);
 	if (get_outfile_fd(token, fd) == 0)
 		exit(1);
-	parsing_cmd_and_options(token[1], *envp);
+	parsing_cmd_and_options(token[1], *envp, 0);
 	if (last_fd != -1)
 	{
 		if (dup2(last_fd, STDIN_FILENO) < 0)
