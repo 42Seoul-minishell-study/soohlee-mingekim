@@ -6,7 +6,7 @@
 /*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 11:28:15 by soohlee           #+#    #+#             */
-/*   Updated: 2023/06/20 11:53:00 by soohlee          ###   ########.fr       */
+/*   Updated: 2023/06/20 17:19:52 by soohlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,6 +151,10 @@ int		ft_exit(char **argv, char ***env);
 
 //ft_cd.c
 int		ft_cd(char **argv, char ***indepen_env);
+
+//cd_utils.c
+int		change_env(char *new_str, char *del_name, char ***indepen_env);
+int		error_print(char *cmd, char *argv, char *messeage);
 
 //ft_pwd.c
 int		ft_pwd(void);
