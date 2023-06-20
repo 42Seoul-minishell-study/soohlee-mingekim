@@ -6,48 +6,16 @@
 /*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 15:12:51 by soohlee           #+#    #+#             */
-/*   Updated: 2023/06/19 16:55:48 by soohlee          ###   ########.fr       */
+/*   Updated: 2023/06/20 19:58:02 by soohlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	make_heredocfile(char **filename)
-{
-	char	*str_num;
-	int		i;
-
-	i = 0;
-	while (1)
-	{
-		str_num = ft_itoa(i);
-		*filename = mi_strjoin(".heredoc_", str_num);
-		free(str_num);
-		str_num = 0;
-		if (access(*filename, F_OK | R_OK | W_OK) != 0)
-			break ;
-		free(*filename);
-		*filename = 0;
-		i++;
-	}
-	return (0);
-}
-
-int	heredoc_excute(char **ops, int redirs_num, char **env)
+static int	heredoc_readline(char *delimiter, int heredoc_fd, char **env)
 {
 	char	*str;
-	int		heredoc_fd;
-	char	*filename;
-	char	*delimiter;
-	int		stdfd[2];
 
-	stdfd[0] = dup(0);
-	stdfd[1] = dup(1);
-	if (g_exit_status != -2)
-		return (0);
-	delimiter = ft_strchr(ops[redirs_num], ' ') + 1;
-	make_heredocfile(&filename);
-	heredoc_fd = open(filename, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	while (1 && g_exit_status == -2)
 	{
 		str = readline("> ");
@@ -68,6 +36,45 @@ int	heredoc_excute(char **ops, int redirs_num, char **env)
 		free(str);
 		str = NULL;
 	}
+	return (0);
+}
+
+static int	make_heredocfile(char **filename)
+{
+	char	*str_num;
+	int		i;
+
+	i = 0;
+	while (1)
+	{
+		str_num = ft_itoa(i);
+		*filename = mi_strjoin(".heredoc_", str_num);
+		free(str_num);
+		str_num = 0;
+		if (access(*filename, F_OK | R_OK | W_OK) != 0)
+			break ;
+		free(*filename);
+		*filename = 0;
+		i++;
+	}
+	return (0);
+}
+
+static int	heredoc_excute(char **ops, int redirs_num, char **env)
+{
+	int		heredoc_fd;
+	char	*filename;
+	char	*delimiter;
+	int		stdfd[2];
+
+	stdfd[0] = dup(0);
+	stdfd[1] = dup(1);
+	if (g_exit_status != -2)
+		return (0);
+	delimiter = ft_strchr(ops[redirs_num], ' ') + 1;
+	make_heredocfile(&filename);
+	heredoc_fd = open(filename, O_CREAT | O_WRONLY | O_TRUNC, 0644);
+	heredoc_readline(delimiter, heredoc_fd, env);
 	if (g_exit_status == -3)
 	{
 		dup2(stdfd[0], 0);
@@ -76,12 +83,10 @@ int	heredoc_excute(char **ops, int redirs_num, char **env)
 	close(heredoc_fd);
 	free(ops[redirs_num]);
 	ops[redirs_num] = mi_strjoin("<< ", filename);
-	free(filename);
-	filename = NULL;
-	return (0);
+	return (one_d_free_null(&filename));
 }
 
-int	find_heredoc(char **ops, char **env)
+static int	find_heredoc(char **ops, char **env)
 {
 	int		i;
 
@@ -118,24 +123,4 @@ int	heredoc(char ****tokens, char **env, int *stdinout_copy)
 	}
 	g_exit_status = previous_exit_status;
 	return (1);
-}
-
-int	heredoc_unlink(char ****tokens)
-{
-	int	process_idx;
-	int	redir_idx;
-
-	process_idx = -1;
-	while (tokens[++process_idx])
-	{
-		redir_idx = -1;
-		while (tokens[process_idx][0][++redir_idx])
-		{
-			if (!ft_strncmp(tokens[process_idx][0][redir_idx], "<< ", 3))
-			{
-				unlink(ft_strchr(tokens[process_idx][0][redir_idx], ' ') + 1);
-			}
-		}
-	}
-	return (0);
 }

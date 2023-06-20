@@ -3,23 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize_check.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mingekim <mingekim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 20:25:41 by mingekim          #+#    #+#             */
-/*   Updated: 2023/05/30 20:25:42 by mingekim         ###   ########.fr       */
+/*   Updated: 2023/06/20 20:32:12 by soohlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	pipe_check(char ***token)
+static int	pipe_check(char ***token)
 {
 	if (token[1][0] == NULL && token[0][0] == NULL)
 		return (0);
 	return (1);
 }
 
-int	operation_check(char ***token)
+static int	operation_check(char ***token)
 {
 	int		i;
 	char	*temp;

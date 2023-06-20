@@ -6,28 +6,11 @@
 /*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 21:25:43 by soohlee           #+#    #+#             */
-/*   Updated: 2023/06/18 14:34:24 by soohlee          ###   ########.fr       */
+/*   Updated: 2023/06/20 20:12:41 by soohlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	free_exit(int flag)
-{
-	exit_print(flag);
-	exit (0);
-}
-
-void	exit_print(int flag)
-{
-	if (flag == EXIT)
-	{
-		rl_on_new_line();
-		ft_putstr_fd("\x1b[1A", STDOUT_FILENO);
-		ft_putstr_fd("\033[11C", STDOUT_FILENO);
-		ft_printf("exit\n");
-	}
-}
 
 int	two_d_free_null(char ***str)
 {

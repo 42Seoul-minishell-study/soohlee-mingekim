@@ -6,38 +6,41 @@
 /*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 14:04:44 by soohlee           #+#    #+#             */
-/*   Updated: 2023/06/19 21:01:19 by soohlee          ###   ########.fr       */
+/*   Updated: 2023/06/20 20:17:05 by soohlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	re_tokenize(char ***tokens, t_retoken db, char *out_insert_str)
+static int	mid_insert(t_retoken *db, char ***new_cmd, int *i, int *insert_idx)
 {
-	while ((*tokens)[db.cmdtotal++])
-		;
-	db.front = mi_substr((*tokens)[*(db.cmd_num)], 0, db.start);
-	db.end = mi_substr((*tokens)[*(db.cmd_num)], *(db.offset), -1);
-	if (out_insert_str[0] == ' ' && *(db.cmd_num) != 0)
-		db.front_space_exist = 1;
-	if (ft_strlen(out_insert_str) >= 2 \
-		&& out_insert_str[ft_strlen(out_insert_str) - 2] == ' ' && \
-			db.last_flag == 0)
-		db.tail_space_exist = 1;
-	db.insert_twod = ft_split(out_insert_str, ' ');
-	if (db.insert_twod[1] != 0)
-		db.start = 0;
-	while (db.insert_twod[db.twod_len++])
-		;
-	db.twod_len = db.twod_len + db.front_space_exist + db.tail_space_exist;
-	insert_two_d_array(tokens, db);
-	two_d_free_null(&(db.insert_twod));
-	one_d_free_null(&db.front);
-	one_d_free_null(&db.end);
-	return (2);
+	if (db->front_space_exist == 0)
+		(*new_cmd)[(*i)++] = \
+			mi_strjoin(db->front, db->insert_twod[(*insert_idx)++]);
+	else
+		(*new_cmd)[(*i)++] = mi_strdup(db->front);
+	while (db->insert_twod[(*insert_idx) + 1])
+		(*new_cmd)[(*i)++] = \
+			mi_strdup(db->insert_twod[(*insert_idx)++]);
+	if (db->tail_space_exist == 0)
+	{
+		(*new_cmd)[(*i)++] = \
+			mi_strjoin(db->insert_twod[(*insert_idx)], db->end);
+		if (ft_strlen(db->insert_twod[(*insert_idx)]) == 0)
+			*(db->offset) = db->start;
+		else
+			*(db->offset) = \
+				db->start + ft_strlen(db->insert_twod[(*insert_idx)]) - 1;
+		insert_idx++;
+		return (0);
+	}
+	(*new_cmd)[(*i)++] = mi_strdup(db->insert_twod[(*insert_idx)]);
+	(*new_cmd)[(*i)++] = mi_strdup(db->end);
+	*(db->offset) = db->start + ft_strlen(db->insert_twod[(*insert_idx)++]) - 1;
+	return (0);
 }
 
-int	insert_two_d_array(char ***tokens, t_retoken db)
+static int	insert_two_d_array(char ***tokens, t_retoken db)
 {
 	char	**new_cmd;
 	int		new_cmd_num;
@@ -64,30 +67,27 @@ int	insert_two_d_array(char ***tokens, t_retoken db)
 	return (0);
 }
 
-int	mid_insert(t_retoken *db, char ***new_cmd, int *idx, int *insert_idx)
+int	re_tokenize(char ***tokens, t_retoken db, char *out_insert_str)
 {
-	if (db->front_space_exist == 0)
-		(*new_cmd)[(*idx)++] = \
-			mi_strjoin(db->front, db->insert_twod[(*insert_idx)++]);
-	else
-		(*new_cmd)[(*idx)++] = mi_strdup(db->front);
-	while (db->insert_twod[(*insert_idx) + 1])
-		(*new_cmd)[(*idx)++] = \
-			mi_strdup(db->insert_twod[(*insert_idx)++]);
-	if (db->tail_space_exist == 0)
-	{
-		(*new_cmd)[(*idx)++] = \
-			mi_strjoin(db->insert_twod[(*insert_idx)], db->end);
-		if (ft_strlen(db->insert_twod[(*insert_idx)]) == 0)
-			*(db->offset) = db->start;
-		else
-			*(db->offset) = \
-				db->start + ft_strlen(db->insert_twod[(*insert_idx)]) - 1;
-		insert_idx++;
-		return (0);
-	}
-	(*new_cmd)[(*idx)++] = mi_strdup(db->insert_twod[(*insert_idx)]);
-	(*new_cmd)[(*idx)++] = mi_strdup(db->end);
-	*(db->offset) = db->start + ft_strlen(db->insert_twod[(*insert_idx)++]) - 1;
-	return (0);
+	while ((*tokens)[db.cmdtotal++])
+		;
+	db.front = mi_substr((*tokens)[*(db.cmd_num)], 0, db.start);
+	db.end = mi_substr((*tokens)[*(db.cmd_num)], *(db.offset), -1);
+	if (out_insert_str[0] == ' ' && *(db.cmd_num) != 0)
+		db.front_space_exist = 1;
+	if (ft_strlen(out_insert_str) >= 2 \
+		&& out_insert_str[ft_strlen(out_insert_str) - 2] == ' ' && \
+			db.last_flag == 0)
+		db.tail_space_exist = 1;
+	db.insert_twod = ft_split(out_insert_str, ' ');
+	if (db.insert_twod[1] != 0)
+		db.start = 0;
+	while (db.insert_twod[db.twod_len++])
+		;
+	db.twod_len = db.twod_len + db.front_space_exist + db.tail_space_exist;
+	insert_two_d_array(tokens, db);
+	two_d_free_null(&(db.insert_twod));
+	one_d_free_null(&db.front);
+	one_d_free_null(&db.end);
+	return (2);
 }

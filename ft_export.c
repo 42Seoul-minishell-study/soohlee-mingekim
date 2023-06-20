@@ -6,43 +6,13 @@
 /*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 18:25:46 by soohlee           #+#    #+#             */
-/*   Updated: 2023/06/19 14:41:07 by soohlee          ###   ########.fr       */
+/*   Updated: 2023/06/20 20:25:26 by soohlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	add_export(char *argv, char ***env);
-int	print_export(char **env);
-int	is_export_str(char *s);
-int	make_sort_hash(int *sort_hash, char **env);
-
-int	ft_export(char **argv, char ***env)
-{
-	char	**temp;
-	int		flag;
-
-	g_exit_status = 0;
-	if (!(*(++argv)))
-		return (print_export(*env));
-	temp = argv;
-	flag = 0;
-	while (*temp)
-	{
-		flag = flag + (is_export_str(*temp));
-		temp++;
-	}
-	while (*argv)
-	{
-		add_export(*argv, env);
-		argv++;
-	}
-	if (flag >= 1)
-		g_exit_status = 1;
-	return (0);
-}
-
-int	add_export(char *argv, char ***env)
+static int	add_export(char *argv, char ***env)
 {
 	char	*value;
 	char	*name;
@@ -53,55 +23,19 @@ int	add_export(char *argv, char ***env)
 		return (only_name_add(argv, env));
 	value = get_env(name, *env);
 	if (!value)
-	{
 		add_env(argv, env);
-		free(name);
-	}
 	else
 	{
+		one_d_free_null(&value);
 		delete_env(name, env, 0);
 		add_env(argv, env);
-		free(name);
 	}
+	one_d_free_null(&name);
 	g_exit_status = 0;
 	return (0);
 }
 
-int	print_export(char **env)
-{
-	int				i;
-	int				j;
-	int				sort_i;
-	int				sort_hash[1028];
-
-	ft_memset(sort_hash, 0, sizeof(int) * 1028);
-	make_sort_hash(sort_hash, env);
-	sort_i = -1;
-	while (++sort_i < 1028)
-	{
-		i = -1;
-		while (env[++i])
-		{
-			if (!(sort_hash[sort_i] == 1 && sort_i == (int)env[i][0]))
-				continue ;
-			j = -1;
-			while (env[i][++j])
-			{
-				write(1, &(env[i][j]), 1);
-				if (env[i][j] == '=')
-					write(1, "\"", 1);
-			}
-			if (ft_strchr(env[i], '='))
-				write(1, "\"\n", 2);
-			else
-				write(1, "\n", 1);
-		}
-	}
-	g_exit_status = 0;
-	return (0);
-}
-
-int	is_export_str(char *s)
+static int	is_export_str(char *s)
 {
 	char	*temp;
 
@@ -122,26 +56,45 @@ int	is_export_str(char *s)
 	return (0);
 }
 
-int	only_name_add(char *argv, char ***env)
+static int	print_export(char **env)
 {
-	int	i;
+	int				i;
+	int				j;
+	int				sort_i;
+	int				sort_hash[1024];
 
-	i = -1;
-	while ((*env)[++i])
+	ft_memset(sort_hash, 0, sizeof(int) * 1024);
+	make_sort_hash(sort_hash, env);
+	sort_i = -1;
+	while (++sort_i < 1028)
 	{
-		if (!ft_strncmp(argv, (*env)[i], get_env_name_len((*env)[i])))
-			return (0);
+		i = -1;
+		while (env[++i])
+		{
+			if (!(sort_hash[sort_i] == 1 && sort_i == (int)env[i][0]))
+				continue ;
+			j = -1;
+			print_export_oneline(env, &i, &j);
+		}
 	}
-	add_env(argv, env);
 	return (0);
 }
 
-int	make_sort_hash(int *sort_hash, char **env)
+int	ft_export(char **argv, char ***env)
 {
-	int	i;
+	char	**temp;
+	int		flag;
 
-	i = -1;
-	while (env[++i])
-		sort_hash[(int)(env[i][0])] = 1;
+	g_exit_status = 0;
+	if (!*(++argv))
+		return (print_export(*env));
+	temp = argv;
+	flag = 0;
+	while (*temp)
+		flag = flag + (is_export_str(*temp++));
+	while (*argv)
+		add_export(*argv++, env);
+	if (flag >= 1)
+		g_exit_status = 1;
 	return (0);
 }

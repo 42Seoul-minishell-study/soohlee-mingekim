@@ -6,7 +6,7 @@
 /*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 17:16:49 by soohlee           #+#    #+#             */
-/*   Updated: 2023/06/20 17:29:49 by soohlee          ###   ########.fr       */
+/*   Updated: 2023/06/20 19:13:52 by soohlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	change_env(char *new_str, char *del_name, char ***indepen_env)
 {
-	delete_env(del_name, indepen_env);
+	delete_env(del_name, indepen_env, 0);
 	add_env(new_str, indepen_env);
 	return (0);
 }

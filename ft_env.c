@@ -6,11 +6,24 @@
 /*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 16:59:06 by soohlee           #+#    #+#             */
-/*   Updated: 2023/06/20 13:04:34 by soohlee          ###   ########.fr       */
+/*   Updated: 2023/06/20 20:23:24 by soohlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	is_compare(char *compare, char **envp)
+{
+	int	i;
+
+	i = -1;
+	while (envp[++i])
+	{
+		if (ft_strncmp(envp[i], compare, ft_strlen(compare)) == 0)
+			return (0);
+	}
+	return (1);
+}
 
 char	**set_env(char **envp)
 {
@@ -21,20 +34,14 @@ char	**set_env(char **envp)
 	while (envp[i] != NULL)
 		i++;
 	env = malloc(sizeof(char *) * (i + 1 + is_compare("OLDPWD", envp)));
-	i = 0;
-	while (envp[i] != NULL)
+	i = -1;
+	while (envp[++i] != NULL)
 	{
 		if ((ft_strlen(envp[i]) >= 6) && (!ft_strncmp(envp[i], "OLDPWD", 6)) \
 			&& (envp[i][6] == '\0' || envp[i][6] == '=' ))
-		{
 			env[i] = mi_strdup("OLDPWD");
-			i++;
-		}
 		else
-		{
 			env[i] = mi_strdup(envp[i]);
-			i++;
-		}
 	}
 	if (is_compare("OLDPWD", envp) == 1)
 		env[i++] = mi_strdup("OLDPWD");
@@ -82,17 +89,4 @@ void	ft_env(char **env)
 {
 	print_env(env);
 	g_exit_status = 0;
-}
-
-int	is_compare(char *compare, char **envp)
-{
-	int	i;
-
-	i = -1;
-	while (envp[++i])
-	{
-		if (ft_strncmp(envp[i], compare, ft_strlen(compare)) == 0)
-			return (0);
-	}
-	return (1);
 }

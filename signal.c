@@ -6,24 +6,13 @@
 /*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 19:05:31 by soohlee           #+#    #+#             */
-/*   Updated: 2023/06/18 20:02:14 by soohlee          ###   ########.fr       */
+/*   Updated: 2023/06/20 20:30:40 by soohlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	set_signal(void)
-{
-	struct termios	term;
-
-	tcgetattr(STDIN_FILENO, &term);
-	term.c_lflag &= ~ECHOCTL;
-	tcsetattr(STDIN_FILENO, TCSANOW, &term);
-	signal(SIGINT, ctrl_c_handler);
-	signal(SIGQUIT, SIG_IGN);
-}
-
-void	ctrl_c_handler(int signum)
+static void	ctrl_c_handler(int signum)
 {
 	if (g_exit_status == -2)
 	{
@@ -38,6 +27,17 @@ void	ctrl_c_handler(int signum)
 	g_exit_status = CTRL_C;
 	close(0);
 	close(1);
+}
+
+void	set_signal(void)
+{
+	struct termios	term;
+
+	tcgetattr(STDIN_FILENO, &term);
+	term.c_lflag &= ~ECHOCTL;
+	tcsetattr(STDIN_FILENO, TCSANOW, &term);
+	signal(SIGINT, ctrl_c_handler);
+	signal(SIGQUIT, SIG_IGN);
 }
 
 int	stdin_dup(int *stdinout_copy)

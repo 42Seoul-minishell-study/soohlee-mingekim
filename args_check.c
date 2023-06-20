@@ -6,7 +6,7 @@
 /*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 19:18:48 by soohlee           #+#    #+#             */
-/*   Updated: 2023/06/18 15:26:24 by soohlee          ###   ########.fr       */
+/*   Updated: 2023/06/20 19:48:21 by soohlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,5 +31,3 @@ int	args_check(int argc, char **argv, char **envp)
 	}
 	return (0);
 }
-
-//minishell에 대한 access 체크 (access함수)

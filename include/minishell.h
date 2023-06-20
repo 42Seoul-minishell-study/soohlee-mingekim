@@ -6,7 +6,7 @@
 /*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 11:28:15 by soohlee           #+#    #+#             */
-/*   Updated: 2023/06/20 17:19:52 by soohlee          ###   ########.fr       */
+/*   Updated: 2023/06/20 20:32:34 by soohlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ typedef enum e_ctrl
 	CTRL_C_COUNT = 2
 }	t_ctrl;
 
-//parsing struct 'only sooha'
 typedef struct s_retoken
 {
 	int		last_flag;
@@ -55,30 +54,109 @@ typedef struct s_retoken
 	int		cmdtotal;
 }		t_retoken;
 
-//global variable
 int		g_exit_status;
-
-//test
-int		ft_twod_strlen(char **str);
-
-//free
-int		two_d_free_null(char ***str);
-int		one_d_free_null(char **str);
 
 //args_check.c
 int		args_check(int argc, char **argv, char **envp);
 
-//signal
+//builtin.c
+void	builtin(char **cmd, char ***env);
+int		is_builtin(char **cmd);
+
+//cd_utils.c
+int		change_env(char *new_str, char *del_name, char ***indepen_env);
+int		error_print(char *cmd, char *argv, char *messeage);
+
+//command_expand.c
+int		cmd_expand(char ***tokens, char **env);
+
+//command_expand_utils.c
+int		re_tokenize(char ***tokens, t_retoken db, char *out_insert_str);
+
+//env_utils.c
+size_t	get_env_name_len(char *str);
+void	delete_env(char *env_name, char ***env_out, int delete_index);
+void	free_env(char ***env);
+char	*get_env(char *env_name, char **env);
+int		ft_twod_strlen(char **str);
+
+//expand_utils.c
+int		single_quate(char **tokens, int *offset);
+int		double_quate(char **tokens, int *offset, char **env);
+int		env_trans(char **tokens, int *offset, char **env);
+char	*word_expand(char **tokens, char **env);
+
+//free_exit.c
+int		two_d_free_null(char ***str);
+int		one_d_free_null(char **str);
+
+//ft_cd.c
+int		ft_cd(char **argv, char ***indepen_env);
+
+//ft_echo.c
+int		ft_echo(char **argv);
+
+//ft_env.c
+char	**set_env(char **envp);
+void	add_env(char *new_str, char ***env_out);
+void	print_env(char **env);
+void	ft_env(char **env);
+int		is_compare(char *compare, char **envp);
+
+//ft_exit.c
+int		ft_exit(char **argv, char ***env);
+
+//ft_export.c
+int		ft_export(char **argv, char ***env);
+
+//ft_export_utils.c
+int		make_sort_hash(int *sort_hash, char **env);
+int		only_name_add(char *argv, char ***env);
+int		print_export_oneline(char **env, int *i, int *j);
+
+//ft_pwd.c
+int		ft_pwd(void);
+
+//ft_unset.c
+int		ft_unset(char **argv, char ***env);
+
+//heredoc.c
+int		heredoc(char ****tokens, char **env, int *stdinout_copy);
+
+//heredoc_utils.c
+int		heredoc_unlink(char ****tokens);
+
+//pipe.c
+int		execute(char *****tokens, char ***envp, int *ctrl_cnt);
+
+//pipe_check.c
+int		check_input(char *word, int *flag_out);
+int		check_output(char *word, int *flag_out);
+
+//pipe_utile.c
+int		perror_and_exit(char *str, int exit_num);
+void	close_fd(int fd);
+void	set_fds_not_use(int *fd);
+void	set_child_exit_status(void);
+
+//pipe_get_fd.c
+int		get_infile_fd(char ***token, int *last_pipe_fd_out);
+int		get_outfile_fd(char ***token, int *pipe_fd_out);
+
+//pipe_cmd_parsing.c
+void	parsing_cmd_and_options(char **command_out, char **envp, int index);
+
+//redirection_expand.c
+int		redirection_expand(char ***tokens, char **env);
+
+//shell_expand.c
+int		shell_expand(char *****tokens, char **env);
+
+//signal.c
 void	set_signal(void);
-void	ctrl_c_handler(int signum);
 int		stdin_dup2(int *stdinout_copy);
 int		stdin_dup(int *stdinout_copy);
 int		ctrl_d_continue(char *str);
-// int		ctrl_d_exit(char *str, int *stdinout_copy);
-
-//shell terminate
-void	free_exit(int flag);
-void	exit_print(int flag);
 
 //tokenize.c
 char	****tokenize(char *str);
@@ -110,96 +188,8 @@ int		tokens_check(char *****tokens);
 //translation.c
 int		translation(char *****tokens, char **envp);
 
-//shell_expansions.c
-int		shell_expand(char *****tokens, char **env);
-int		redirection_expand(char ***tokens, char **env);
-int		cmd_expand(char ***tokens, char **env);
 
-//redirection_expand
-int		redir_line_expand(char **tokens, char **envp);
-int		redir_env_check(char **tokens, int *offset, char **envp);
-int		redir_env_trans(char **tokens, int *start, int *offset, char **env);
 
-//cmd_expand
-int		cmd_line_expand(char ***tokens, int *cmd_num, char **env);
-int		cmd_env_check(char ***tokens, int *cmd_num, int *offset, char **env);
-int		cmd_env_trans(char ***tokens, t_retoken *db, char **env);
-int		re_tokenize(char ***tokens, t_retoken db, char *out_insert_str);
-int		insert_two_d_array(char ***tokens, t_retoken db);
-int		mid_insert(t_retoken *db, char ***new_cmd, int *idx, int *insert_idx);
-int		mi_isalnum(int c);
 
-//expand_utils
-int		single_quate(char **tokens, int *offset);
-int		double_quate(char **tokens, int *offset, char **env);
-char	*word_expand(char **tokens, char **env);
-int		env_trans(char **tokens, int *offset, char **env);
-
-//env_utils.c
-char	*get_env(char *env_name, char **env);
-void	delete_env(char *env_name, char ***env_out, int delete_index);
-void	free_env(char ***env);
-size_t	get_env_name_len(char *str);
-
-//ft_echo.c
-int		ft_echo(char **argv);
-int		option_remove(char ***argv);
-int		ehco_print(char **argv);
-
-//ft_exit.c
-int		ft_exit(char **argv, char ***env);
-
-//ft_cd.c
-int		ft_cd(char **argv, char ***indepen_env);
-
-//cd_utils.c
-int		change_env(char *new_str, char *del_name, char ***indepen_env);
-int		error_print(char *cmd, char *argv, char *messeage);
-
-//ft_pwd.c
-int		ft_pwd(void);
-
-//ft_env.c
-char	**set_env(char **envp);
-void	add_env(char *new_str, char ***env_out);
-void	print_env(char **env);
-void	ft_env(char **env);
-int		is_compare(char *compare, char **envp);
-
-//ft_export.c
-int		ft_export(char **argv, char ***env);
-int		only_name_add(char *argv, char ***env);
-
-//ft_unset.c
-int		ft_unset(char **argv, char ***env);
-
-//pipe.c
-int		is_builtin(char **cmd);
-int		execute(char *****tokens, char ***envp, int *ctrl_cnt);
-
-//pipe_check.c
-int		check_input(char *word, int *flag_out);
-int		check_output(char *word, int *flag_out);
-
-//pipe_utile.c
-int		perror_and_exit(char *str, int exit_num);
-void	close_fd(int fd);
-void	set_fds_not_use(int *fd);
-void	set_child_exit_status(void);
-
-//pipe_get_fd.c
-int		get_infile_fd(char ***token, int *last_pipe_fd_out);
-int		get_outfile_fd(char ***token, int *pipe_fd_out);
-
-//pipe_cmd_parsing.c
-void	parsing_cmd_and_options(char **command_out, char **envp, int index);
-
-//heredoc.c
-int		heredoc(char ****tokens, char **env, int *stdinout_copy);
-int		heredoc_unlink(char ****tokens);
-
-//builtin.c
-void	builtin(char **cmd, char ***env);
-int		is_builtin(char **cmd);
 
 #endif

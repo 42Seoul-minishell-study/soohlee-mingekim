@@ -18,6 +18,7 @@ SRCS = 	main.c \
 		command_expand_utils.c \
 		env_utils.c \
 		cd_utils.c \
+		ft_export_utils.c \
 		ft_echo.c \
 		ft_cd.c \
 		ft_pwd.c \
@@ -31,6 +32,7 @@ SRCS = 	main.c \
 		pipe_get_fd.c \
 		pipe_utiles.c \
 		heredoc.c \
+		heredoc_utils.c \
 		builtin.c
 
 NAME = minishell

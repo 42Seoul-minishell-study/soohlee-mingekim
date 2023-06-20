@@ -6,44 +6,13 @@
 /*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 20:25:17 by mingekim          #+#    #+#             */
-/*   Updated: 2023/06/19 14:40:12 by soohlee          ###   ########.fr       */
+/*   Updated: 2023/06/20 20:29:17 by soohlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*join_path(char *envp_path, char *command)
-{
-	char	*temp;
-	char	*command_path;
-
-	temp = mi_strjoin(envp_path, "/");
-	command_path = mi_strjoin(temp, command);
-	free(temp);
-	return (command_path);
-}
-
-char	**parsing_path_or_null(char **envp)
-{
-	char	*path;
-
-	while (*envp != NULL)
-	{
-		if (ft_strncmp("PATH=", *envp, 5) == 0)
-			break ;
-		envp++;
-	}
-	if (*envp == NULL)
-		return (NULL);
-	if (ft_strncmp("PATH=", *envp, 5) == 0)
-	{
-		path = *envp + 5;
-		return (ft_split(path, ':'));
-	}
-	return (NULL);
-}
-
-void	free_all_cmd_str(char **command_split)
+static void	free_all_cmd_str(char **command_split)
 {
 	char	**temp;
 
@@ -63,6 +32,37 @@ static int	free_and_exit(char **envp_split, char *command)
 	write(2, command, ft_strlen(command));
 	write(2, ": command not found\n", 21);
 	exit(127);
+}
+
+static char	*join_path(char *envp_path, char *command)
+{
+	char	*temp;
+	char	*command_path;
+
+	temp = mi_strjoin(envp_path, "/");
+	command_path = mi_strjoin(temp, command);
+	free(temp);
+	return (command_path);
+}
+
+static char	**parsing_path_or_null(char **envp)
+{
+	char	*path;
+
+	while (*envp != NULL)
+	{
+		if (ft_strncmp("PATH=", *envp, 5) == 0)
+			break ;
+		envp++;
+	}
+	if (*envp == NULL)
+		return (NULL);
+	if (ft_strncmp("PATH=", *envp, 5) == 0)
+	{
+		path = *envp + 5;
+		return (ft_split(path, ':'));
+	}
+	return (NULL);
 }
 
 void	parsing_cmd_and_options(char **command_out, char **envp, int envp_index)

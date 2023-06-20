@@ -1,41 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   translation.c                                      :+:      :+:    :+:   */
+/*   heredoc_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/14 14:22:42 by soohlee           #+#    #+#             */
-/*   Updated: 2023/06/20 20:32:32 by soohlee          ###   ########.fr       */
+/*   Created: 2023/06/20 19:54:46 by soohlee           #+#    #+#             */
+/*   Updated: 2023/06/20 19:55:10 by soohlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	tokens_print(char *****tokens)
+int	heredoc_unlink(char ****tokens)
 {
-	int	pipe;
-	int	i;
-	int	j;
+	int	process_idx;
+	int	redir_idx;
 
-	pipe = -1;
-	while ((*tokens)[++pipe])
+	process_idx = -1;
+	while (tokens[++process_idx])
 	{
-		i = -1;
-		while ((*tokens)[pipe][++i])
+		redir_idx = -1;
+		while (tokens[process_idx][0][++redir_idx])
 		{
-			j = -1;
-			while ((*tokens)[pipe][i][++j])
-				printf("%d %d %d: %s\n", pipe, i, j, (*tokens)[pipe][i][j]);
+			if (!ft_strncmp(tokens[process_idx][0][redir_idx], "<< ", 3))
+			{
+				unlink(ft_strchr(tokens[process_idx][0][redir_idx], ' ') + 1);
+			}
 		}
 	}
-}
-
-int	translation(char *****tokens, char **envp)
-{
-	if (*tokens == NULL)
-		return (0);
-	shell_expand(tokens, envp);
-	tokens_print(tokens);
 	return (0);
 }
