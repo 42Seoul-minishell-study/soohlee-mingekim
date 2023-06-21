@@ -6,7 +6,7 @@
 /*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 14:04:44 by soohlee           #+#    #+#             */
-/*   Updated: 2023/06/20 20:17:05 by soohlee          ###   ########.fr       */
+/*   Updated: 2023/06/21 18:45:16 by soohlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,10 @@ static int	mid_insert(t_retoken *db, char ***new_cmd, int *i, int *insert_idx)
 	while (db->insert_twod[(*insert_idx) + 1])
 		(*new_cmd)[(*i)++] = \
 			mi_strdup(db->insert_twod[(*insert_idx)++]);
-	if (db->tail_space_exist == 0)
+	if (db->tail_space_exist == 0 && (*new_cmd)[(*i)] != NULL)
 	{
 		(*new_cmd)[(*i)++] = \
-			mi_strjoin(db->insert_twod[(*insert_idx)], db->end);
+				mi_strjoin(db->insert_twod[(*insert_idx)], db->end);
 		if (ft_strlen(db->insert_twod[(*insert_idx)]) == 0)
 			*(db->offset) = db->start;
 		else
@@ -73,7 +73,8 @@ int	re_tokenize(char ***tokens, t_retoken db, char *out_insert_str)
 		;
 	db.front = mi_substr((*tokens)[*(db.cmd_num)], 0, db.start);
 	db.end = mi_substr((*tokens)[*(db.cmd_num)], *(db.offset), -1);
-	if (out_insert_str[0] == ' ' && *(db.cmd_num) != 0)
+	if (out_insert_str[0] == ' ' && ((*(db.cmd_num) != 0) \
+		|| (*tokens)[*(db.cmd_num)][0] != '\0'))
 		db.front_space_exist = 1;
 	if (ft_strlen(out_insert_str) >= 2 \
 		&& out_insert_str[ft_strlen(out_insert_str) - 2] == ' ' && \
