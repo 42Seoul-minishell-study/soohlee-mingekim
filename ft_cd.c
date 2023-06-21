@@ -72,7 +72,7 @@ static int	old_path_move(char ***indepen_env)
 	}
 	cur_path = getcwd(NULL, 0);
 	if (chdir(move_path))
-		exit(write(2, "chdir_error\n", 12) && 1);
+		perror_and_exit("chdir", 1);
 	new_path = mi_strjoin("OLDPWD=", cur_path);
 	one_d_free_null(&cur_path);
 	change_env(new_path, "OLDPWD", indepen_env);
@@ -93,7 +93,7 @@ static int	home_path_move(char ***indepen_env)
 
 	cur_path = getcwd(NULL, 0);
 	if (!cur_path)
-		exit(1);
+		perror_and_exit("getcwd", 1);
 	pull_path = mi_strjoin("OLDPWD=", cur_path);
 	one_d_free_null(&cur_path);
 	change_env(pull_path, "OLDPWD", indepen_env);
@@ -101,7 +101,8 @@ static int	home_path_move(char ***indepen_env)
 	move_path = get_env("HOME", *indepen_env);
 	if (!move_path)
 		move_path = mi_strdup("");
-	chdir(move_path);
+	if (chdir(move_path))
+		perror_and_exit("chdir", 1);
 	pull_path = mi_strjoin("PWD=", move_path);
 	one_d_free_null(&move_path);
 	change_env(pull_path, "PWD", indepen_env);
