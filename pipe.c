@@ -18,6 +18,8 @@ static void	exec_settings(char ***token, int last_fd, int *fd, char ***envp)
 		exit(1);
 	if (get_outfile_fd(token, fd) == 0)
 		exit(1);
+	if (token[1][0] == NULL)
+		exit(0);
 	parsing_cmd_and_options(token[1], *envp, 0);
 	if (last_fd != -1)
 	{
@@ -45,8 +47,6 @@ static pid_t	exec_command(char ***token, int last_pipe_fd, \
 	else if (cpid < 0)
 		perror_and_exit("fork", 1);
 	exec_settings(token, last_pipe_fd, fd, envp);
-	if (token[1][0] == NULL)
-		exit(0);
 	if (is_builtin(token[1]) == 1)
 	{
 		builtin(token[1], envp);
