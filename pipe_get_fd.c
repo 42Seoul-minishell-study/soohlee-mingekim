@@ -6,7 +6,7 @@
 /*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 20:25:27 by mingekim          #+#    #+#             */
-/*   Updated: 2023/06/14 17:06:04 by soohlee          ###   ########.fr       */
+/*   Updated: 2023/06/21 17:43:40 by soohlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,12 +56,12 @@ int	get_infile_fd(char ***token, int *last_pipe_fd_out)
 		{
 			if (fd != -1)
 				close(fd);
-			if (flag == -1)
-				return (0);
 			fd = file_open(token[0][i], flag);
 			if (fd < 0)
 				return (0);
 		}
+		else if (flag == -1)
+			return (0);
 	}
 	if (fd == -1)
 		return (1);
@@ -85,12 +85,12 @@ int	get_outfile_fd(char ***token, int *pipe_fd_out)
 		{
 			if (fd != -1)
 				close(fd);
-			if (flag == -1)
-				return (0);
 			fd = file_write_open(token[0][i], flag);
 			if (fd < 0)
 				return (0);
 		}
+		else if (flag == -1)
+			return (0);
 	}
 	if (fd == -1)
 		return (1);
