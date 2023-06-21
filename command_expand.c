@@ -18,8 +18,6 @@ static int	mi_isalnum(int c)
 		return (1);
 	else if (c >= '0' && c <= '9')
 		return (1);
-	else if (c == '?')
-		return (1);
 	else
 		return (0);
 }
@@ -68,8 +66,10 @@ static int	cmd_env_check(char ***tokens, int *cmd_num, int *offset, char **env)
 	while ((*tokens)[*cmd_num][++(*offset)])
 		if (!mi_isalnum((*tokens)[*cmd_num][(*offset)]))
 			break ;
-	if ((*offset - db.start) == 1)
+	if ((*offset - db.start) == 1 && ((*tokens)[*cmd_num][(*offset)] != '?'))
 		return (0);
+	if ((*tokens)[*cmd_num][(*offset)] == '?')
+		(*offset)++;
 	db.last_flag = (*tokens)[*cmd_num + 1] == NULL;
 	env_str = mi_substr((*tokens)[*cmd_num], db.start, *offset - db.start);
 	if (!ft_strchr(env_str, '$'))
