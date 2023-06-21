@@ -6,7 +6,7 @@
 /*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 17:16:49 by soohlee           #+#    #+#             */
-/*   Updated: 2023/06/21 15:01:17 by soohlee          ###   ########.fr       */
+/*   Updated: 2023/06/21 16:57:34 by soohlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	change_home(char **argv, char **env)
 	{
 		home = get_env("HOME", env);
 		if (!home)
-			home = mi_strdup("");
+			return (error_exit_status("getenv: error\n", 1));
 		temp = *argv;
 		*argv = mi_strinsert(temp, home, 0, 0);
 		one_d_free_null(&home);

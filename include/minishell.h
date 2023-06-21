@@ -6,7 +6,7 @@
 /*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 11:28:15 by soohlee           #+#    #+#             */
-/*   Updated: 2023/06/21 15:02:54 by soohlee          ###   ########.fr       */
+/*   Updated: 2023/06/21 16:51:16 by soohlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ int		args_check(int argc, char **argv, char **envp);
 //builtin.c
 void	builtin(char **cmd, char ***env);
 int		is_builtin(char **cmd);
+int		error_exit_status(char *str, int num);
 
 //command_expand.c
 int		cmd_expand(char ***tokens, char **env);

@@ -6,7 +6,7 @@
 /*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 15:10:00 by soohlee           #+#    #+#             */
-/*   Updated: 2023/06/20 17:19:37 by soohlee          ###   ########.fr       */
+/*   Updated: 2023/06/21 16:59:37 by soohlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,5 +50,12 @@ int	is_builtin(char **cmd)
 		return (1);
 	else if (ft_strlen(cmd[0]) == 4 && !ft_strncmp(cmd[0], "exit", 5))
 		return (1);
+	return (0);
+}
+
+int	error_exit_status(char *str, int num)
+{
+	ft_putstr_fd(str, 2);
+	g_exit_status = num;
 	return (0);
 }
