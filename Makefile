@@ -1,4 +1,5 @@
-##basic rule
+NAME = minishell
+
 SRCS = 	main.c \
 		signal.c \
 		args_check.c \
@@ -35,20 +36,19 @@ SRCS = 	main.c \
 		heredoc_utils.c \
 		builtin.c
 
-NAME = minishell
 CC = cc
 LIBFT_DIR = ./libft
 OBJS = $(SRCS:.c=.o)
+CPPFLAGS = -I $(HOME)/.brew/opt/readline/include
+LDFLAGS = -L $(HOME)/.brew/opt/readline/lib
 
-#complie auto option
+#compile auto option
 CFLAGS = -Wall -Wextra -Werror -g3
 
 #header includes
-#CPPFLAGS : 환경변수로 readline library 경로 등록해놓고 사용함. 
 INCLUDE = -I./include -I$(LIBFT_DIR)/include $(CPPFLAGS)
 
-#library and archive link
-#LDFLAGS : 환경변수로 readline header 경로 등록해놓고 사용함.
+#library link
 LIBFT_A = -L$(LIBFT_DIR) -lft
 
 #log hide option
@@ -61,9 +61,6 @@ $(NAME) : $(LIBFT_A) $(OBJS)
 
 $(LIBFT_A) :
 	cd ./libft; make $(SILENT);
-
-$(MINI_HEADER) : 
-
 
 %.o: %.c
 	$(CC) $(CFLAGS) $(INCLUDE) -c $^ -o $@
