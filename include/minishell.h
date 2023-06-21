@@ -6,7 +6,7 @@
 /*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 11:28:15 by soohlee           #+#    #+#             */
-/*   Updated: 2023/06/20 20:32:34 by soohlee          ###   ########.fr       */
+/*   Updated: 2023/06/21 11:01:36 by soohlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,6 +125,7 @@ int		heredoc(char ****tokens, char **env, int *stdinout_copy);
 
 //heredoc_utils.c
 int		heredoc_unlink(char ****tokens);
+int		make_heredocfile(char **filename);
 
 //pipe.c
 int		execute(char *****tokens, char ***envp, int *ctrl_cnt);
@@ -144,7 +145,7 @@ int		get_infile_fd(char ***token, int *last_pipe_fd_out);
 int		get_outfile_fd(char ***token, int *pipe_fd_out);
 
 //pipe_cmd_parsing.c
-void	parsing_cmd_and_options(char **command_out, char **envp, int index);
+void	parsing_cmd_and_options(char **command, char **envp, int index);
 
 //redirection_expand.c
 int		redirection_expand(char ***tokens, char **env);

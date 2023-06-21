@@ -6,7 +6,7 @@
 /*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 15:12:51 by soohlee           #+#    #+#             */
-/*   Updated: 2023/06/20 19:58:02 by soohlee          ###   ########.fr       */
+/*   Updated: 2023/06/21 11:03:26 by soohlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static int	heredoc_readline(char *delimiter, int heredoc_fd, char **env)
 		str = readline("> ");
 		if (!str)
 		{
-			g_exit_status = -2;
+			//g_exit_status = -2;
 			break ;
 		}
 		if (ft_strncmp(str, delimiter, ft_strlen(delimiter) + 1) == 0)
@@ -35,27 +35,6 @@ static int	heredoc_readline(char *delimiter, int heredoc_fd, char **env)
 		write(heredoc_fd, "\n", 1);
 		free(str);
 		str = NULL;
-	}
-	return (0);
-}
-
-static int	make_heredocfile(char **filename)
-{
-	char	*str_num;
-	int		i;
-
-	i = 0;
-	while (1)
-	{
-		str_num = ft_itoa(i);
-		*filename = mi_strjoin(".heredoc_", str_num);
-		free(str_num);
-		str_num = 0;
-		if (access(*filename, F_OK | R_OK | W_OK) != 0)
-			break ;
-		free(*filename);
-		*filename = 0;
-		i++;
 	}
 	return (0);
 }
