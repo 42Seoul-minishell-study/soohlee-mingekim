@@ -6,7 +6,7 @@
 /*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 22:10:43 by soohlee           #+#    #+#             */
-/*   Updated: 2023/06/21 12:44:21 by soohlee          ###   ########.fr       */
+/*   Updated: 2023/06/21 15:03:52 by soohlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,11 +113,9 @@ static int	home_path_move(char ***indepen_env)
 int	ft_cd(char **argv, char ***indepen_env)
 {
 	argv++;
-	if (!*argv || !ft_strlen(*argv) || !ft_strncmp(*argv, "~\0", 2))
-	{
-		home_path_move(indepen_env);
-		return (0);
-	}
+	if (!*argv || !ft_strlen(*argv) || (!ft_strncmp(*argv, "~\0", 2) \
+		&& argv[1] == NULL))
+		return (home_path_move(indepen_env));
 	if (ft_strlen(*argv) == 2 && !ft_strncmp(*argv, "--", 2))
 		argv++;
 	if (ft_strlen(*argv) >= 3 && !ft_strncmp(*argv, "--", 2))
@@ -128,6 +126,9 @@ int	ft_cd(char **argv, char ***indepen_env)
 	if (ft_strlen(*argv) >= 1 && !ft_strncmp(*argv, "-\0", 2))
 		return (old_path_move(indepen_env));
 	else
+	{
+		change_home(&(*argv), *indepen_env);
 		return (move_path_check(*argv, indepen_env));
+	}
 	return (0);
 }

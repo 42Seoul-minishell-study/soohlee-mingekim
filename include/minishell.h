@@ -6,7 +6,7 @@
 /*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 11:28:15 by soohlee           #+#    #+#             */
-/*   Updated: 2023/06/21 11:01:36 by soohlee          ###   ########.fr       */
+/*   Updated: 2023/06/21 15:02:54 by soohlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,10 +63,6 @@ int		args_check(int argc, char **argv, char **envp);
 void	builtin(char **cmd, char ***env);
 int		is_builtin(char **cmd);
 
-//cd_utils.c
-int		change_env(char *new_str, char *del_name, char ***indepen_env);
-int		error_print(char *cmd, char *argv, char *messeage);
-
 //command_expand.c
 int		cmd_expand(char ***tokens, char **env);
 
@@ -92,6 +88,11 @@ int		one_d_free_null(char **str);
 
 //ft_cd.c
 int		ft_cd(char **argv, char ***indepen_env);
+int		change_home(char **argv, char **env);
+
+//cd_utils.c
+int		change_env(char *new_str, char *del_name, char ***indepen_env);
+int		error_print(char *cmd, char *argv, char *messeage);
 
 //ft_echo.c
 int		ft_echo(char **argv);
@@ -188,9 +189,5 @@ int		tokens_check(char *****tokens);
 
 //translation.c
 int		translation(char *****tokens, char **envp);
-
-
-
-
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 17:16:49 by soohlee           #+#    #+#             */
-/*   Updated: 2023/06/20 19:13:52 by soohlee          ###   ########.fr       */
+/*   Updated: 2023/06/21 15:01:17 by soohlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,5 +24,23 @@ int	error_print(char *cmd, char *argv, char *messeage)
 	ft_putstr_fd(cmd, 2);
 	ft_putstr_fd(argv, 2);
 	ft_putstr_fd(messeage, 2);
+	return (0);
+}
+
+int	change_home(char **argv, char **env)
+{
+	char	*home;
+	char	*temp;
+
+	if (ft_strlen(*argv) >= 1 && argv[0][0] == '~')
+	{
+		home = get_env("HOME", env);
+		if (!home)
+			home = mi_strdup("");
+		temp = *argv;
+		*argv = mi_strinsert(temp, home, 0, 0);
+		one_d_free_null(&home);
+		one_d_free_null(&temp);
+	}
 	return (0);
 }

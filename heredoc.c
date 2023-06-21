@@ -6,7 +6,7 @@
 /*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 15:12:51 by soohlee           #+#    #+#             */
-/*   Updated: 2023/06/21 11:03:26 by soohlee          ###   ########.fr       */
+/*   Updated: 2023/06/21 15:03:18 by soohlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,7 @@ static int	heredoc_readline(char *delimiter, int heredoc_fd, char **env)
 	{
 		str = readline("> ");
 		if (!str)
-		{
-			//g_exit_status = -2;
 			break ;
-		}
 		if (ft_strncmp(str, delimiter, ft_strlen(delimiter) + 1) == 0)
 		{
 			free(str);
