@@ -65,31 +65,31 @@ static char	**parsing_path_or_null(char **envp)
 	return (NULL);
 }
 
-void	parsing_cmd_and_options(char **command_out, char **envp, int envp_index)
+void	parsing_cmd_and_options(char **command, char **envp, int envp_index)
 {
 	char	*result;
 	char	**envp_split;
 
 	envp_index = 0;
-	result = command_out[0];
-	if (is_builtin(command_out) == 1)
+	result = command[0];
+	if (is_builtin(command) == 1)
 		return ;
-	if (access(command_out[0], X_OK) == 0)
+	if (access(command[0], X_OK) == 0 || ft_strchr(command[0], '/') != NULL)
 		return ;
 	envp_split = parsing_path_or_null(envp);
 	if (envp_split == NULL)
 		perror_and_exit(result, 127);
 	while (envp_split[envp_index] != NULL)
 	{
-		result = join_path(envp_split[envp_index++], command_out[0]);
+		result = join_path(envp_split[envp_index++], command[0]);
 		if (access(result, X_OK) == 0)
 		{
-			free(command_out[0]);
-			command_out[0] = result;
+			free(command[0]);
+			command[0] = result;
 			free_all_cmd_str(envp_split);
 			return ;
 		}
 		free(result);
 	}
-	free_and_exit(envp_split, command_out[0]);
+	free_and_exit(envp_split, command[0]);
 }

@@ -55,7 +55,7 @@ static pid_t	exec_command(char ***token, int last_pipe_fd, \
 	else
 	{
 		execve(token[1][0], token[1], *envp);
-		perror_and_exit("execve", 1);
+		perror_and_exit(token[1][0], 1);
 	}
 	return (cpid);
 }
