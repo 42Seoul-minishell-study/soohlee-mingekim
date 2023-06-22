@@ -6,7 +6,7 @@
 /*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 22:10:43 by soohlee           #+#    #+#             */
-/*   Updated: 2023/06/21 17:09:02 by soohlee          ###   ########.fr       */
+/*   Updated: 2023/06/22 15:20:41 by soohlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,9 @@ static int	old_path_move(char ***indepen_env)
 	char	*new_path;
 
 	move_path = get_env("OLDPWD", *indepen_env);
-	if (!move_path)
-		return (error_exit_status("cd: OLDPWD not set\n", 1));
+	if (!move_path || ft_strlen(move_path) == 0)
+		if (!move_path || !one_d_free_null(&move_path))
+			return (error_exit_status("cd: OLDPWD not set\n", 1));
 	cur_path = getcwd(NULL, 0);
 	if (chdir(move_path) && !one_d_free_null(&cur_path) && \
 		!one_d_free_null(&move_path))
@@ -79,8 +80,7 @@ static int	old_path_move(char ***indepen_env)
 	one_d_free_null(&move_path);
 	change_env(new_path, "PWD", indepen_env);
 	one_d_free_null(&new_path);
-	g_exit_status = 0;
-	return (0);
+	return (ft_pwd());
 }
 
 static int	home_path_move(char ***indepen_env)
@@ -111,6 +111,7 @@ static int	home_path_move(char ***indepen_env)
 
 int	ft_cd(char **argv, char ***indepen_env)
 {
+	g_exit_status = 0;
 	argv++;
 	if (!*argv || !ft_strlen(*argv) || (!ft_strncmp(*argv, "~\0", 2) \
 		&& argv[1] == NULL))

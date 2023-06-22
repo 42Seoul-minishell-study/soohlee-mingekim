@@ -6,11 +6,26 @@
 /*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 16:59:06 by soohlee           #+#    #+#             */
-/*   Updated: 2023/06/20 20:23:24 by soohlee          ###   ########.fr       */
+/*   Updated: 2023/06/22 15:39:20 by soohlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static int	shellname_change(char ***env)
+{
+	char	*shell_path;
+	char	*temp;
+
+	temp = get_env("PWD", *env);
+	if (!temp)
+		return (error_exit_status("not set PWD\n", 1));
+	shell_path = mi_strjoin("SHELL=", temp);
+	one_d_free_null(&temp);
+	change_env(shell_path, "SHELL", env);
+	one_d_free_null(&shell_path);
+	return (0);
+}
 
 int	is_compare(char *compare, char **envp)
 {
@@ -46,6 +61,7 @@ char	**set_env(char **envp)
 	if (is_compare("OLDPWD", envp) == 1)
 		env[i++] = mi_strdup("OLDPWD");
 	env[i] = NULL;
+	shellname_change(&env);
 	return (env);
 }
 

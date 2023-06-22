@@ -6,7 +6,7 @@
 /*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 11:28:15 by soohlee           #+#    #+#             */
-/*   Updated: 2023/06/21 16:51:16 by soohlee          ###   ########.fr       */
+/*   Updated: 2023/06/22 15:33:09 by soohlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ int		args_check(int argc, char **argv, char **envp);
 void	builtin(char **cmd, char ***env);
 int		is_builtin(char **cmd);
 int		error_exit_status(char *str, int num);
+int		ft_twod_strlen(char **str);
 
 //command_expand.c
 int		cmd_expand(char ***tokens, char **env);
@@ -75,7 +76,6 @@ size_t	get_env_name_len(char *str);
 void	delete_env(char *env_name, char ***env_out, int delete_index);
 void	free_env(char ***env);
 char	*get_env(char *env_name, char **env);
-int		ft_twod_strlen(char **str);
 
 //expand_utils.c
 int		single_quate(char **tokens, int *offset);

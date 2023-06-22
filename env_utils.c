@@ -6,7 +6,7 @@
 /*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 01:51:05 by soohlee           #+#    #+#             */
-/*   Updated: 2023/06/20 17:19:10 by soohlee          ###   ########.fr       */
+/*   Updated: 2023/06/22 15:31:59 by soohlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,14 +88,4 @@ char	*get_env(char *env_name, char **env)
 	++temp;
 	str_env = mi_strdup(temp);
 	return (str_env);
-}
-
-int	ft_twod_strlen(char **str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
-		i++;
-	return (i);
 }
