@@ -6,7 +6,7 @@
 /*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 14:04:44 by soohlee           #+#    #+#             */
-/*   Updated: 2023/06/21 18:45:16 by soohlee          ###   ########.fr       */
+/*   Updated: 2023/06/22 17:33:11 by soohlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ static int	insert_two_d_array(char ***tokens, t_retoken db)
 	int		tokens_idx;
 	int		insert_idx;
 
+
+	printf("----db.cmdtotal: %d----db.towd_len: %d\n", db.cmdtotal, db.twod_len);
 	new_cmd = (char **)malloc(sizeof(char *) * (db.cmdtotal + db.twod_len + 1));
 	if (!new_cmd)
 		exit (1);
@@ -85,7 +87,8 @@ int	re_tokenize(char ***tokens, t_retoken db, char *out_insert_str)
 		db.start = 0;
 	while (db.insert_twod[db.twod_len++])
 		;
-	db.twod_len = db.twod_len + db.front_space_exist + db.tail_space_exist;
+	printf("--towdlen %d, --fornt exit :%d --tail_spatce: %d\n", db.twod_len, db.front_space_exist, db.tail_space_exist);
+	db.twod_len = db.twod_len - 1 + db.tail_space_exist;
 	insert_two_d_array(tokens, db);
 	two_d_free_null(&(db.insert_twod));
 	one_d_free_null(&db.front);
