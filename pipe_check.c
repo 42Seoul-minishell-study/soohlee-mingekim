@@ -39,7 +39,7 @@ int	check_output(char *word, int *flag_out)
 {
 	if (ft_strncmp(word, "> ", 2) == 0)
 	{
-		*flag_out = O_WRONLY | O_CREAT;
+		*flag_out = O_WRONLY | O_TRUNC | O_CREAT;
 		return (1);
 	}
 	else if (ft_strncmp(word, ">> ", 3) == 0)
