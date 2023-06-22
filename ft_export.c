@@ -6,7 +6,7 @@
 /*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 18:25:46 by soohlee           #+#    #+#             */
-/*   Updated: 2023/06/20 20:25:26 by soohlee          ###   ########.fr       */
+/*   Updated: 2023/06/22 13:04:34 by soohlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,14 +44,11 @@ static int	is_export_str(char *s)
 	{
 		if (!ft_isalnum(*s))
 		{
-			g_exit_status = 1;
-			write(2, "export: \'", 9);
-			write(2, temp, ft_strlen(temp));
-			write(2, "\'", 1);
-			write(2, ": not a valid identifier\n", 25);
+			ft_putstr_fd("export: \'", 2);
+			error_exit_status(temp, 1);
+			ft_putstr_fd("\': not a valid identifier\n", 2);
 			return (1);
 		}
-		s++;
 	}
 	return (0);
 }
@@ -90,6 +87,14 @@ int	ft_export(char **argv, char ***env)
 		return (print_export(*env));
 	temp = argv;
 	flag = 0;
+	if (*temp && *temp[0] == '-')
+	{
+		ft_putstr_fd("export: ", 2);
+		while (*temp && !ft_isalnum(temp[0][flag]))
+			write(2, &(temp[0][flag++]), 1);
+		error_exit_status(": invalid option\n", 2);
+		return (0);
+	}
 	while (*temp)
 		flag = flag + (is_export_str(*temp++));
 	while (*argv)

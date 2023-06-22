@@ -6,7 +6,7 @@
 /*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 19:18:32 by soohlee           #+#    #+#             */
-/*   Updated: 2023/06/20 19:38:35 by soohlee          ###   ########.fr       */
+/*   Updated: 2023/06/22 13:52:43 by soohlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,14 @@ int	make_sort_hash(int *sort_hash, char **env)
 int	only_name_add(char *argv, char ***env)
 {
 	int	i;
+	int	newenv_len;
 
+	newenv_len = ft_strlen(argv);
 	i = -1;
 	while ((*env)[++i])
 	{
-		if (!ft_strncmp(argv, (*env)[i], get_env_name_len((*env)[i])))
+		if ((int)ft_strlen((*env)[i]) >= newenv_len && \
+			!ft_strncmp(argv, (*env)[i], (int)newenv_len))
 			return (0);
 	}
 	add_env(argv, env);
