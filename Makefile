@@ -17,6 +17,7 @@ SRCS = 	main.c \
 		redirection_expand.c \
 		command_expand.c \
 		command_expand_utils.c \
+		env_trim.c \
 		env_utils.c \
 		cd_utils.c \
 		ft_export_utils.c \

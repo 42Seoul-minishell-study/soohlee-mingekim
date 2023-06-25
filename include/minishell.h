@@ -70,6 +70,8 @@ void	cmd_expand(char ***token, char **env);
 
 //command_expand_utils.c
 
+//env_utils.c
+char	*trim_quotes(char *str);
 
 //env_utils.c
 size_t	get_env_name_len(char *str);
