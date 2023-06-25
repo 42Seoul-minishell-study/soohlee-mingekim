@@ -87,7 +87,6 @@ int	re_tokenize(char ***tokens, t_retoken db, char *out_insert_str)
 		db.start = 0;
 	while (db.insert_twod[db.twod_len++])
 		;
-	printf("--towdlen %d, --fornt exit :%d --tail_spatce: %d\n", db.twod_len, db.front_space_exist, db.tail_space_exist);
 	db.twod_len = db.twod_len - 1 + db.tail_space_exist;
 	insert_two_d_array(tokens, db);
 	two_d_free_null(&(db.insert_twod));

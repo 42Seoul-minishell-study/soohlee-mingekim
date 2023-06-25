@@ -66,10 +66,10 @@ int		error_exit_status(char *str, int num);
 int		ft_twod_strlen(char **str);
 
 //command_expand.c
-int		cmd_expand(char ***tokens, char **env);
+void	cmd_expand(char ***token, char **env);
 
 //command_expand_utils.c
-int		re_tokenize(char ***tokens, t_retoken db, char *out_insert_str);
+
 
 //env_utils.c
 size_t	get_env_name_len(char *str);

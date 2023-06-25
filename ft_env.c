@@ -65,6 +65,31 @@ char	**set_env(char **envp)
 	return (env);
 }
 
+char	*trim_quotes(char *str)
+{
+	int		len;
+	int		name_len;
+	char	*temp;
+	char	*result;
+
+	len = ft_strlen(str);
+	temp = ft_strchr(str, '=');
+	temp++;
+	name_len = temp - str;
+	if ((*temp == '\'' && str[len - 1] == '\'') || (*temp == '\"' && str[len - 1] == '\"'))
+	{
+		result = (char *)malloc(sizeof(char) * (len - 1));
+		if (result == NULL)
+			perror_and_exit("malloc", 1);
+		ft_memcpy(result, str, name_len);
+		ft_memcpy(&result[name_len], temp + 1, len - name_len - 2);
+		result[len - 2] = '\0';
+	}
+	else
+		result = mi_strdup(str);
+	return (result);
+}
+
 void	add_env(char *new_str, char ***env_out)
 {
 	int		i;
@@ -80,9 +105,7 @@ void	add_env(char *new_str, char ***env_out)
 		new_env[i] = (*env_out)[i];
 		i++;
 	}
-	new_env[i++] = mi_strdup(new_str);
-	if (!new_env[i - 1])
-		exit (1);
+	new_env[i++] = trim_quotes(new_str);
 	new_env[i] = NULL;
 	free(*env_out);
 	*env_out = new_env;
