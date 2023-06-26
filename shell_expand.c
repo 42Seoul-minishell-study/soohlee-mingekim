@@ -19,7 +19,7 @@ int	shell_expand(char *****tokens, char **env)
 	idx = -1;
 	while ((*tokens)[++idx])
 	{
-		redirection_expand(&((*tokens)[idx][0]), env);
+		redirection_expand(&(((*tokens)[idx])[0]), env);
 		cmd_expand((*tokens)[idx], env);
 	}
 	return (0);
