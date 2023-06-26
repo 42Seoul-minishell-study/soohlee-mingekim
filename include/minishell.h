@@ -67,8 +67,24 @@ int		ft_twod_strlen(char **str);
 
 //command_expand.c
 void	cmd_expand(char ***token, char **env);
+void	line_expand(char **cmd, char **env);
 
 //command_expand_utils.c
+void	free_cmd(char ***token);
+char	*join_all_cmd(char ***token, char **env);
+int		is_expand_needed(char **cmds);
+
+//command_line_expand.c
+char	*line_expand_1(char *cmd, char **env);
+void	line_expand(char **cmd, char **env);
+void	in_quote_expand(char **cmd, char **env);
+
+//command_line_expand_utils.c
+char	*get_env_name(char *cmd, char *last, char **env);
+char	*dup_with_len(char *str, char *last);
+char	*find_last(char *str, int flag);
+//char	*find_last_in_quote(char *str, int flag);
+
 
 //env_utils.c
 char	*trim_quotes(char *str);
@@ -80,8 +96,8 @@ void	free_env(char ***env);
 char	*get_env(char *env_name, char **env);
 
 //expand_utils.c
-int		single_quate(char **tokens, int *offset);
-int		double_quate(char **tokens, int *offset, char **env);
+int		single_quote(char **tokens, int *offset);
+int		double_quote(char **tokens, int *offset, char **env);
 int		env_trans(char **tokens, int *offset, char **env);
 char	*word_expand(char **tokens, char **env);
 
@@ -168,6 +184,10 @@ char	****tokenize(char *str);
 
 //tokenize_ops_and_words
 int		is_redirection(char *str);
+char	*skip_spaces_and_words(char *str, int redir_index, int *count_out);
+void	get_ops_and_words_count(char *str, \
+									int *ops_count_out, int *words_count_out);
+void	split_ops_and_words(char *str, char ***ops_and_words_out);
 char	**set_ops_and_words(char *str, char ***ops_and_words_out);
 
 //tokenize_find_quote.c

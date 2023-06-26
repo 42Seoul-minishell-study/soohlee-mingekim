@@ -1,96 +1,74 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   command_expand_utils.c                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/19 14:04:44 by soohlee           #+#    #+#             */
-/*   Updated: 2023/06/22 17:33:11 by soohlee          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	mid_insert(t_retoken *db, char ***new_cmd, int *i, int *insert_idx)
+void	free_cmd(char ***token)
 {
-	if (db->front_space_exist == 0)
-		(*new_cmd)[(*i)++] = \
-			mi_strjoin(db->front, db->insert_twod[(*insert_idx)++]);
-	else
-		(*new_cmd)[(*i)++] = mi_strdup(db->front);
-	while (db->insert_twod[(*insert_idx) + 1])
-		(*new_cmd)[(*i)++] = \
-			mi_strdup(db->insert_twod[(*insert_idx)++]);
-	if (db->tail_space_exist == 0 && (*new_cmd)[(*i)] != NULL)
+	int	i;
+
+	i = 0;
+	while (token[1][i] != NULL)
 	{
-		(*new_cmd)[(*i)++] = \
-				mi_strjoin(db->insert_twod[(*insert_idx)], db->end);
-		if (ft_strlen(db->insert_twod[(*insert_idx)]) == 0)
-			*(db->offset) = db->start;
-		else
-			*(db->offset) = \
-				db->start + ft_strlen(db->insert_twod[(*insert_idx)]) - 1;
-		insert_idx++;
-		return (0);
+		free(token[1][i]);
+		i++;
 	}
-	(*new_cmd)[(*i)++] = mi_strdup(db->insert_twod[(*insert_idx)]);
-	(*new_cmd)[(*i)++] = mi_strdup(db->end);
-	*(db->offset) = db->start + ft_strlen(db->insert_twod[(*insert_idx)++]) - 1;
-	return (0);
+	free(token[1]);
 }
 
-static int	insert_two_d_array(char ***tokens, t_retoken db)
+char	*join_all_cmd(char ***token, char **env)
 {
-	char	**new_cmd;
-	int		new_cmd_num;
-	int		tokens_idx;
-	int		insert_idx;
+	int		index;
+	char	*cmds_temp;
+	char	*expanded;
+	char	*result;
 
-
-	printf("----db.cmdtotal: %d----db.towd_len: %d\n", db.cmdtotal, db.twod_len);
-	new_cmd = (char **)malloc(sizeof(char *) * (db.cmdtotal + db.twod_len + 1));
-	if (!new_cmd)
-		exit (1);
-	new_cmd_num = 0;
-	tokens_idx = 0;
-	insert_idx = 0;
-	while (new_cmd_num < *(db.cmd_num))
-		new_cmd[new_cmd_num++] = mi_strdup((*tokens)[tokens_idx++]);
-	tokens_idx++;
-	mid_insert(&db, &new_cmd, &new_cmd_num, &insert_idx);
-	*(db.cmd_num) = new_cmd_num - 1;
-	while ((*tokens)[tokens_idx])
-		new_cmd[new_cmd_num++] = mi_strdup((*tokens)[tokens_idx++]);
-	new_cmd[new_cmd_num] = NULL;
-	two_d_free_null(&(*tokens));
-	*tokens = new_cmd;
-	new_cmd = NULL;
-	return (0);
+	index = 0;
+	expanded = line_expand_1(token[1][index], env);
+	result = mi_strjoin("", expanded);
+	free(expanded);
+	while (token[1][++index] != NULL)
+	{
+		expanded = line_expand_1(token[1][index], env);
+		cmds_temp = mi_strjoin(result, expanded);
+		free(result);
+		free(expanded);
+		result = cmds_temp;
+	}
+	return (result);
 }
 
-int	re_tokenize(char ***tokens, t_retoken db, char *out_insert_str)
+int	is_expand_needed(char **cmds)
 {
-	while ((*tokens)[db.cmdtotal++])
-		;
-	db.front = mi_substr((*tokens)[*(db.cmd_num)], 0, db.start);
-	db.end = mi_substr((*tokens)[*(db.cmd_num)], *(db.offset), -1);
-	if (out_insert_str[0] == ' ' && ((*(db.cmd_num) != 0) \
-		|| (*tokens)[*(db.cmd_num)][0] != '\0'))
-		db.front_space_exist = 1;
-	if (ft_strlen(out_insert_str) >= 2 \
-		&& out_insert_str[ft_strlen(out_insert_str) - 2] == ' ' && \
-			db.last_flag == 0)
-		db.tail_space_exist = 1;
-	db.insert_twod = ft_split(out_insert_str, ' ');
-	if (db.insert_twod[1] != 0)
-		db.start = 0;
-	while (db.insert_twod[db.twod_len++])
-		;
-	db.twod_len = db.twod_len - 1 + db.tail_space_exist;
-	insert_two_d_array(tokens, db);
-	two_d_free_null(&(db.insert_twod));
-	one_d_free_null(&db.front);
-	one_d_free_null(&db.end);
-	return (2);
+	char	*str;
+	char	*temp;
+
+	while (*cmds != NULL)
+	{
+		str = *cmds;
+		while (*str != '\0' && *str != '$')
+		{
+			str = pass_space(str);
+			while (*str != '\0' && is_space(*str) == 0 && *str != '$')
+			{
+				if (*str == '\'')
+					str = find_next_single_quote(str);
+				else if (*str == '\"')
+				{
+					temp = str;
+					str = find_next_double_quote(str);
+					if (*str == '\"')
+					{
+						while (*temp != '\0'&& *temp != '$')
+							temp++;
+						if (*temp == '$')
+							return (1);
+					}
+				}
+				str++;
+			}
+		}
+		cmds++;
+	}
+	if (*str == '$')
+		return (1);
+	return (0);
 }

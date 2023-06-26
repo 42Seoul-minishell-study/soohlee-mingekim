@@ -73,9 +73,9 @@ static int	redir_line_expand(char **tokens, char **env)
 	while ((*tokens)[++offset])
 	{
 		if ((*tokens)[offset] == '\'')
-			single_quate(tokens, &offset);
+			single_quote(tokens, &offset);
 		else if ((*tokens)[offset] == '\"')
-			double_quate(tokens, &offset, env);
+			double_quote(tokens, &offset, env);
 		else if ((*tokens)[offset] == '$')
 			redir_env_check(tokens, &offset, env);
 	}

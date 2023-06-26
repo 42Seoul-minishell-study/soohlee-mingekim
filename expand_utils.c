@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-int	single_quate(char **tokens, int *offset)
+int	single_quote(char **tokens, int *offset)
 {
 	int		start;
 	char	*insert_str;
@@ -40,7 +40,7 @@ int	single_quate(char **tokens, int *offset)
 	return (0);
 }
 
-int	double_quate(char **tokens, int *offset, char **env)
+int	double_quote(char **tokens, int *offset, char **env)
 {
 	int		start;
 	char	*insert_str;

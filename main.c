@@ -42,7 +42,7 @@ int	main(int argc, char **argv, char **envp)
 		tokens = tokenize(str);
 		if (!one_d_free_null(&str) && tokens == NULL)
 			continue ;
-		//translation(&tokens, env);
+		translation(&tokens, env);
 		execute(&tokens, &env, stdinout_copy);
 		printf("g_exit %d\n", g_exit_status);
 	}

@@ -25,7 +25,7 @@ int	is_redirection(char *str)
 	return (0);
 }
 
-static char	*skip_spaces_and_words(char *str, int redir_index, int *count_out)
+char	*skip_spaces_and_words(char *str, int redir_index, int *count_out)
 {
 	str += redir_index;
 	str = pass_space(str);
@@ -33,8 +33,7 @@ static char	*skip_spaces_and_words(char *str, int redir_index, int *count_out)
 	(*count_out)++;
 	return (str);
 }
-
-static void	get_ops_and_words_count(char *str, \
+void	get_ops_and_words_count(char *str, \
 									int *ops_count_out, int *words_count_out)
 {
 	*ops_count_out = 0;
@@ -55,7 +54,7 @@ static void	get_ops_and_words_count(char *str, \
 	}
 }
 
-static void	split_ops_and_words(char *str, char ***ops_and_words_out)
+void	split_ops_and_words(char *str, char ***ops_and_words_out)
 {
 	int	index_op;
 	int	index_word;
