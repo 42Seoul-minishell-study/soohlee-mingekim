@@ -33,6 +33,7 @@ char	*skip_spaces_and_words(char *str, int redir_index, int *count_out)
 	(*count_out)++;
 	return (str);
 }
+
 void	get_ops_and_words_count(char *str, \
 									int *ops_count_out, int *words_count_out)
 {

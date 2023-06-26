@@ -41,7 +41,7 @@ typedef enum e_line_expand
 {
 	BEFORE_TOKENIZE = 0,
 	AFTER_TOKENIZE = 1
-}	e_line_expand;
+}	t_line_expand;
 
 int		g_exit_status;
 
