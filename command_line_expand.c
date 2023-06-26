@@ -186,7 +186,25 @@ void	in_quote_expand(char **cmd, char **env)
 	tokens_temp = 0;
 }
 
-void	line_expand(char **cmd, char **env)
+void	skip_single_quote(char **cmd, int *offset)
+{
+	char	*temp;
+
+	temp = (*cmd) + 1;
+	temp = find_next_single_quote(temp);
+	*offset += temp - (*cmd);
+}
+
+void	skip_double_quote(char **cmd, int *offset)
+{
+	char	*temp;
+
+	temp = (*cmd) + 1;
+	temp = find_next_double_quote(temp);
+	*offset += temp - (*cmd);
+}
+
+void	line_expand(char **cmd, char **env, int flag)
 {
 	int		offset;
 	char	*tokens_temp;
@@ -194,11 +212,15 @@ void	line_expand(char **cmd, char **env)
 	offset = -1;
 	while ((*cmd)[++offset])
 	{
-		if ((*cmd)[offset] == '\'')
+		if ((*cmd)[offset] == '\'' && flag == 1)
 			single_quote_expand(cmd, &offset);
-		else if ((*cmd)[offset] == '\"')
+		else if ((*cmd)[offset] == '\"' && flag == 1)
 			double_quote_expand(cmd, &offset, env);
-		else if ((*cmd)[offset] == '$')
+		else if ((*cmd)[offset] == '\'' && flag == 0)
+			skip_single_quote(cmd, &offset);
+		else if ((*cmd)[offset] == '\'' && flag == 0)
+			skip_double_quote(cmd, &offset);
+		else if ((*cmd)[offset] == '$' && flag == 0)
 			redir_env_check(cmd, &offset, env);
 	}
 	tokens_temp = *cmd;

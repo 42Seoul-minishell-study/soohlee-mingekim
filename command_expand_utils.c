@@ -22,12 +22,16 @@ char	*join_all_cmd(char ***token, char **env)
 	char	*result;
 
 	index = 0;
-	expanded = line_expand_1(token[1][index], env);
+	//expanded = line_expand_1(token[1][index], env);
+	line_expand(&token[1][index], env, 0);
+	expanded = mi_strdup(token[1][index]);
 	result = mi_strjoin("", expanded);
 	free(expanded);
 	while (token[1][++index] != NULL)
 	{
-		expanded = line_expand_1(token[1][index], env);
+		//expanded = line_expand_1(token[1][index], env);
+		line_expand(&token[1][index], env, 0);
+		expanded = mi_strdup(token[1][index]);
 		cmds_temp = mi_strjoin(result, expanded);
 		free(result);
 		free(expanded);

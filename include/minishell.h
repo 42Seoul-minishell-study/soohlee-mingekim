@@ -67,7 +67,6 @@ int		ft_twod_strlen(char **str);
 
 //command_expand.c
 void	cmd_expand(char ***token, char **env);
-void	line_expand(char **cmd, char **env);
 
 //command_expand_utils.c
 void	free_cmd(char ***token);
@@ -76,7 +75,7 @@ int		is_expand_needed(char **cmds);
 
 //command_line_expand.c
 char	*line_expand_1(char *cmd, char **env);
-void	line_expand(char **cmd, char **env);
+void	line_expand(char **cmd, char **env, int flag);
 void	in_quote_expand(char **cmd, char **env);
 
 //command_line_expand_utils.c
