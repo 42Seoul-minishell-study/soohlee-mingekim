@@ -12,12 +12,12 @@
 
 #include "minishell.h"
 
-void	asdf(void)
-{
-	ft_putstr_fd("atexit: ", 2);
-	system("leaks minishell | grep Process");
-	ft_putstr_fd("\n", 2);
-}
+// void	asdf(void)
+// {
+// 	ft_putstr_fd("atexit: ", 2);
+// 	system("leaks minishell | grep Process");
+// 	ft_putstr_fd("\n", 2);
+// }
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -31,7 +31,7 @@ int	main(int argc, char **argv, char **envp)
 	env = set_env(envp);
 	while (1)
 	{
-		system("leaks minishell | grep Process");
+		system("leaks minishell");
 		str = readline("\U0001F60Aminishell$ ");
 		if (!stdin_dup2(stdinout_copy) || ctrl_d_continue(str))
 			continue ;
@@ -44,7 +44,7 @@ int	main(int argc, char **argv, char **envp)
 			continue ;
 		translation(&tokens, env);
 		execute(&tokens, &env, stdinout_copy);
-		printf("g_exit %d\n", g_exit_status);
+		//printf("g_exit %d\n", g_exit_status);
 	}
 	free_env(&env);
 	return (0);

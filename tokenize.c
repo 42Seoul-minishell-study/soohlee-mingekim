@@ -42,30 +42,30 @@ static char	***split_tokens(char *str)
 	return (ops_and_words);
 }
 
-void	print_all_tree(char ****tokens)
-{
-	int	i;
-	int	j;
-	int	k;
+// void	print_all_tree(char ****tokens)
+// {
+// 	int	i;
+// 	int	j;
+// 	int	k;
 
-	i = 0;
-	while (tokens[i] != NULL)
-	{
-		j = 0;
-		while (j < 2)
-		{
-			k = 0;
-			while (tokens[i][j][k] != NULL)
-			{
-				printf("%d %d %d: %s\n", i, j, k, tokens[i][j][k]);
-				k++;
-			}
-			j++;
-		}
-		i++;
-	}
-	printf("---------------------------expantion-----------------------------\n");
-}
+// 	i = 0;
+// 	while (tokens[i] != NULL)
+// 	{
+// 		j = 0;
+// 		while (j < 2)
+// 		{
+// 			k = 0;
+// 			while (tokens[i][j][k] != NULL)
+// 			{
+// 				printf("%d %d %d: %s\n", i, j, k, tokens[i][j][k]);
+// 				k++;
+// 			}
+// 			j++;
+// 		}
+// 		i++;
+// 	}
+// 	printf("---------------------------expantion-----------------------------\n");
+// }
 
 char	****tokenize(char *str)
 {
@@ -90,7 +90,7 @@ char	****tokenize(char *str)
 			return (free_tokens(&tokens));
 	}
 	tokens[tokens_len] = NULL;
-	print_all_tree(tokens);
+	//print_all_tree(tokens);
 	if (tokens_check(&tokens) == 0)
 		return (NULL);
 	return (tokens);

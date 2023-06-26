@@ -12,6 +12,21 @@
 
 #include "minishell.h"
 
+static void	split_only_words(char *str, char ***ops_and_words_out)
+{
+	int	index_word;
+
+	index_word = 0;
+	str = pass_space(str);
+	while (*str != '\0' && *str != '|')
+	{
+		str = split_words(str, &ops_and_words_out[1][index_word]);
+		index_word++;
+		str = pass_space(str);
+	}
+	ops_and_words_out[1][index_word] = NULL;
+}
+
 static void	re_tokenize(char ***token, char **env)
 {
 	int		words_count;
@@ -25,7 +40,7 @@ static void	re_tokenize(char ***token, char **env)
 	token[1] = (char **)malloc(sizeof(char *) * (words_count + 1));
 	if (token[1] == NULL)
 		perror_and_exit("malloc", 1);
-	split_ops_and_words(str, token);
+	split_only_words(str, token);
 	free(str);
 	words_count = 0;
 	while (token[1][words_count] != NULL)

@@ -25,7 +25,9 @@ int	heredoc_unlink(char ****tokens)
 		{
 			if (!ft_strncmp(tokens[process_idx][0][redir_idx], "<< ", 3))
 			{
-				unlink(ft_strchr(tokens[process_idx][0][redir_idx], ' ') + 1);
+				if (unlink(ft_strchr(tokens[process_idx][0][redir_idx], ' ') \
+																		+ 1))
+					perror_and_exit("unlink", 1);
 			}
 		}
 	}

@@ -36,6 +36,14 @@ static int	heredoc_readline(char *delimiter, int heredoc_fd, char **env)
 	return (0);
 }
 
+static void	dup_perror(int *stdfd)
+{
+	if (stdfd[0] < 0)
+		perror_and_exit("dup", 1);
+	if (stdfd[1] < 0)
+		perror_and_exit("dup", 1);
+}
+
 static int	heredoc_excute(char **ops, int redirs_num, char **env)
 {
 	int		heredoc_fd;
@@ -45,6 +53,7 @@ static int	heredoc_excute(char **ops, int redirs_num, char **env)
 
 	stdfd[0] = dup(0);
 	stdfd[1] = dup(1);
+	dup_perror(stdfd);
 	if (g_exit_status != -2)
 		return (0);
 	delimiter = ft_strchr(ops[redirs_num], ' ') + 1;
@@ -53,8 +62,10 @@ static int	heredoc_excute(char **ops, int redirs_num, char **env)
 	heredoc_readline(delimiter, heredoc_fd, env);
 	if (g_exit_status == -3)
 	{
-		dup2(stdfd[0], 0);
-		dup2(stdfd[1], 1);
+		if (dup2(stdfd[0], 0) < 0)
+			perror_and_exit("dup2", 1);
+		if (dup2(stdfd[1], 1) < 0)
+			perror_and_exit("dup2", 1);
 	}
 	close(heredoc_fd);
 	free(ops[redirs_num]);

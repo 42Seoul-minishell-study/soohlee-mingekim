@@ -67,7 +67,7 @@ static int	redir_env_check(char **tokens, int *offset, char **env)
 static int	redir_line_expand(char **tokens, char **env)
 {
 	int		offset;
-	char	*tokens_temp;
+	//char	*tokens_temp;
 
 	offset = -1;
 	while ((*tokens)[++offset])
@@ -79,10 +79,10 @@ static int	redir_line_expand(char **tokens, char **env)
 		else if ((*tokens)[offset] == '$')
 			redir_env_check(tokens, &offset, env);
 	}
-	tokens_temp = *tokens;
-	*tokens = mi_strtrim(tokens_temp, " ");
-	free(tokens_temp);
-	tokens_temp = 0;
+	// tokens_temp = *tokens;
+	// *tokens = mi_strtrim(tokens_temp, " ");
+	// free(tokens_temp);
+	// tokens_temp = 0;
 	return (0);
 }
 

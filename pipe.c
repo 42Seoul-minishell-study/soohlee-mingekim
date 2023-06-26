@@ -125,8 +125,10 @@ int	execute(char *****tokens, char ***envp, int *stdinout_copy)
 	free_tokens(tokens);
 	if (g_exit_status == 130)
 	{
-		dup2(stdinout_copy[0], STDIN_FILENO);
-		dup2(stdinout_copy[1], STDOUT_FILENO);
+		if (dup2(stdinout_copy[0], STDIN_FILENO) < 0)
+			perror_and_exit("dup2", 1);
+		if (dup2(stdinout_copy[1], STDOUT_FILENO) < 0)
+			perror_and_exit("dup2", 1);
 	}
 	return (1);
 }
