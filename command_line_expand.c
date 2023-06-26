@@ -121,7 +121,6 @@ static int	redir_env_check(char **tokens, int *offset, char **env)
 void	line_expand(char **cmd, char **env, int flag)
 {
 	int		offset;
-	char	*tokens_temp;
 
 	offset = -1;
 	while ((*cmd)[++offset])
@@ -137,8 +136,4 @@ void	line_expand(char **cmd, char **env, int flag)
 		else if ((*cmd)[offset] == '$' && flag == BEFORE_TOKENIZE)
 			redir_env_check(cmd, &offset, env);
 	}
-	tokens_temp = *cmd;
-	*cmd = mi_strtrim(tokens_temp, " ");
-	free(tokens_temp);
-	tokens_temp = 0;
 }

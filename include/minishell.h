@@ -60,7 +60,6 @@ void	cmd_expand(char ***token, char **env);
 //command_expand_utils.c
 void	free_cmd(char ***token);
 char	*join_all_cmd(char ***token, char **env);
-int		is_expand_needed(char **cmds);
 
 //command_line_expand.c
 void	line_expand(char **cmd, char **env, int flag);
@@ -68,10 +67,6 @@ void	line_expand(char **cmd, char **env, int flag);
 //command_line_expand_utils.c
 void	skip_single_quote(char **cmd, int *offset);
 void	skip_double_quote(char **cmd, int *offset);
-
-
-//env_utils.c
-char	*trim_quotes(char *str);
 
 //env_utils.c
 size_t	get_env_name_len(char *str);
@@ -103,7 +98,6 @@ int		ft_echo(char **argv);
 //ft_env.c
 char	**set_env(char **envp);
 void	add_env(char *new_str, char ***env_out);
-void	print_env(char **env);
 void	ft_env(char **env);
 int		is_compare(char *compare, char **envp);
 

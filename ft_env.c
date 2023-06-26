@@ -80,13 +80,13 @@ void	add_env(char *new_str, char ***env_out)
 		new_env[i] = (*env_out)[i];
 		i++;
 	}
-	new_env[i++] = trim_quotes(new_str);
+	new_env[i++] = mi_strdup(new_str);
 	new_env[i] = NULL;
 	free(*env_out);
 	*env_out = new_env;
 }
 
-void	print_env(char **env)
+void	ft_env(char **env)
 {
 	int	i;
 
@@ -97,10 +97,5 @@ void	print_env(char **env)
 			printf("%s\n", env[i]);
 		i++;
 	}
-}
-
-void	ft_env(char **env)
-{
-	print_env(env);
 	g_exit_status = 0;
 }

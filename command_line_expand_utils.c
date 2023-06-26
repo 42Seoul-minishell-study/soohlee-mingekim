@@ -15,17 +15,21 @@
 void	skip_single_quote(char **cmd, int *offset)
 {
 	char	*temp;
+	char	*last;
 
 	temp = (*cmd) + *offset;
-	temp = find_next_single_quote(temp);
-	*offset += temp - (*cmd);
+	last = temp;
+	last = find_next_single_quote(last);
+	*offset += last - temp;
 }
 
 void	skip_double_quote(char **cmd, int *offset)
 {
 	char	*temp;
+	char	*last;
 
 	temp = (*cmd) + *offset;
-	temp = find_next_double_quote(temp);
-	*offset += temp - (*cmd) + 1;
+	last = temp;
+	last = find_next_double_quote(last);
+	*offset += last - temp;
 }
