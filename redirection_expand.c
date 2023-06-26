@@ -6,7 +6,7 @@
 /*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 15:44:12 by soohlee           #+#    #+#             */
-/*   Updated: 2023/06/20 20:09:51 by soohlee          ###   ########.fr       */
+/*   Updated: 2023/06/26 17:58:20 by soohlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,10 @@ static int	redir_env_trans(char **tokens, int *start, int *offset, char **env)
 	env_str = mi_substr(*tokens, *start, *offset - *start);
 	if (!env_str)
 		exit (1);
-	insert_str = get_env(env_str + 1, env);
+	if (env_str[1] == '?')
+		insert_str = expand_exit_status(env_str);
+	else
+		insert_str = get_env(env_str + 1, env);
 	if (!insert_str)
 		insert_str = mi_strdup("");
 	one_d_free_null(&env_str);

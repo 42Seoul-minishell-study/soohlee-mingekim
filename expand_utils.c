@@ -6,7 +6,7 @@
 /*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 14:22:34 by soohlee           #+#    #+#             */
-/*   Updated: 2023/06/22 16:15:02 by soohlee          ###   ########.fr       */
+/*   Updated: 2023/06/26 17:27:18 by soohlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,10 @@ int	env_trans(char **tokens, int *offset, char **env)
 	env_str = mi_substr(*tokens, start, *offset - start);
 	if (!ft_strchr(env_str, '$'))
 		return ((one_d_free_null(&env_str) + (*offset)--) * 0);
-	insert_str = get_env(env_str + 1, env);
+	if (env_str[1] == '?')
+		insert_str = expand_exit_status(env_str);
+	else
+		insert_str = get_env(env_str + 1, env);
 	if (!insert_str)
 		insert_str = mi_strdup("");
 	one_d_free_null(&env_str);

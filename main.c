@@ -6,7 +6,7 @@
 /*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 12:16:38 by soohlee           #+#    #+#             */
-/*   Updated: 2023/06/21 12:33:42 by soohlee          ###   ########.fr       */
+/*   Updated: 2023/06/26 18:29:10 by soohlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	main(int argc, char **argv, char **envp)
 	env = set_env(envp);
 	while (1)
 	{
-		system("leaks minishell | grep Process");
+		system("leaks minishell");
 		str = readline("\U0001F60Aminishell$ ");
 		if (!stdin_dup2(stdinout_copy) || ctrl_d_continue(str))
 			continue ;

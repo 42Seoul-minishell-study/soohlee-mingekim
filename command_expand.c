@@ -39,6 +39,8 @@ void	cmd_expand(char ***token, char **env)
 {
 	int		index;
 
+	if (token[1][0] == NULL)
+		return ;
 	re_tokenize(token, env);
 	index = 0;
 	while (token[1][index] != NULL)

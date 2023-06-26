@@ -6,7 +6,7 @@
 /*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 11:28:15 by soohlee           #+#    #+#             */
-/*   Updated: 2023/06/26 16:37:20 by soohlee          ###   ########.fr       */
+/*   Updated: 2023/06/26 17:35:11 by soohlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ void	line_expand(char **cmd, char **env, int flag);
 //command_line_expand_utils.c
 void	skip_single_quote(char **cmd, int *offset);
 void	skip_double_quote(char **cmd, int *offset);
+char	*expand_exit_status(char *str);
 
 //env_utils.c
 size_t	get_env_name_len(char *str);
