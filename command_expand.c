@@ -34,7 +34,7 @@ static void	re_tokenize(char ***token, char **env)
 	char	*str;
 
 	str = join_all_cmd(token, env);
-	printf("str%s\n", str);
+	//printf("str%s\n", str);
 	get_ops_and_words_count(str, &ops_count, &words_count);
 	free_cmd(token);
 	token[1] = (char **)malloc(sizeof(char *) * (words_count + 1));
@@ -42,12 +42,6 @@ static void	re_tokenize(char ***token, char **env)
 		perror_and_exit("malloc", 1);
 	split_only_words(str, token);
 	free(str);
-	words_count = 0;
-	while (token[1][words_count] != NULL)
-	{
-		printf("%d:%s\n", words_count, token[1][words_count]);
-		words_count++;
-	}
 }
 
 void	cmd_expand(char ***token, char **env)
