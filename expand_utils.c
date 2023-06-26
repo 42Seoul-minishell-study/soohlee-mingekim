@@ -6,7 +6,7 @@
 /*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 14:22:34 by soohlee           #+#    #+#             */
-/*   Updated: 2023/06/26 17:27:18 by soohlee          ###   ########.fr       */
+/*   Updated: 2023/06/26 21:00:33 by soohlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,33 +71,30 @@ int	double_quote(char **tokens, int *offset, char **env)
 int	env_trans(char **tokens, int *offset, char **env)
 {
 	int		start;
-	char	*env_str;
 	char	*insert_str;
 	char	*temp;
 
 	start = *offset;
 	while ((*tokens)[++(*offset)])
-		if ((*tokens)[(*offset)] == '\''
-			|| (*tokens)[(*offset)] == '\"'
-				|| (*tokens)[(*offset)] == '$'
-					|| (*tokens)[(*offset)] == ' ')
+		if ((*tokens)[(*offset)] == '\'' || (*tokens)[(*offset)] == '\"'
+				|| (*tokens)[(*offset)] == '$' || (*tokens)[(*offset)] == ' ')
 			break ;
-	env_str = mi_substr(*tokens, start, *offset - start);
-	if (!ft_strchr(env_str, '$'))
-		return ((one_d_free_null(&env_str) + (*offset)--) * 0);
-	if (env_str[1] == '?')
-		insert_str = expand_exit_status(env_str);
+	if ((*offset - start) == 1)
+		return (0);
+	temp = mi_substr(*tokens, start, *offset - start);
+	if (!ft_strchr(temp, '$'))
+		return ((one_d_free_null(&temp) + (*offset)--) * 0);
+	if (temp[1] == '?')
+		insert_str = expand_exit_status(temp);
 	else
-		insert_str = get_env(env_str + 1, env);
+		insert_str = get_env(temp + 1, env);
 	if (!insert_str)
 		insert_str = mi_strdup("");
-	one_d_free_null(&env_str);
+	one_d_free_null(&temp);
 	temp = *tokens;
 	*tokens = mi_strinsert(temp, insert_str, start, *offset - 1);
-	one_d_free_null(&temp);
 	*offset = start + ft_strlen(insert_str) - 1;
-	one_d_free_null(&insert_str);
-	return (0);
+	return (one_d_free_null(&insert_str) + one_d_free_null(&temp));
 }
 
 char	*word_expand(char **tokens, char **env)

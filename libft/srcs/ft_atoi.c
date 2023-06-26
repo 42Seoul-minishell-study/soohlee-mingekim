@@ -6,13 +6,13 @@
 /*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 16:46:27 by soohlee           #+#    #+#             */
-/*   Updated: 2023/05/06 01:49:01 by soohlee          ###   ########.fr       */
+/*   Updated: 2023/06/26 20:41:30 by soohlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static unsigned long long	atoi_check(const char *str)
+static long long	atoi_check(const char *str)
 {
 	int					i;
 	unsigned long long	res;

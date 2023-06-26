@@ -6,7 +6,7 @@
 /*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 15:44:12 by soohlee           #+#    #+#             */
-/*   Updated: 2023/06/26 17:58:20 by soohlee          ###   ########.fr       */
+/*   Updated: 2023/06/26 21:01:00 by soohlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,6 @@ static int	redir_env_check(char **tokens, int *offset, char **env)
 static int	redir_line_expand(char **tokens, char **env)
 {
 	int		offset;
-	//char	*tokens_temp;
 
 	offset = -1;
 	while ((*tokens)[++offset])
@@ -82,10 +81,6 @@ static int	redir_line_expand(char **tokens, char **env)
 		else if ((*tokens)[offset] == '$')
 			redir_env_check(tokens, &offset, env);
 	}
-	// tokens_temp = *tokens;
-	// *tokens = mi_strtrim(tokens_temp, " ");
-	// free(tokens_temp);
-	// tokens_temp = 0;
 	return (0);
 }
 

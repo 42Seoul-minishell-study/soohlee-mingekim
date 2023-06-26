@@ -6,7 +6,7 @@
 /*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 12:16:38 by soohlee           #+#    #+#             */
-/*   Updated: 2023/06/26 18:29:10 by soohlee          ###   ########.fr       */
+/*   Updated: 2023/06/26 20:53:56 by soohlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ int	main(int argc, char **argv, char **envp)
 	char	**env;
 	int		stdinout_copy[3];
 
+	//atexit(asdf);
 	if (!stdin_dup(stdinout_copy) && !args_check(argc, argv, envp))
 		set_signal();
 	env = set_env(envp);
@@ -47,5 +48,6 @@ int	main(int argc, char **argv, char **envp)
 		//printf("g_exit %d\n", g_exit_status);
 	}
 	free_env(&env);
+	//system("leaks minishell");
 	return (0);
 }

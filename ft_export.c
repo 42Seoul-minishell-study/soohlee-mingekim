@@ -6,7 +6,7 @@
 /*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 18:25:46 by soohlee           #+#    #+#             */
-/*   Updated: 2023/06/22 13:04:34 by soohlee          ###   ########.fr       */
+/*   Updated: 2023/06/26 20:27:33 by soohlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,15 +40,25 @@ static int	is_export_str(char *s)
 	char	*temp;
 
 	temp = s;
-	while (*s && *s == '=')
+	if (*temp == '=' || ft_isdigit(*temp))
 	{
-		if (!ft_isalnum(*s))
+		ft_putstr_fd("export: \'", 2);
+		error_exit_status(s, 1);
+		ft_putstr_fd("\': not a valid identifier\n", 2);
+		return (1);
+	}
+	while (*temp)
+	{
+		if (*temp == '=')
+			return (0);
+		if (!ft_isalnum(*temp) && *temp != '_')
 		{
 			ft_putstr_fd("export: \'", 2);
-			error_exit_status(temp, 1);
+			error_exit_status(s, 1);
 			ft_putstr_fd("\': not a valid identifier\n", 2);
 			return (1);
 		}
+		temp++;
 	}
 	return (0);
 }
@@ -94,12 +104,13 @@ int	ft_export(char **argv, char ***env)
 			write(2, &(temp[0][flag++]), 1);
 		error_exit_status(": invalid option\n", 2);
 		return (0);
-	}
-	while (*temp)
-		flag = flag + (is_export_str(*temp++));
+	}	
 	while (*argv)
-		add_export(*argv++, env);
-	if (flag >= 1)
-		g_exit_status = 1;
+	{
+		g_exit_status = is_export_str(*argv);
+		if (g_exit_status == 0)
+			add_export(*argv, env);
+		argv++;
+	}
 	return (0);
 }
