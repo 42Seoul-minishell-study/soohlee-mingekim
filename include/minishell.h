@@ -6,7 +6,7 @@
 /*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 11:28:15 by soohlee           #+#    #+#             */
-/*   Updated: 2023/06/22 15:33:09 by soohlee          ###   ########.fr       */
+/*   Updated: 2023/06/26 16:37:20 by soohlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ typedef enum e_line_expand
 {
 	BEFORE_TOKENIZE = 0,
 	AFTER_TOKENIZE = 1
-}	e_line_expand;
+}	t_line_expand;
 
 int		g_exit_status;
 

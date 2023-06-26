@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize_ops_and_words.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mingekim <mingekim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 20:25:47 by mingekim          #+#    #+#             */
-/*   Updated: 2023/05/30 20:25:48 by mingekim         ###   ########.fr       */
+/*   Updated: 2023/06/26 16:37:30 by soohlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ char	*skip_spaces_and_words(char *str, int redir_index, int *count_out)
 	(*count_out)++;
 	return (str);
 }
+
 void	get_ops_and_words_count(char *str, \
 									int *ops_count_out, int *words_count_out)
 {

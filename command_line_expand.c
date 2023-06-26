@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   command_line_expand.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mingekim <mingekim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/26 15:34:29 by mingekim          #+#    #+#             */
-/*   Updated: 2023/06/26 15:34:31 by mingekim         ###   ########.fr       */
+/*   Updated: 2023/06/26 16:36:49 by soohlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	redir_env_trans(char **tokens, int *start, int *offset, char **env)
+static int	cmd_env_trans(char **tokens, int *start, int *offset, char **env)
 {
 	char	*insert_str;
 	char	*temp;
@@ -25,9 +25,6 @@ static int	redir_env_trans(char **tokens, int *start, int *offset, char **env)
 	if (!insert_str)
 		insert_str = mi_strdup("");
 	one_d_free_null(&env_str);
-	temp = insert_str;
-	insert_str = mi_strtrim(temp, " ");
-	one_d_free_null(&temp);
 	temp = *tokens;
 	*tokens = mi_strinsert(temp, insert_str, *start, *offset - 1);
 	one_d_free_null(&temp);
@@ -92,7 +89,7 @@ static int	double_quote_expand(char **tokens, int *offset, char **env)
 	return (0);
 }
 
-static int	redir_env_check(char **tokens, int *offset, char **env)
+static int	cmd_env_check(char **tokens, int *offset, char **env)
 {
 	int		start;
 	char	*env_str;
@@ -115,7 +112,7 @@ static int	redir_env_check(char **tokens, int *offset, char **env)
 	if (!ft_strchr(env_str, '$'))
 		return ((one_d_free_null(&env_str) + (*offset)--) * 0);
 	one_d_free_null(&env_str);
-	return (redir_env_trans(tokens, &start, offset, env));
+	return (cmd_env_trans(tokens, &start, offset, env));
 }
 
 void	line_expand(char **cmd, char **env, int flag)
@@ -134,6 +131,6 @@ void	line_expand(char **cmd, char **env, int flag)
 		else if ((*cmd)[offset] == '\"' && flag == BEFORE_TOKENIZE)
 			skip_double_quote(cmd, &offset);
 		else if ((*cmd)[offset] == '$' && flag == BEFORE_TOKENIZE)
-			redir_env_check(cmd, &offset, env);
+			cmd_env_check(cmd, &offset, env);
 	}
 }
