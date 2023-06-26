@@ -16,7 +16,7 @@ void	skip_single_quote(char **cmd, int *offset)
 {
 	char	*temp;
 
-	temp = (*cmd) + 1;
+	temp = (*cmd) + *offset;
 	temp = find_next_single_quote(temp);
 	*offset += temp - (*cmd);
 }
@@ -25,7 +25,7 @@ void	skip_double_quote(char **cmd, int *offset)
 {
 	char	*temp;
 
-	temp = (*cmd) + 1;
+	temp = (*cmd) + *offset;
 	temp = find_next_double_quote(temp);
-	*offset += temp - (*cmd);
+	*offset += temp - (*cmd) + 1;
 }

@@ -132,7 +132,7 @@ void	line_expand(char **cmd, char **env, int flag)
 			double_quote_expand(cmd, &offset, env);
 		else if ((*cmd)[offset] == '\'' && flag == BEFORE_TOKENIZE)
 			skip_single_quote(cmd, &offset);
-		else if ((*cmd)[offset] == '\'' && flag == BEFORE_TOKENIZE)
+		else if ((*cmd)[offset] == '\"' && flag == BEFORE_TOKENIZE)
 			skip_double_quote(cmd, &offset);
 		else if ((*cmd)[offset] == '$' && flag == BEFORE_TOKENIZE)
 			redir_env_check(cmd, &offset, env);
