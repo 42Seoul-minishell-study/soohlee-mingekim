@@ -45,7 +45,7 @@ void	cmd_expand(char ***token, char **env)
 	index = 0;
 	while (token[1][index] != NULL)
 	{
-		in_quote_expand(&(token[1][index]), env);
+		line_expand(&(token[1][index]), env, AFTER_TOKENIZE);
 		index++;
 	}
 }

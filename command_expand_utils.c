@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   command_expand_utils.c                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mingekim <mingekim@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/06/26 15:34:21 by mingekim          #+#    #+#             */
+/*   Updated: 2023/06/26 15:34:28 by mingekim         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "minishell.h"
 
@@ -22,15 +33,13 @@ char	*join_all_cmd(char ***token, char **env)
 	char	*result;
 
 	index = 0;
-	//expanded = line_expand_1(token[1][index], env);
-	line_expand(&token[1][index], env, 0);
+	line_expand(&token[1][index], env, BEFORE_TOKENIZE);
 	expanded = mi_strdup(token[1][index]);
 	result = mi_strjoin("", expanded);
 	free(expanded);
 	while (token[1][++index] != NULL)
 	{
-		//expanded = line_expand_1(token[1][index], env);
-		line_expand(&token[1][index], env, 0);
+		line_expand(&token[1][index], env, BEFORE_TOKENIZE);
 		expanded = mi_strdup(token[1][index]);
 		cmds_temp = mi_strjoin(result, expanded);
 		free(result);
@@ -38,41 +47,4 @@ char	*join_all_cmd(char ***token, char **env)
 		result = cmds_temp;
 	}
 	return (result);
-}
-
-int	is_expand_needed(char **cmds)
-{
-	char	*str;
-	char	*temp;
-
-	while (*cmds != NULL)
-	{
-		str = *cmds;
-		while (*str != '\0' && *str != '$')
-		{
-			str = pass_space(str);
-			while (*str != '\0' && is_space(*str) == 0 && *str != '$')
-			{
-				if (*str == '\'')
-					str = find_next_single_quote(str);
-				else if (*str == '\"')
-				{
-					temp = str;
-					str = find_next_double_quote(str);
-					if (*str == '\"')
-					{
-						while (*temp != '\0'&& *temp != '$')
-							temp++;
-						if (*temp == '$')
-							return (1);
-					}
-				}
-				str++;
-			}
-		}
-		cmds++;
-	}
-	if (*str == '$')
-		return (1);
-	return (0);
 }

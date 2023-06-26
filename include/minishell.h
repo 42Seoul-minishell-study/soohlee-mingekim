@@ -37,22 +37,11 @@ typedef enum e_ctrl
 	CTRL_C_COUNT = 2
 }	t_ctrl;
 
-typedef struct s_retoken
+typedef enum e_line_expand
 {
-	int		last_flag;
-	int		all_space_check;
-	int		front_space_exist;
-	int		tail_space_exist;
-	int		start;
-	int		*offset;
-	int		*cmd_num;
-	int		insert_str_len;
-	char	*front;
-	char	*end;
-	char	**insert_twod;
-	int		twod_len;
-	int		cmdtotal;
-}		t_retoken;
+	BEFORE_TOKENIZE = 0,
+	AFTER_TOKENIZE = 1
+}	e_line_expand;
 
 int		g_exit_status;
 
@@ -74,15 +63,11 @@ char	*join_all_cmd(char ***token, char **env);
 int		is_expand_needed(char **cmds);
 
 //command_line_expand.c
-char	*line_expand_1(char *cmd, char **env);
 void	line_expand(char **cmd, char **env, int flag);
-void	in_quote_expand(char **cmd, char **env);
 
 //command_line_expand_utils.c
-char	*get_env_name(char *cmd, char *last, char **env);
-char	*dup_with_len(char *str, char *last);
-char	*find_last(char *str, int flag);
-//char	*find_last_in_quote(char *str, int flag);
+void	skip_single_quote(char **cmd, int *offset);
+void	skip_double_quote(char **cmd, int *offset);
 
 
 //env_utils.c

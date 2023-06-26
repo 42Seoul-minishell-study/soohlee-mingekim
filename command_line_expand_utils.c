@@ -1,52 +1,31 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   command_line_expand_utils.c                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mingekim <mingekim@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/06/26 15:34:32 by mingekim          #+#    #+#             */
+/*   Updated: 2023/06/26 15:34:35 by mingekim         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*get_env_name(char *cmd, char *last, char **env)
+void	skip_single_quote(char **cmd, int *offset)
 {
-	char	*env_name;
 	char	*temp;
 
-	env_name = (char *)malloc(sizeof(char) * (last - cmd + 1));
-	if (env_name == NULL)
-		perror_and_exit("malloc", 1);
-	ft_memset(env_name, 0, (last - cmd + 1));
-	ft_memcpy(env_name, cmd, last - cmd);
-	temp = get_env(env_name, env);
-	free(env_name);
-	return (temp);
+	temp = (*cmd) + 1;
+	temp = find_next_single_quote(temp);
+	*offset += temp - (*cmd);
 }
 
-char	*dup_with_len(char *str, char *last)
+void	skip_double_quote(char **cmd, int *offset)
 {
-	char	*result;
+	char	*temp;
 
-	result = (char *)malloc(sizeof(char) * (last - str + 1));
-	if (result == NULL)
-		perror_and_exit("malloc", 1);
-	ft_memset(result, 0, (last - str + 1));
-	ft_memcpy(result, str, last - str);
-	return (result);
+	temp = (*cmd) + 1;
+	temp = find_next_double_quote(temp);
+	*offset += temp - (*cmd);
 }
-
-char	*find_last(char *str, int flag)
-{
-	if (*str >= '0' && *str <= '9' && flag == 1)
-		return (str + 1);
-	while (*str != '\0' && *str != '$')
-	{
-		str++;
-	}
-	return (str);
-}
-
-// char	*find_last_in_quote(char *str, int flag)
-// {
-// 	if (*str >= '0' && *str <= '9' && flag == 1)
-// 		return (str + 1);
-// 	while (*str != '\0' && *str != '$' && *str != '\"')
-// 	{
-// 		str++;
-// 	}
-// 	return (str);
-// }
-

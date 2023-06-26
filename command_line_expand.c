@@ -1,65 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   command_line_expand.c                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mingekim <mingekim@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/06/26 15:34:29 by mingekim          #+#    #+#             */
+/*   Updated: 2023/06/26 15:34:31 by mingekim         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "minishell.h"
-
-static char	*malloc_and_reset(void)
-{
-	char	*result;
-
-	result = (char *)malloc(sizeof(char) * 2);
-	if (result == NULL)
-		perror_and_exit("malloc", 1);
-	result[0] = ' ';
-	result[1] = '\0';
-	return (result);
-}
-
-static char	*join_with_param(char *result, char *param)
-{
-	char	*temp;
-
-	if (param == NULL)
-		return (result);
-	temp = mi_strjoin(result, param);
-	free(result);
-	free(param);
-	return (temp);
-}
-
-char	*line_expand_1(char *cmd, char **env)
-{
-	char	*last;
-	char	*result;
-
-	result = malloc_and_reset();
-	while (*cmd != '\0')
-	{
-		if (*cmd == '\'')
-		{
-			last = find_next_single_quote(cmd);
-			result = join_with_param(result, dup_with_len(cmd, last));
-			cmd = last;
-		}
-		if (*cmd == '\"')
-		{
-			last = find_next_double_quote(cmd);
-			result = join_with_param(result, dup_with_len(cmd, last));
-			cmd = last;
-		}
-		if (*cmd == '$')
-		{
-			last = find_last(++cmd, 1);
-			result = join_with_param(result, get_env_name(cmd, last, env));
-			cmd = last;
-		}
-		else
-		{
-			last = find_last(cmd, 0);
-			result = join_with_param(result, dup_with_len(cmd, last));
-			cmd = last;
-		}
-	}
-	return (result);
-}
 
 static int	redir_env_trans(char **tokens, int *start, int *offset, char **env)
 {
@@ -167,43 +118,6 @@ static int	redir_env_check(char **tokens, int *offset, char **env)
 	return (redir_env_trans(tokens, &start, offset, env));
 }
 
-void	in_quote_expand(char **cmd, char **env)
-{
-	int		offset;
-	char	*tokens_temp;
-
-	offset = -1;
-	while ((*cmd)[++offset])
-	{
-		if ((*cmd)[offset] == '\'')
-			single_quote_expand(cmd, &offset);
-		else if ((*cmd)[offset] == '\"')
-			double_quote_expand(cmd, &offset, env);
-	}
-	tokens_temp = *cmd;
-	*cmd = mi_strtrim(tokens_temp, " ");
-	free(tokens_temp);
-	tokens_temp = 0;
-}
-
-void	skip_single_quote(char **cmd, int *offset)
-{
-	char	*temp;
-
-	temp = (*cmd) + 1;
-	temp = find_next_single_quote(temp);
-	*offset += temp - (*cmd);
-}
-
-void	skip_double_quote(char **cmd, int *offset)
-{
-	char	*temp;
-
-	temp = (*cmd) + 1;
-	temp = find_next_double_quote(temp);
-	*offset += temp - (*cmd);
-}
-
 void	line_expand(char **cmd, char **env, int flag)
 {
 	int		offset;
@@ -212,15 +126,15 @@ void	line_expand(char **cmd, char **env, int flag)
 	offset = -1;
 	while ((*cmd)[++offset])
 	{
-		if ((*cmd)[offset] == '\'' && flag == 1)
+		if ((*cmd)[offset] == '\'' && flag == AFTER_TOKENIZE)
 			single_quote_expand(cmd, &offset);
-		else if ((*cmd)[offset] == '\"' && flag == 1)
+		else if ((*cmd)[offset] == '\"' && flag == AFTER_TOKENIZE)
 			double_quote_expand(cmd, &offset, env);
-		else if ((*cmd)[offset] == '\'' && flag == 0)
+		else if ((*cmd)[offset] == '\'' && flag == BEFORE_TOKENIZE)
 			skip_single_quote(cmd, &offset);
-		else if ((*cmd)[offset] == '\'' && flag == 0)
+		else if ((*cmd)[offset] == '\'' && flag == BEFORE_TOKENIZE)
 			skip_double_quote(cmd, &offset);
-		else if ((*cmd)[offset] == '$' && flag == 0)
+		else if ((*cmd)[offset] == '$' && flag == BEFORE_TOKENIZE)
 			redir_env_check(cmd, &offset, env);
 	}
 	tokens_temp = *cmd;
