@@ -40,12 +40,13 @@ SRCS = 	main.c \
 
 CC = cc
 LIBFT_DIR = ./libft
+LIBFT_OBJS = ./libft/srcs/*.o
 OBJS = $(SRCS:.c=.o)
 CPPFLAGS = -I $(HOME)/.brew/opt/readline/include
 LDFLAGS = -L $(HOME)/.brew/opt/readline/lib
 
 #compile auto option
-CFLAGS = -Wall -Wextra -Werror -g3
+CFLAGS = -Wall -Wextra -Werror -g $(INCLUDE)
 
 #header includes
 INCLUDE = -I./include -I$(LIBFT_DIR)/include $(CPPFLAGS)
@@ -54,18 +55,15 @@ INCLUDE = -I./include -I$(LIBFT_DIR)/include $(CPPFLAGS)
 LIBFT_A = -L$(LIBFT_DIR) -lft
 
 #log hide option
-SILENT = -s
+SILENT = #-s
 
 all : $(NAME)
 
-$(NAME) : $(LIBFT_A) $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) $(LIBFT_A) $(LDFLAGS) -lreadline -lhistory -o $(NAME);
+$(NAME) : $(OBJS) $(LIBFT_OBJS)
+	$(CC) $(CFLAGS) $(OBJS) $(LDFLAGS) $(LIBFT_A) -lreadline -lhistory -o $(NAME)
 
-$(LIBFT_A) :
-	cd ./libft; make $(SILENT);
-
-%.o: %.c
-	$(CC) $(CFLAGS) $(INCLUDE) -c $^ -o $@
+$(LIBFT_OBJS) :
+	cd ./libft; make $(SILENT)
 
 clean :
 	cd ./libft; make $(SILENT) clean;
@@ -81,4 +79,4 @@ re :
 	cd ./libft; make $(SILENT) re;
 	make $(SILENT) all;
 
-.SILENT : all $(NAME) $(OBJS) $(LIBFT_A) clean fclean re;
+#.SILENT : all $(NAME) $(OBJS) $(LIBFT_A) clean fclean re;

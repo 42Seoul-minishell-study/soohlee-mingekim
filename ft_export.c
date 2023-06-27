@@ -6,7 +6,7 @@
 /*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 18:25:46 by soohlee           #+#    #+#             */
-/*   Updated: 2023/06/26 20:27:33 by soohlee          ###   ########.fr       */
+/*   Updated: 2023/06/27 11:57:15 by soohlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ static int	print_export(char **env)
 	ft_memset(sort_hash, 0, sizeof(int) * 1024);
 	make_sort_hash(sort_hash, env);
 	sort_i = -1;
-	while (++sort_i < 1028)
+	while (++sort_i < 1024)
 	{
 		i = -1;
 		while (env[++i])
