@@ -6,7 +6,7 @@
 /*   By: soohlee <soohlee@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 20:25:17 by mingekim          #+#    #+#             */
-/*   Updated: 2023/06/20 20:29:17 by soohlee          ###   ########.fr       */
+/*   Updated: 2023/06/27 16:08:13 by soohlee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,8 @@ void	parsing_cmd_and_options(char **command, char **envp, int envp_index)
 		return ;
 	if (access(command[0], X_OK) == 0 || ft_strchr(command[0], '/') != NULL)
 		return ;
+	// if (ft_strchr(command[0], '/') != NULL)
+	// 	return ; 이렇게 바꿔야 bash와 일치
 	envp_split = parsing_path_or_null(envp);
 	if (envp_split == NULL)
 		perror_and_exit(result, 127);
