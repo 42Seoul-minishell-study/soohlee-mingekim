@@ -74,10 +74,8 @@ void	parsing_cmd_and_options(char **command, char **envp, int envp_index)
 	result = command[0];
 	if (is_builtin(command) == 1)
 		return ;
-	if (access(command[0], X_OK) == 0 || ft_strchr(command[0], '/') != NULL)
+	if (ft_strchr(command[0], '/') != NULL)
 		return ;
-	// if (ft_strchr(command[0], '/') != NULL)
-	// 	return ; 이렇게 바꿔야 bash와 일치
 	envp_split = parsing_path_or_null(envp);
 	if (envp_split == NULL)
 		perror_and_exit(result, 127);
