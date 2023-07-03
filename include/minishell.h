@@ -24,13 +24,6 @@
 # include "readline/history.h"
 # include "libft.h"
 
-//finish flags
-# define EXIT 0
-# define MALLOC_FAIL 1
-# define SEARCH_DIR 2
-# define ACCESS 3
-# define COMMAND 4
-
 typedef enum e_ctrl
 {
 	CTRL_C = -1,
