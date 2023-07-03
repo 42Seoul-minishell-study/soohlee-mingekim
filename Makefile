@@ -54,29 +54,24 @@ INCLUDE = -I./include -I$(LIBFT_DIR)/include $(CPPFLAGS)
 #library link
 LIBFT_A = -L$(LIBFT_DIR) -lft
 
-#log hide option
-SILENT = #-s
-
 all : $(NAME)
 
 $(NAME) : $(OBJS) $(LIBFT_OBJS)
 	$(CC) $(CFLAGS) $(OBJS) $(LDFLAGS) $(LIBFT_A) -lreadline -lhistory -o $(NAME)
 
 $(LIBFT_OBJS) :
-	cd ./libft; make $(SILENT)
+	cd ./libft; make
 
 clean :
-	cd ./libft; make $(SILENT) clean;
+	cd ./libft; make clean;
 	rm -f $(OBJS);
 
 fclean :
-	cd ./libft; make $(SILENT) fclean;
+	cd ./libft; make fclean;
 	rm -f $(OBJS);
 	rm -f $(NAME);
 
 re :
-	make $(SILENT) fclean;
-	cd ./libft; make $(SILENT) re;
-	make $(SILENT) all;
-
-#.SILENT : all $(NAME) $(OBJS) $(LIBFT_A) clean fclean re;
+	make fclean;
+	cd ./libft; make re;
+	make all;
