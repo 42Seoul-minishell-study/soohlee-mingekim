@@ -12,13 +12,6 @@
 
 #include "minishell.h"
 
-// void	leaks_check(void)
-// {
-// 	ft_putstr_fd("atexit: ", 2);
-// 	system("leaks minishell");
-// 	ft_putstr_fd("\n", 2);
-// }
-
 int	main(int argc, char **argv, char **envp)
 {
 	char	*str;
@@ -26,13 +19,11 @@ int	main(int argc, char **argv, char **envp)
 	char	**env;
 	int		stdinout_copy[3];
 
-	// atexit(leaks_check);
 	if (!stdin_dup(stdinout_copy) && !args_check(argc, argv, envp))
 		set_signal();
 	env = set_env(envp);
 	while (1)
 	{
-		// system("leaks minishell");
 		str = readline("\U0001F60Aminishell$ ");
 		if (!stdin_dup2(stdinout_copy) || ctrl_d_continue(str))
 			continue ;
@@ -45,10 +36,7 @@ int	main(int argc, char **argv, char **envp)
 			continue ;
 		translation(&tokens, env);
 		execute(&tokens, &env, stdinout_copy);
-		//printf("g_exit %d\n", g_exit_status);
 	}
 	free_env(&env);
-	// system("leaks minishell");
-	// exit (g_exit_status);
 	return (0);
 }
